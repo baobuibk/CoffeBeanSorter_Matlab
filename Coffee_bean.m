@@ -186,22 +186,24 @@ global SAME_POS_MT;
     Chroma_THR     = str2double(Chroma_THR);
   
     colormap(gray);
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\coffee_bean_matlab\Real data');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\coffee_bean_matlab\Real data');
+    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
+    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
     [length,~]     = size(listTemplate);
     for i=3:length
-        %=-=-=-=-=-=-=-======================================================
+        %=-=-=-=-=-=-=-====================================================
     fprintf('%d\n',i);
     set(handles.name_img,'String',listTemplate(i).name);   
     IMG = imread(listTemplate(i).name);
-    RGB = imresize(IMG,[480 640]);
-        
+    RGB = imresize(IMG,[480 640]);    
     axes(handles.img);
-    [IMGBi,IMGSeg_CIE,~,Canny] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
+    imagesc(IMG);
+    
+    [IMGBi,IMGBi_min,~,~,Canny] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
    
     axes(handles.img1);
     imagesc(IMGBi);
-    
+    axes(handles.img2);
+    imagesc(IMGBi_min);
 %    write_img2text(IMGBi,2);
     axes(handles.img3);
     imagesc(Canny);
@@ -271,8 +273,8 @@ function GET_THR_Callback(hObject, eventdata, handles)
 %    Review_good      = fopen('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\Data\test_color.txt','w');
 %    Review_good_name = fopen('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\test_color.txt','w');
 %    check = 0;
-    addpath('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\Data\shape');
-    listTemplate   = dir('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\Data\shape');
+    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
+    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
     [length,~]     = size(listTemplate);
 %    Review       = fopen('D:\B. WORK\LAB\COFFEE _BEAN IMAGE PROCESSING\Text_value\Review_bad.txt','w');
 %    fprintf(Review,'Number:%.4f  GOOD \n',1);
