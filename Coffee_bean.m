@@ -186,6 +186,71 @@ global SAME_POS_MT;
     Chroma_THR     = str2double(Chroma_THR);
   
     colormap(gray);
+   
+    %=-=-=-=-=-=-=-====================================================
+    [IMGBi,label,num_object] = segmentation_RGB(IMG); %Use RGB %-25
+    axes(handles.img1);
+    imagesc(IMGBi);
+    
+    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
+%     [img_border,pos_pixel,num_object] = find_border(IMGBi); 
+    pos_pixel = bwboundaries(IMGBi);
+%    hold on;
+%    axes(handles.img2);
+%    for k=1:length(pos_pixel)
+%    	boundary = pos_pixel{k};
+%    	plot(boundary(:,2), boundary(:,1),'.r');
+%    end
+    
+   
+    %==================================================END TEST
+     if (num_object ~= 0)
+        [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block,L_THR,b_THR,Chroma_THR);
+     else
+         out_result = 0;
+%         SAME_POS_MT = zeros(20,3);
+     end
+    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% display
+%    axes(handles.img3);
+    if (num_object ~= 0)
+        for ii=1:num_object
+            hold on;
+            if out_result(ii,3) == BAD 
+                plot(out_result(ii,2),out_result(ii,1),'*r');
+            end
+        end
+    end
+
+    %=-=-=-=-=-=-=-======================================================
+%    SAME_POS_MT = zeros(20,3);
+    %======================================================
+
+
+%==========================================================================%GET THR
+%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+function GET_THR_Callback(hObject, eventdata, handles)
+global IMG;
+
+    GOOD = 1;
+    BAD  = 0;
+    ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
+    ADD_BINARY_THR = str2double(ADD_BINARY_THR);
+    
+    number_part    = get(handles.number_part,'string');
+    THR_convex     = get(handles.THR_convex,'string');
+    THR_block      = get(handles.THR_block,'string');
+    num_part       = str2double(number_part);
+    THR_convex     = str2double(THR_convex);
+    THR_block      = str2double(THR_block);
+    
+    L_THR          = get(handles.L,'string');
+    L_THR          = str2double(L_THR);
+    b_THR          = get(handles.b,'string');
+    b_THR          = str2double(b_THR);
+    Chroma_THR     = get(handles.Chroma,'string');
+    Chroma_THR     = str2double(Chroma_THR);
+  
+    colormap(gray);
     addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
     listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
     [length,~]     = size(listTemplate);
@@ -197,27 +262,23 @@ global SAME_POS_MT;
     RGB = imresize(IMG,[480 640]);    
     axes(handles.img);
     imagesc(IMG);
-    
-    [IMGBi,IMGBi_min,~,~,Canny] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
-   
+    [IMGBi,label,num_object] = segmentation_RGB(IMG); %Use RGB %-25
     axes(handles.img1);
     imagesc(IMGBi);
-    axes(handles.img2);
-    imagesc(IMGBi_min);
-%    write_img2text(IMGBi,2);
-    axes(handles.img3);
-    imagesc(Canny);
+    pause(1);
     
-%    axes(handles.img3);
-%    imagesc(IMGGreen);
-    
-%    axes(handles.img4);
-%    imagesc(IMGBlue);
-%{
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
-     [img_border,pos_pixel,num_object] = find_border(IMGBi); 
-%     axes(handles.img4);
-%     imagesc(img_border);
+%     [img_border,pos_pixel,num_object] = find_border(IMGBi); 
+    [pos_pixel,~,~] = bwboundaries(IMGBi);
+     hold on;
+ %   axes(handles.img2);
+    for k=1:length(pos_pixel)
+    	boundary = pos_pixel{k};
+    	plot(boundary(:,2), boundary(:,1),'.r');
+    end
+%{
+    axes(handles.img4);
+     imagesc(img_border);
     %==================================================END TEST
      if (num_object ~= 0)
         [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block,L_THR,b_THR,Chroma_THR);
@@ -240,103 +301,12 @@ global SAME_POS_MT;
     end
 %    SAME_POS_MT = zeros(20,3);
     %======================================================
-
-
-%==========================================================================%GET THR
-%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function GET_THR_Callback(hObject, eventdata, handles)
-
-    GOOD = 1;
-    BAD  = 0;
-    count = 0;
-    sum_object =0;
-    number_shape = 0;
+   
+ 
     
-    ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
-    ADD_BINARY_THR = str2double(ADD_BINARY_THR);
-    
-    number_part    = get(handles.number_part,'string');
-    THR_convex     = get(handles.THR_convex,'string');
-    THR_block      = get(handles.THR_block,'string');
-    num_part       = str2double(number_part);
-    THR_convex     = str2double(THR_convex);
-    THR_block      = str2double(THR_block);
-    
-    L_THR          = get(handles.L,'string');
-    L_THR          = str2double(L_THR);
-    b_THR          = get(handles.b,'string');
-    b_THR          = str2double(b_THR);
-    Chroma_THR     = get(handles.Chroma,'string');
-    Chroma_THR     = str2double(Chroma_THR);
+  
 
-%    Review_bad       = fopen('C:\Users\ducan\Documents\MATLAB\Coffee_bean_Matlab\Text_value\THR_bad.txt','w');
-%    Review_good      = fopen('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\Data\test_color.txt','w');
-%    Review_good_name = fopen('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\test_color.txt','w');
-%    check = 0;
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\Coffee_bean\Real data');
-    [length,~]     = size(listTemplate);
-%    Review       = fopen('D:\B. WORK\LAB\COFFEE _BEAN IMAGE PROCESSING\Text_value\Review_bad.txt','w');
-%    fprintf(Review,'Number:%.4f  GOOD \n',1);
-    %====================================================================== start
-    axes(handles.img1); 
-    for i=3:length
-        set(handles.name_img,'String',listTemplate(i).name);   
-        IMG = imread(listTemplate(i).name);
-        RGB = imresize(IMG,[240 320]);
-%        axes(handles.img);
-%        imagesc(RGB);
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% segmentation
-        fprintf('%d \n',i);
-%         write_img2text(RGB,1);
-        [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(RGB,ADD_BINARY_THR);
-        imagesc(IMGSeg_CIE);
-        pause(0.1);
-%        Trig = IMGBi(215:235,285:315);         %check if trigger ok -> capture
-        %---------------------------------------------------------------------------------------------
-%        if (sum(sum(Trig(:,:))) >=100) && (trig_check == 0)
-%            trig_check = 1;
-             %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% find border and calculate result
-        [~,pos_pixel,num_object] = find_border(IMGBi); 
-%        axes(handles.img2);
-%        imagesc(img_border);
-%        axes(handles.img1);
-%        imagesc(img_border);
-            if (num_object ~= 0)
-                [out_result,num_object_bad] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block,L_THR,b_THR,Chroma_THR,i);
-            else
-                out_result = 0;
-            end
-            number_shape = number_shape + num_object_bad;
-            sum_object   = sum_object + num_object;
-%           axes(handles.img); 
-            %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-%
-            %{
-            if (num_object~=0)
-            for ii=1:num_object
-                hold on;
-                if out_result(ii,3) == BAD 
-                    plot(out_result(ii,2),out_result(ii,1),'*r');
-                    pause(0.1);
-                end
-            end
-            end
-            %}
-%        else 
-%            trig_check = 0;
-%            continue;
-    end
-    fprintf('number_bad_shape: %d   sum_object: %d   percent: %.4f \n',number_shape,sum_object,number_shape/sum_object);
-        %---------------------------------------------------------------------------------------------
-%end
-%            end
-%        end
-%    end
-%fprintf(valuenew,'percent: %.2f   \n',check/length);
-%fclose(Review_bad);
-%fclose(Review_good);
-fclose('all');
-    
+   
 %write_img2text();
 %==========================================================================%OPEN CAMERA
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

@@ -1,4 +1,4 @@
-function [IMGBi,IMGBi_min,IMGSeg_CIE,IMGSeg_RGB,Canny] = segmentation_RGB(RGB,ADD_BINARY_THR)
+function [IMGBi,label,num_obj] = segmentation_RGB(RGB)
 
 %=========================================================================%
 % This funtion segmentates image and reture two value:
@@ -13,7 +13,7 @@ function [IMGBi,IMGBi_min,IMGSeg_CIE,IMGSeg_RGB,Canny] = segmentation_RGB(RGB,AD
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= explore threshold
     IMGRed          = double(RGB(:,:,1));
-    IMGGreen        = double(RGB(:,:,2));
+    IMGGreen        = (RGB(:,:,2));
     IMGBlue         = (RGB(:,:,3));
     
     [row,col]       = size(IMGRed);
@@ -24,21 +24,30 @@ function [IMGBi,IMGBi_min,IMGSeg_CIE,IMGSeg_RGB,Canny] = segmentation_RGB(RGB,AD
     IMGRedSeg       = zeros(row,col);
     IMGGreenSeg     = zeros(row,col);
     IMGBlueSeg      = zeros(row,col);
-%    gray1            = zeros(row,col);   
-%    BLK             = 64;
-%    BLOCK_ROW       = floor(row/BLK);
-%    BLOCK_COL       = floor(col/BLK);
-%    IMGBlue_his     = zeros(row,col);
 
-    
-    msk             =   fspecial('gaussian',5,3);
-    IMGBlue         =   imfilter(IMGBlue,msk);
+    msk             =   fspecial('gaussian',3,2.5);
+    for i=1:3
+        IMGBlue     =   imfilter(IMGBlue,msk);
+    end
 
-    IMGBi_min       = imextendedmin(IMGBlue,30);
-    THRBlue         =   graythresh(IMGBlue)*255;
-    Canny           =   edge(IMGBlue,'Canny',[0.35*THRBlue/255 (THRBlue/255-0.12)]);
+    IMGBi           =   imextendedmin(IMGBlue,40);       %40
     
-    IMGBi(:,:)      =  (IMGBlue(:,:)>= THRBlue + ADD_BINARY_THR);
+    
+    
+    %{
+    IMGBi_min       =   imimposemin(IMGBlue,IMGBi_min);
+    
+    THRBlue         =   graythresh(IMGBlue1)*255;
+    Canny           =   edge(IMGBlue1,'Canny',[0.35*THRBlue/255 (0.8*(THRBlue/255))]);
+    
+    IMGBi(:,:)      =  (IMGBlue1(:,:)>= THRBlue + ADD_BINARY_THR);
+    
+    IMGBi_min       = IMGBi_min|(Canny);
+    
+    IMGBi_min       = bwareaopen(IMGBi_min, 500);
+   IMGBi_min       = ~bwareaopen(~IMGBi_min, 500);
+    
+    %}
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 %    imagesc(IMGBi);
@@ -46,20 +55,22 @@ function [IMGBi,IMGBi_min,IMGSeg_CIE,IMGSeg_RGB,Canny] = segmentation_RGB(RGB,AD
 %    IMGBi   = Gaussian_new(msk, IMGBi); 
     
 
-    IMGBi(1:5,:) = 1;                                    
-    IMGBi(:,1:5) = 1;
+    IMGBi(1:5,:)        = 1;                                    
+    IMGBi(:,1:5)        = 1;
     IMGBi(row -4:row,:) = 1;
     IMGBi(:,col -4:col) = 1;
-    
-    
-    
-    
-%    write_img2text(IMGBi,2);  
-    
+    label               =   bwlabel(IMGBi);
+    label(label==1)     =   0;
+    IMGBi               =  (label ~= 0);
+    IMGBi               =   bwareaopen(IMGBi, 200);
+    IMGBi               =   ~bwareaopen(~IMGBi, 200);
+    [label,num_obj]     =   bwlabel(IMGBi);
+
+    %{
     [IMGBi_label]   = bwlabel(IMGBi,8);
     IMGBi           = (IMGBi_label(:,:)==1);
     IMGBi           = 1-IMGBi;
-    
+
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= RGB Segmentation 
     for ii=1:row
@@ -82,7 +93,7 @@ function [IMGBi,IMGBi_min,IMGSeg_CIE,IMGSeg_RGB,Canny] = segmentation_RGB(RGB,AD
     IMGSeg_RGB(:,:,3)    = IMGBlueSeg;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CIE Segmentation
     IMGRedSeg            = IMGRed   .*IMGBi;
-    IMGGreenSeg          = IMGGreen .*IMGBi;
+    IMGGreenSeg          = double(IMGGreen) .*IMGBi;
     IMGBlueSeg           = double(IMGBlue)  .*IMGBi;
     
     IMGSeg_CIE(:,:,1)    = IMGRedSeg;
@@ -91,7 +102,7 @@ function [IMGBi,IMGBi_min,IMGSeg_CIE,IMGSeg_RGB,Canny] = segmentation_RGB(RGB,AD
     
     IMGSeg_CIE           = uint8(IMGSeg_CIE);
     IMGBi                = uint8(IMGBi);
-   
+   %}
 %    write_img2text(IMGBlueSeg,2);
 end
 
