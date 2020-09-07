@@ -24,6 +24,7 @@ cnt_block_t2    = 0;
 %THR_dis_pix     = 0.9;
 %THR_dis_per     = 0.3;  
 %=========================================================% PART 1
+
 for i=0:(num_part-1)
     pnt_st    = i*len_avr + 1;          
     pnt_end   = pnt_st +len_avr - 1;

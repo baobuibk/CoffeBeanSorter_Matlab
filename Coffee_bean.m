@@ -177,18 +177,12 @@ global SAME_POS_MT;
     num_part       = str2double(number_part);
     THR_convex     = str2double(THR_convex);
     THR_block      = str2double(THR_block);
-    
-    L_THR          = get(handles.L,'string');
-    L_THR          = str2double(L_THR);
-    b_THR          = get(handles.b,'string');
-    b_THR          = str2double(b_THR);
-    Chroma_THR     = get(handles.Chroma,'string');
-    Chroma_THR     = str2double(Chroma_THR);
   
     colormap(gray);
    
     %=-=-=-=-=-=-=-====================================================
     [IMGBi,label,num_object] = segmentation_RGB(IMG); %Use RGB %-25
+    a = uint8(IMGBi);
     axes(handles.img1);
     imagesc(IMGBi);
     
@@ -205,10 +199,9 @@ global SAME_POS_MT;
    
     %==================================================END TEST
      if (num_object ~= 0)
-        [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block,L_THR,b_THR,Chroma_THR);
+        [out_result] = check_shape_color(IMGBi,IMG,pos_pixel,num_object,num_part,THR_convex,THR_block,label);
      else
          out_result = 0;
-%         SAME_POS_MT = zeros(20,3);
      end
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% display
 %    axes(handles.img3);

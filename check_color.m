@@ -1,4 +1,4 @@
-function [result_color] = check_color(IMGSeg,img_check,L_THR,b_THR,Chroma_THR)
+function [result_color] = check_color(Lab_img,label,num_object)
 
 %===================================================================%
 % funtion calculate image histogram and return result of coffee qualily 
@@ -14,28 +14,27 @@ IMGSeg  = uint8(IMGSeg);
 lab     = rgb2lab(IMGSeg);
 
 L1   = lab(:,:,1);
-a1   = lab(:,:,2);
 b1   = lab(:,:,3);
+a1   = lab(:,:,2);
 
 %XYZ     = rgb2xyz(IMGSeg);
 %lab1    = xyz2lab(XYZ);
 
 %}
-lab1 = rgb2labnew(IMGSeg);
+%Lab_img = rgb2labnew(IMGSeg);
 
-L   = lab1(:,:,1);
-a   = lab1(:,:,2);
-b   = lab1(:,:,3);
+L   = Lab_img(:,:,1);
+a   = Lab_img(:,:,2);
+b   = Lab_img(:,:,3);
 GOOD = 1;
 BAD  = 0;
 %write_img2text(L,2);
 
-
-
-
 %=============================================Test
 Chroma = sqrt(a.*a + b.*b);
 Hue    = atan(b./(a+eps));
+
+%{
 Sum_L = 0;
 Sum_a = 0;
 Sum_b = 0;
@@ -44,8 +43,24 @@ Sum_Hue    = 0;
 
 total_px  = 0;
 [row,col] = size(L);
+%}
 %=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-= Calculate sum L,a,b
 %write_img2text(img_check,2);
+
+Sum_L       = sum(L(label==num_object));
+Sum_a       = sum(a(label==num_object));
+Sum_b       = sum(b(label==num_object));
+Sum_Chroma  = sum(Chroma(label==num_object));
+Sum_Hue     = sum(Hue(label==num_object));
+
+total_pxl   = size(L(label==num_object),1);
+Avr_L       = Sum_L/total_pxl;
+
+
+Avr_b       = Sum_b/total_pxl;
+Avr_Hue     = Sum_Hue/total_pxl;
+
+%{
 for i=1:row
     for j=1:col
         %-----------------------------%
@@ -61,15 +76,13 @@ for i=1:row
     end
 end
 
-%=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=Calculate average L,a,b
+%=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-= Calculate average L,a,b
 Avr_L = Sum_L/total_px;
 Avr_a = Sum_a/total_px;
 Avr_b = Sum_b/total_px;
 Avr_Chroma = Sum_Chroma/total_px;
 Avr_Hue = Sum_Hue/total_px;
-
-%fprintf(Review_good,'%.4f   %.4f    %.4f    %.4f    %.4f \n',Avr_L,Avr_a,Avr_b,Avr_Chroma,Avr_Hue);
-%fprintf(Review_good_name,'L: %.4f   a: %.4f    b: %.4f    Chroma: %.4f    Hue: %.4f   %d\n',Avr_L,Avr_a,Avr_b,Avr_Chroma,Avr_Hue,num);
+%}
 
 w0 = 257.774711141135696835;
 w1 = -1.983727219269821873; 

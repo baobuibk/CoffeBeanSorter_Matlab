@@ -12,26 +12,17 @@ function [IMGBi,label,num_obj] = segmentation_RGB(RGB)
 %=========================================================================%
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= explore threshold
-    IMGRed          = double(RGB(:,:,1));
-    IMGGreen        = (RGB(:,:,2));
-    IMGBlue         = (RGB(:,:,3));
+    IMGBlue         = RGB(:,:,3);
     
-    [row,col]       = size(IMGRed);
+    [row,col]       = size(IMGBlue);
 %    IMGBi           = zeros(row,col);
- 
-    IMGSeg_RGB      = [];
-    IMGSeg_CIE      = [];
-    IMGRedSeg       = zeros(row,col);
-    IMGGreenSeg     = zeros(row,col);
-    IMGBlueSeg      = zeros(row,col);
 
     msk             =   fspecial('gaussian',3,2.5);
     for i=1:3
         IMGBlue     =   imfilter(IMGBlue,msk);
     end
 
-    IMGBi           =   imextendedmin(IMGBlue,40);       %40
-    
+    IMGBi           =   imextendedmin(IMGBlue,40);       %40    
     
     
     %{
