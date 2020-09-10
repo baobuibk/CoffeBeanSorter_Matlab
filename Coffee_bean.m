@@ -130,7 +130,6 @@ global IMG;
     imagesc(IMGSeg_CIE);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% find border and calculate result
     [out_border,pos_px,num_object,er_find_line] = find_border(IMGBi); 
-     
     axes(handles.img3);
     imagesc(out_border);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% check shape
@@ -186,47 +185,18 @@ global SAME_POS_MT;
     Chroma_THR     = get(handles.Chroma,'string');
     Chroma_THR     = str2double(Chroma_THR);
     
-
-%===================================    
-%    RGB = IMG(61:180,:,:);
-%    axes(handles.img1);
-%    imagesc(RGB);
-%    write_img2text(RGB,1);
-%===================================%
-%    write_img2text(IMG,1);
-%    a = IMG(:,:,3);
-%    write_img2text(a,2);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
-   
-%    write_img2text(IMGBi,2);
-%    axes(handles.img1);
-%    imagesc(IMGBi);
-%    bi = double(IMGBi);
-%    imwrite(bi, 'D:\IMGBi.jpg');
     axes(handles.img2);
     imagesc(IMGSeg_CIE);
-%    imwrite(IMGSeg_CIE, 'D:\IMGSeg_CIE.jpg');
-%    axes(handles.img3);
-%    Trig = IMGBi(215:235,285:315);         %check if trigger ok -> capture
+
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
-     [img_border,pos_pixel,num_object] = find_border(IMGBi); 
-%     write_img2text(img_border,2);
- %   img_border = find_border(IMGBi);
-%     axes(handles.img3);
- %    imagesc(img_border);
-%     imwrite(img_border, 'D:\IMG_border.jpg');
-     
-      %==================================================TEST HERE
-%    dir1    = dinhhuong_process(IMGBi,16);
-%    dir_mt  = explore_dir_object(IMGBi,pos_pixel,num_object);
-%    correct_direction(dir_mt);
-%   correct_img();
+     [~,pos_pixel,num_object] = find_border(IMGBi); 
     
     %==================================================END TEST
      if (num_object ~= 0)
-        [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block,L_THR,b_THR,Chroma_THR);
+        [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block);
      else
          out_result = 0;
 %         SAME_POS_MT = zeros(20,3);
@@ -255,6 +225,9 @@ function GET_THR_Callback(hObject, eventdata, handles)
     count = 0;
     sum_object =0;
     number_shape = 0;
+    TP   = 0;
+    FN   = 0;
+    
     
     ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
     ADD_BINARY_THR = str2double(ADD_BINARY_THR);
@@ -267,48 +240,31 @@ function GET_THR_Callback(hObject, eventdata, handles)
     THR_block      = str2double(THR_block);
     
 
-%    Review_bad       = fopen('C:\Users\ducan\Documents\MATLAB\Coffee_bean_Matlab\Text_value\THR_bad.txt','w');
-%    Review_good      = fopen('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\Data\test_color.txt','w');
-%    Review_good_name = fopen('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\test_color.txt','w');
-%    check = 0;
-    addpath('C:\Users\ducan\Documents\MATLAB\Coffee_bean_Matlab\Data_Multi');
-    listTemplate   = dir('C:\Users\ducan\Documents\MATLAB\Coffee_bean_Matlab\Data_Multi');
+    Review_bad       = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\Result_good.txt','w');
+
+    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\GOOD_COFFEE\test');
+    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\GOOD_COFFEE\test');
     [length,~]     = size(listTemplate);
-%    Review       = fopen('D:\B. WORK\LAB\COFFEE _BEAN IMAGE PROCESSING\Text_value\Review_bad.txt','w');
-%    fprintf(Review,'Number:%.4f  GOOD \n',1);
     %====================================================================== start
     axes(handles.img); 
     for i=3:length
         set(handles.name_img,'String',listTemplate(i).name);   
         IMG = imread(listTemplate(i).name);
         RGB = imresize(IMG,[240 320]);
-%        RGB = imresize(IMG,[480 640]);
-%        axes(handles.img);
-%        imagesc(RGB);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% segmentation
         fprintf('%d \n',i);
-%         write_img2text(RGB,1);
         [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(RGB,ADD_BINARY_THR);
         imagesc(IMGSeg_CIE);
         pause(0.1);
-%        Trig = IMGBi(215:235,285:315);         %check if trigger ok -> capture
-        %---------------------------------------------------------------------------------------------
-%        if (sum(sum(Trig(:,:))) >=100) && (trig_check == 0)
-%            trig_check = 1;
              %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% find border and calculate result
         [~,pos_pixel,num_object] = find_border(IMGBi); 
-%        axes(handles.img2);
-%        imagesc(img_border);
-%        axes(handles.img1);
-%        imagesc(img_border);
+
             if (num_object ~= 0)
                 [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block);
             else
                 out_result = 0;
             end
-%           axes(handles.img); 
-            %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-%
-      
+            %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% Plot
             if (num_object~=0)
             for ii=1:num_object
                 hold on;
@@ -318,20 +274,26 @@ function GET_THR_Callback(hObject, eventdata, handles)
                 end
             end
             end
-%        else 
-%            trig_check = 0;
-%            continue;
+            %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% Write the result into txt
+            for obj=1:num_object
+                if (out_result(obj,3) == GOOD)
+                    fprintf(Review_bad,'row:%d   col:%d   result:%d  GOOD \n',out_result(obj,1),out_result(obj,2),out_result(obj,3));
+                    TP = TP + 1;
+                else
+                    fprintf(Review_bad,'row:%d   col:%d   result:%d  BAD \n',out_result(obj,1),out_result(obj,2),out_result(obj,3));
+                    FN = FN + 1;
+                end
+            end
     end
         %---------------------------------------------------------------------------------------------
-%end
-%            end
-%        end
-%    end
-%fprintf(valuenew,'percent: %.2f   \n',check/length);
-%fclose(Review_bad);
-%fclose(Review_good);
+%fprintf(Review_bad,'FP: %d    TN: %d \n',FP,TN);
+fprintf(Review_bad,'TP: %d    FN: %d \n',TP,FN);
 fclose('all');
-    
+%Tn = 618    fp=33
+
+
+
+
 %write_img2text();
 %==========================================================================%OPEN CAMERA
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

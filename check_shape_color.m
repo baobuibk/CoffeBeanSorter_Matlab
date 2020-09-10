@@ -17,15 +17,8 @@ for i=1:num_object
     [result_shape,x_center,y_center] = check_single_shape(pos_single,num_part,THR_convex,THR_block);       % check shape
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     [img,img_check]     = explore_single_img(pos_single,IMGSeg_CIE);
- 
     [result_color]     = check_color(img,img_check);                               % check color
 
-%    if result_color == BAD
-%        fprintf(Review_bad,'Avr_L: %.4f    Avr_b: %.4f   Avr_Chroma: %.4f \n',Avr_L,Avr_b,Avr_Chroma);
-%    else
-%        fprintf(Review_good,'Avr_L: %.4f    Avr_b: %.4f   Avr_Chroma: %.4f \n',Avr_L,Avr_b,Avr_Chroma);
-%    end
-    
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     result     =  result_shape && result_color; %
     out_result = [out_result;x_center,y_center,result,i];
