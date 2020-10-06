@@ -83,6 +83,7 @@ global IMG;
 
      [IMG,row,col,dir3,name_img] = Load_img();
      
+     
 %     Red = IMG(:,:,1);
 %     Green = IMG(:,:,2);
 %     Blue = IMG(:,:,3);
@@ -94,7 +95,7 @@ global IMG;
      set(handles.col,'string',col);    
      set(handles.dir3,'string',dir3); 
      axes(handles.img);   
-     IMG = imresize(IMG,[240 320]);
+%     IMG = imresize(IMG,[240 320]);
      imagesc(IMG);
      colormap(gray); 
   
@@ -185,12 +186,27 @@ global SAME_POS_MT;
     Chroma_THR     = get(handles.Chroma,'string');
     Chroma_THR     = str2double(Chroma_THR);
     
+    [row,col,~]    = size(IMG);
+    
+    axes(handles.img1);
+    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel\background.jpg");
+    
+    IMG            = (IMG+40) - background;
+    imagesc(IMG);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
-    [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
+    
+    [IMGBi,IMG_Gray,IMGGreen] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
+    axes(handles.img4);
+    imagesc(IMGBi);
+    
+    axes(handles.img3);
+    imagesc(IMG_Gray);
+    
     axes(handles.img2);
-    imagesc(IMGSeg_CIE);
+    imagesc(IMGGreen);
 
+    %{
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
      [~,pos_pixel,num_object] = find_border(IMGBi); 
     
@@ -214,7 +230,7 @@ global SAME_POS_MT;
     end
 %    SAME_POS_MT = zeros(20,3);
     %======================================================
-
+%}
 
 %==========================================================================%GET THR
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -240,23 +256,35 @@ function GET_THR_Callback(hObject, eventdata, handles)
     THR_block      = str2double(THR_block);
     
 
-    Review_bad       = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\Result_good.txt','w');
+%    Review_bad       = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\Result_good.txt','w');
 
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\GOOD_COFFEE\test');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\GOOD_COFFEE\test');
+    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel');
+    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel');
     [length,~]     = size(listTemplate);
     %====================================================================== start
     axes(handles.img); 
     for i=3:length
         set(handles.name_img,'String',listTemplate(i).name);   
         IMG = imread(listTemplate(i).name);
-        RGB = imresize(IMG,[240 320]);
+        
+        [row,col,~] = size(IMG);
+        IMG         = IMG(40:row-39,40:col-39,:);
+        
+        RGB = imresize(IMG,[480 640]);
+        
+        IMG_Gray        = rgb2gray(RGB);
+        axes(handles.img); 
+        histogram(IMG_Gray);
+        hold off;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% segmentation
+       %{
         fprintf('%d \n',i);
         [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(RGB,ADD_BINARY_THR);
         imagesc(IMGSeg_CIE);
         pause(0.1);
+        hold off;
              %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% find border and calculate result
+       
         [~,pos_pixel,num_object] = find_border(IMGBi); 
 
             if (num_object ~= 0)
@@ -274,6 +302,7 @@ function GET_THR_Callback(hObject, eventdata, handles)
                 end
             end
             end
+           
             %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% Write the result into txt
             for obj=1:num_object
                 if (out_result(obj,3) == GOOD)
@@ -284,12 +313,14 @@ function GET_THR_Callback(hObject, eventdata, handles)
                     FN = FN + 1;
                 end
             end
+            %}
     end
         %---------------------------------------------------------------------------------------------
 %fprintf(Review_bad,'FP: %d    TN: %d \n',FP,TN);
-fprintf(Review_bad,'TP: %d    FN: %d \n',TP,FN);
-fclose('all');
+%fprintf(Review_bad,'TP: %d    FN: %d \n',TP,FN);
+%fclose('all');
 %Tn = 618    fp=33
+%TP = 477    FN= 36
 
 
 

@@ -1,4 +1,4 @@
-function [IMGBi,IMGSeg_CIE,IMGSeg_RGB] = segmentation_RGB(RGB,ADD_BINARY_THR)
+function [IMGBi,IMG_Gray,IMGBlue] = segmentation_RGB(RGB,ADD_BINARY_THR)
 
 %=========================================================================%
 % This funtion segmentate image and reture two value:
@@ -24,6 +24,15 @@ function [IMGBi,IMGSeg_CIE,IMGSeg_RGB] = segmentation_RGB(RGB,ADD_BINARY_THR)
     IMGRedSeg       = zeros(row,col);
     IMGGreenSeg     = zeros(row,col);
     IMGBlueSeg      = zeros(row,col);
+    
+    
+%    IMG_Gray        = rgb2gray(RGB);
+   
+    
+    msk      = fspecial('gaussian',7,2);
+    IMG_Gray = imfilter(IMGBlue,msk,'symmetric','same');
+    IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
+    IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
     %{
     for i=0:14
         for j=0:19
@@ -42,16 +51,14 @@ function [IMGBi,IMGSeg_CIE,IMGSeg_RGB] = segmentation_RGB(RGB,ADD_BINARY_THR)
     
 %    THRRed          = np_otsus_process(IMGRed)   ;
 %    THRGreen        = np_otsus_process(IMGGreen) ;
-    THRBlue         = np_otsus_process(IMGBlue);
+%    THRBlue         = np_otsus_process(IMGBlue);
+     THR_Gray = np_otsus_process(IMG_Gray);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
-%    IMGBi(:,:)   = (IMGRed(:,:)>= (THRRed-50));
-%    IMGBi(:,:)   = IMGBi(:,:)|(IMGGreen(:,:)>= (THRGreen-15));
-    IMGBi(:,:)   =  (IMGBlue(:,:)>= (THRBlue+ADD_BINARY_THR));      
-%    write_img2text(IMGBi,2);
-%    IMGBi(:,:) = (IMGRed(:,:)>= THR) | (IMGGreen(:,:)>= THR) | (IMGBlue(:,:)>= THR);
+
+    IMGBi(:,:)   =  (IMG_Gray(:,:)>= (THR_Gray+ADD_BINARY_THR));      
+
+    %{ 
     
- %   write_img2text(IMGRed,2);
-     
     msk     = fspecial('gaussian',5,3);
     IMGBi   = Gaussian_new(msk, IMGBi); 
 
@@ -99,5 +106,6 @@ function [IMGBi,IMGSeg_CIE,IMGSeg_RGB] = segmentation_RGB(RGB,ADD_BINARY_THR)
     IMGBi                = uint8(IMGBi);
    
 %    write_img2text(IMGBlueSeg,2);
+    %}
 end
 

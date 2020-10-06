@@ -1,4 +1,5 @@
 function nguongk = np_otsus_process(img)
+img = uint8(img);
 [row,col]= size(img);
 kichthuoc = row*col;
 matdo     = zeros(1,256);
