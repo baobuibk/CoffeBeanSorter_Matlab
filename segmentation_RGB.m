@@ -1,4 +1,4 @@
-function [IMGBi,IMG_Gray,IMGBlue] = segmentation_RGB(RGB,ADD_BINARY_THR)
+function [Ihmf] = segmentation_RGB(RGB,ADD_BINARY_THR)
 
 %=========================================================================%
 % This funtion segmentate image and reture two value:
@@ -12,6 +12,29 @@ function [IMGBi,IMG_Gray,IMGBlue] = segmentation_RGB(RGB,ADD_BINARY_THR)
 %=========================================================================%
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= explore threshold
+    RGB     = RGB(:,:,3);
+    RGB     = im2double(RGB);
+    RGB     = log(1+RGB);
+    M       = 2*size(RGB,1) + 1;
+    N       = 2*size(RGB,2) + 1;
+    sigma   = 10;
+    
+    %----------------------------- create gaussian filter (low pass)
+    [X, Y] = meshgrid(1:N,1:M);
+    centerX = ceil(N/2);
+    centerY = ceil(M/2);
+    gaussianNumerator = (X - centerX).^2 + (Y - centerY).^2;
+    H = exp(-gaussianNumerator./(2*sigma.^2));
+    %-----------------------------
+    H = 1 - H;                        %high pass
+    H = fftshift(H);
+    
+    If = fft2(RGB, M, N);
+    Iout = real(ifft2(H.*If));
+    Iout = Iout(1:size(RGB,1),1:size(RGB,2));
+    Ihmf = exp(Iout) - 1;
+    
+    %{
     IMGRed          = double(RGB(:,:,1));
     IMGGreen        = double(RGB(:,:,2));
     IMGBlue         = double(RGB(:,:,3));
@@ -57,7 +80,7 @@ function [IMGBi,IMG_Gray,IMGBlue] = segmentation_RGB(RGB,ADD_BINARY_THR)
 
     IMGBi(:,:)   =  (IMG_Gray(:,:)>= (THR_Gray+ADD_BINARY_THR));      
 
-    %{ 
+   
     
     msk     = fspecial('gaussian',5,3);
     IMGBi   = Gaussian_new(msk, IMGBi); 

@@ -186,26 +186,19 @@ global SAME_POS_MT;
     Chroma_THR     = get(handles.Chroma,'string');
     Chroma_THR     = str2double(Chroma_THR);
     
-    [row,col,~]    = size(IMG);
-    
-    axes(handles.img1);
-    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel\background.jpg");
-    
-    IMG            = (IMG+40) - background;
-    imagesc(IMG);
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
-%    imwrite(IMG, 'D:\IMG.jpg');
-    
-    [IMGBi,IMG_Gray,IMGGreen] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
-    axes(handles.img4);
-    imagesc(IMGBi);
-    
-    axes(handles.img3);
-    imagesc(IMG_Gray);
-    
-    axes(handles.img2);
-    imagesc(IMGGreen);
 
+    [Ihmf] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
+    axes(handles.img1);
+    imagesc(Ihmf);
+    
+    T = graythresh(Ihmf);
+    IMGBi(:,:) = Ihmf > 0.0001;
+    axes(handles.img3);
+    imagesc(IMGBi)
+    
+    axes(handles.img2)
+    histogram(Ihmf)
+    a =1;
     %{
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
      [~,pos_pixel,num_object] = find_border(IMGBi); 
