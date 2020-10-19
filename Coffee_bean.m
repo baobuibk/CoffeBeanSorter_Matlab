@@ -226,8 +226,8 @@ global SAME_POS_MT;
     
     %==================================================END TEST
      if (num_object ~= 0)
-        [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block,L_THR,b_THR,Chroma_THR);
-     else
+        [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block);
+     else                         
          out_result = 0;
 %         SAME_POS_MT = zeros(20,3);
      end
@@ -237,7 +237,7 @@ global SAME_POS_MT;
     if (num_object ~= 0)
         for ii=1:num_object
             hold on;
-            if out_result(ii,3) == BAD 
+            if out_result(ii,3) == GOOD 
                 plot(out_result(ii,2),out_result(ii,1),'*r');
             end
         end
