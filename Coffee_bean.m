@@ -186,29 +186,22 @@ global SAME_POS_MT;
     Chroma_THR     = get(handles.Chroma,'string');
     Chroma_THR     = str2double(Chroma_THR);
     
-    [row,col,~]    = size(IMG);
-    
-    axes(handles.img1);
+    colormap('gray');
     background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel\background.jpg");
     
-    IMG            = (IMG+40) - background;
-    imagesc(IMG);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_Gray,IMGGreen] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
-    axes(handles.img4);
+    [IMGBi,IMG_seg] = segmentation_RGB(IMG,background,ADD_BINARY_THR); %Use RGB %-25
+    axes(handles.img1);
     imagesc(IMGBi);
-    
-    axes(handles.img3);
-    imagesc(IMG_Gray);
-    
     axes(handles.img2);
-    imagesc(IMGGreen);
+    imagesc(IMG_seg);
+    
+    
 
-    %{
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
-     [~,pos_pixel,num_object] = find_border(IMGBi); 
+    [~,pos_pixel,num_object] = find_border(IMGBi); 
     
     %==================================================END TEST
      if (num_object ~= 0)
@@ -230,7 +223,6 @@ global SAME_POS_MT;
     end
 %    SAME_POS_MT = zeros(20,3);
     %======================================================
-%}
 
 %==========================================================================%GET THR
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -261,21 +253,30 @@ function GET_THR_Callback(hObject, eventdata, handles)
     addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel');
     listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel');
     [length,~]     = size(listTemplate);
+    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel\background.jpg");
     %====================================================================== start
     axes(handles.img); 
+    colormap('gray');
     for i=3:length
         set(handles.name_img,'String',listTemplate(i).name);   
         IMG = imread(listTemplate(i).name);
+        axes(handles.img);
+        imagesc(IMG);
         
-        [row,col,~] = size(IMG);
-        IMG         = IMG(40:row-39,40:col-39,:);
-        
-        RGB = imresize(IMG,[480 640]);
-        
-        IMG_Gray        = rgb2gray(RGB);
-        axes(handles.img); 
-        histogram(IMG_Gray);
-        hold off;
+        IMG            = (IMG+40) - background;
+    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
+%    imwrite(IMG, 'D:\IMG.jpg');
+    
+        [IMGBi,IMG_Gray,IMGBlue] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
+        axes(handles.img1);
+        imagesc(IMGBi);
+    
+        axes(handles.img3);
+        imagesc(IMG_Gray);
+    
+        axes(handles.img2);
+        imagesc(IMGBlue);
+        pause(0.7);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% segmentation
        %{
         fprintf('%d \n',i);
