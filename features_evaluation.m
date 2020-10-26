@@ -1,4 +1,4 @@
-function [out_result] = check_shape_color(IMGSeg_CIE,pos_px,num_object,num_part,THR_convex,THR_block)
+function [out_result] = features_evaluation(out_border,img_label)
 
 %===============================================================
 %out_result = [x coordinate, y coordinate, result, object class
@@ -10,10 +10,13 @@ GOOD = 1;
 BAD  = 0;
 out_result  = [];
 pnt_end     = 0;
-for i=1:num_object
-    pnt_st     = pnt_end + 2;
-    pnt_end    = pnt_st + pos_px(pnt_st-1,2) - 1;
-    pos_single = pos_px(pnt_st:pnt_end,:);                                                                 % get position after thinning 
+
+rs_roundness  = check_roundness(out_border,img_label);
+rs_convexhull = check_convexhull(out_border);
+
+rs_color      = check_color();
+
+                                                       % get position after thinning 
     [result_shape,x_center,y_center] = check_single_shape(pos_single,num_part,THR_convex,THR_block);       % check shape
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     [img,img_check]     = explore_single_img(pos_single,IMGSeg_CIE);

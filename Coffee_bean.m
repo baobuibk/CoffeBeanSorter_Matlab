@@ -198,11 +198,21 @@ global SAME_POS_MT;
     axes(handles.img2);
     imagesc(IMG_seg);
     
-    
+    [img_border,out_border,IMGBi,img_label,nb_obj] = find_border_matlab(IMGBi);
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
-    [~,pos_pixel,num_object] = find_border(IMGBi); 
+%    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
+    axes(handles.img3);
+    imagesc(img_border);
+    axes(handles.img4);
+    imagesc(IMGBi)
+    hold on;
+    if (nb_obj ~= 0)
+        result = features_evaluation(out_border,img_label,THR_convex,THR_block);
+    end
     
+    
+    %{
     %==================================================END TEST
      if (num_object ~= 0)
         [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block);
@@ -222,6 +232,7 @@ global SAME_POS_MT;
         end
     end
 %    SAME_POS_MT = zeros(20,3);
+    %}
     %======================================================
 
 %==========================================================================%GET THR
