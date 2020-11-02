@@ -1,5 +1,8 @@
-function [out_result] = features_evaluation(out_border,img_label)
-
+function [out_result] = features_evaluation(    out_border,...
+                                                img_label,...
+                                                THR_block,...
+                                                NUM_PART,...
+                                                THR_convex)                      
 %===============================================================
 %out_result = [x coordinate, y coordinate, result, object class
 %funtion return value of good object and it's coodinate
@@ -9,22 +12,21 @@ function [out_result] = features_evaluation(out_border,img_label)
 GOOD = 1;
 BAD  = 0;
 out_result  = [];
-pnt_end     = 0;
 
-rs_roundness  = check_roundness(out_border,img_label);
-rs_convexhull = check_convexhull(out_border);
+rs_rdness   = check_roundness(out_border,img_label);
+rs_cvhull   = check_convexhull(out_border,NUM_PART,THR_block,THR_convex);
 
-rs_color      = check_color();
-
-                                                       % get position after thinning 
-    [result_shape,x_center,y_center] = check_single_shape(pos_single,num_part,THR_convex,THR_block);       % check shape
+%rs_color    = check_color();
+%{
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     [img,img_check]     = explore_single_img(pos_single,IMGSeg_CIE);
     [result_color]     = check_color(img,img_check);                               % check color
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    result     =  result_shape && result_color; %
-    out_result = [out_result;x_center,y_center,result,i];
+%}
+    result     =  rs_rdness;
+    out_result = [out_result;result];
 end
-end
+
+
 

@@ -172,10 +172,10 @@ global SAME_POS_MT;
     ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
     ADD_BINARY_THR = str2double(ADD_BINARY_THR);
     
-    number_part    = get(handles.number_part,'string');
+    NUM_PART    = get(handles.number_part,'string');
     THR_convex     = get(handles.THR_convex,'string');
     THR_block      = get(handles.THR_block,'string');
-    num_part       = str2double(number_part);
+    NUM_PART       = str2double(NUM_PART);
     THR_convex     = str2double(THR_convex);
     THR_block      = str2double(THR_block);
     
@@ -187,12 +187,14 @@ global SAME_POS_MT;
     Chroma_THR     = str2double(Chroma_THR);
     
     colormap('gray');
-    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel\background.jpg");
+    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\train data\background.jpg");
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_seg] = segmentation_RGB(IMG,background,ADD_BINARY_THR); %Use RGB %-25
+    [IMGBi,IMG_seg] = segmentation_RGB( IMG,...
+                                        background,...
+                                        ADD_BINARY_THR); %Use RGB %-25
     axes(handles.img1);
     imagesc(IMGBi);
     axes(handles.img2);
@@ -208,26 +210,20 @@ global SAME_POS_MT;
     imagesc(IMGBi)
     hold on;
     if (nb_obj ~= 0)
-        result = features_evaluation(out_border,img_label,THR_convex,THR_block);
+        result = features_evaluation(   out_border,...
+                                        img_label,...
+                                        THR_block,...
+                                        NUM_PART,...
+                                        THR_convex);
     end
     
-    
-    %{
+  
     %==================================================END TEST
-     if (num_object ~= 0)
-        [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block);
-     else
-         out_result = 0;
-%         SAME_POS_MT = zeros(20,3);
-     end
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% display
-
-%    axes(handles.img3);
-    if (num_object ~= 0)
-        for ii=1:num_object
+    if (nb_obj ~= 0)
+        for ii=1:nb_obj
             hold on;
-            if out_result(ii,3) == BAD 
-                plot(out_result(ii,2),out_result(ii,1),'*r');
+            if result(ii,5) == BAD 
+                plot(result(ii,3),result(ii,2),'*r');
             end
         end
     end
