@@ -1,7 +1,7 @@
 function result_shape = check_roundness(out_border,img_label)
 
 %====================================================
-THR_SHAPE       = 1.15;
+THR_SHAPE       = 1.12;
 GOOD            = 1;
 BAD             = 0;
 result_shape    = [];

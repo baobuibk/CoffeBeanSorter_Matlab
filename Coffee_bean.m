@@ -227,6 +227,15 @@ global SAME_POS_MT;
             end
         end
     end
+    axes(handles.img3);
+    if (nb_obj ~= 0)
+        for ii=1:nb_obj
+            hold on;
+            if result(ii,7) == BAD 
+                plot(result(ii,3),result(ii,2),'*r');
+            end
+        end
+    end
 %    SAME_POS_MT = zeros(20,3);
     %}
     %======================================================

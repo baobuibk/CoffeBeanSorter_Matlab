@@ -14,6 +14,7 @@ BAD  = 0;
 out_result  = [];
 
 rs_rdness   = check_roundness(out_border,img_label);
+convexity   = check_convexhull1(out_border,img_label);
 rs_cvhull   = check_convexhull(out_border,NUM_PART,THR_block,THR_convex);
 
 %rs_color    = check_color();
@@ -24,7 +25,7 @@ rs_cvhull   = check_convexhull(out_border,NUM_PART,THR_block,THR_convex);
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 %}
-    result     =  rs_rdness;
+    result     =  [rs_rdness,convexity];
     out_result = [out_result;result];
 end
 
