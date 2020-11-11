@@ -30,20 +30,27 @@ function [IMGBi,IMG_Seg] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
     
     IMGBi(:,:)   =  (IMG_Gray(:,:)>= (THR_Gray+ADD_BINARY_THR));      
-    IMGBi       = bwareaopen(IMGBi, 570);
-    IMGBi       = ~bwareaopen(~IMGBi, 30);
- 
+    
+    IMGBi           = 1-IMGBi;
+    
+    se              = strel('square',2);
+    IMGBi           = imerode(IMGBi,se);
+    IMGBi           = imerode(IMGBi,se);
+    IMGBi           = imerode(IMGBi,se);
+    IMGBi           = ~bwareaopen(~IMGBi, 570);
+    IMGBi           = bwareaopen(IMGBi, 30);
 %    msk     = fspecial('gaussian',5,3);
 %    IMGBi   = Gaussian_new(msk, IMGBi); 
 
-    IMGBi(1:5,:) = 1;                                    
-    IMGBi(:,1:5) = 1;
-    IMGBi(row -4:row,:) = 1;
-    IMGBi(:,col -4:col) = 1;
+    IMGBi(1:5,:) = 0;                                    
+    IMGBi(:,1:5) = 0;
+    IMGBi(row -4:row,:) = 0;
+    IMGBi(:,col -4:col) = 0;
         
 %    [IMGBi_label]   = bwlabel(IMGBi,8);
 %    IMGBi           = (IMGBi_label(:,:)==1);
-    IMGBi           = 1-IMGBi;
+    
+    
     IMG_Seg = RGB(:,:,:).*(uint8(IMGBi));
 end
 

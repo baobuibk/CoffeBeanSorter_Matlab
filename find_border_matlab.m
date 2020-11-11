@@ -19,6 +19,8 @@ end
 IMGBi      = uint8((lb_img(:,:) ~=0));
 [out_border,img_label,nb_obj] = bwboundaries(IMGBi,'noholes');
 
+
+
 %=========================================get the image for display
 [row,col]  = size(IMGBi);
 img_border = zeros(row,col);
