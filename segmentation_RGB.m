@@ -1,4 +1,4 @@
-function [IMGBi,IMG_Seg] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
+function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 
 
 %=========================================================================%

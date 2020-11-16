@@ -1,4 +1,5 @@
-function [out_result] = features_evaluation(    out_border,...
+function [out_result] = features_evaluation(    IMG,...
+                                                out_border,...
                                                 img_label)
                                                                       
 %===============================================================
@@ -11,11 +12,14 @@ GOOD = 1;
 BAD  = 0;
 out_result  = [];
 
-rs_rdness   = check_roundness(out_border,img_label);
-convexity   = check_convexhull1(out_border,img_label);
-%signature   = check_signature();
-%rs_cvhull   = check_convexhull(out_border,NUM_PART,THR_block,THR_convex);
+    rs_rdness   = check_roundness(out_border,img_label);
+    convexity   = check_convexhull1(out_border,img_label);
+    
+    num_object  = size(out_border,1);
+    color       = evaluate_color(IMG,img_label,num_object);
 
+
+%rs_cvhull   = check_convexhull(out_border,NUM_PART,THR_block,THR_convex);
 %rs_color    = check_color();
 %{
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

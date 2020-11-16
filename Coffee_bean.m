@@ -192,7 +192,7 @@ global SAME_POS_MT;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_seg] = segmentation_RGB( IMG,...
+    [IMGBi,IMG_seg,IMG] = segmentation_RGB( IMG,...
                                         background,...
                                         ADD_BINARY_THR); %Use RGB %-25
     axes(handles.img1);
@@ -200,17 +200,20 @@ global SAME_POS_MT;
     axes(handles.img2);
     imagesc(IMG_seg);
     
+    
     [img_border,out_border,IMGBi,img_label,nb_obj] = find_border_matlab(IMGBi);
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
     axes(handles.img3);
     imagesc(img_border);
+   % axes(handles.img4);
+   % imagesc(IMGBi)
+   
     axes(handles.img4);
-    imagesc(IMGBi)
-    hold on;
     if (nb_obj ~= 0)
-        result = features_evaluation(   out_border,...
+        result = features_evaluation(   IMG,...
+                                        out_border,...
                                         img_label);
                                         
     end
