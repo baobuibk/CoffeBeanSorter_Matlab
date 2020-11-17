@@ -24,7 +24,6 @@ for obj=1:num_object
         color = [color;hist_zeros,GOOD];
     end
 end
-
 %===================================================
 end
 

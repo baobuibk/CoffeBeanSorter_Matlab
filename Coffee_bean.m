@@ -193,13 +193,12 @@ global SAME_POS_MT;
 %    imwrite(IMG, 'D:\IMG.jpg');
     
     [IMGBi,IMG_seg,IMG] = segmentation_RGB( IMG,...
-                                        background,...
-                                        ADD_BINARY_THR); %Use RGB %-25
+                                            background,...
+                                            ADD_BINARY_THR); %Use RGB %-25
     axes(handles.img1);
     imagesc(IMG);
     axes(handles.img2);
     imagesc(IMG_seg);
-    
     
     [~,out_border,~,img_label,nb_obj] = find_border_matlab(IMGBi);
 
@@ -210,35 +209,24 @@ global SAME_POS_MT;
    % axes(handles.img4);
    % imagesc(IMGBi)
    
-    axes(handles.img4);
     if (nb_obj ~= 0)
         result = features_evaluation(   IMG,...
                                         out_border,...
                                         img_label);
                                         
     end
-    
-    hold off;
     %==================================================END TEST
-  %{ 
- if (nb_obj ~= 0)
-        for ii=1:nb_obj
-            hold on;
-            if result(ii,5) == BAD 
-                plot(result(ii,3),result(ii,2),'*r');
-            end
-        end
-    end
-    axes(handles.img3);
+  
     if (nb_obj ~= 0)
         for ii=1:nb_obj
             hold on;
-            if result(ii,7) == BAD 
+            if result(ii,9) == BAD 
                 plot(result(ii,3),result(ii,2),'*r');
             end
         end
     end
-    %}
+
+
 %    SAME_POS_MT = zeros(20,3);
     %}
     %======================================================
