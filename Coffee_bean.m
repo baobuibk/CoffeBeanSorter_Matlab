@@ -247,72 +247,53 @@ global SAME_POS_MT;
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function GET_THR_Callback(hObject, eventdata, handles)
         
+    BAD     = 0;
+    GOOD    = 1;
     ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
     ADD_BINARY_THR = str2double(ADD_BINARY_THR);
+    text_F1_score  = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\F1_score.txt','w');
     
-    number_part    = get(handles.number_part,'string');
-    THR_convex     = get(handles.THR_convex,'string');
-    THR_block      = get(handles.THR_block,'string');
-    num_part       = str2double(number_part);
-    THR_convex     = str2double(THR_convex);
-    THR_block      = str2double(THR_block);
-    
-
+   
+    %---------------------------------Color 
     text_color     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRcolor.txt','w');
-
     addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\color');
     listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\color');
     [length,~]     = size(listTemplate);
-    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
-    %====================================================================== start
-    colormap('gray');
-   
-    count =0;
-    for thr_pxl=0:20
-        count1 = 0;
-        for thr_percent=0.02:0.01:0.2
-            count = 0;
-            count1 = count1 +1;
-            fprintf("andepzai ahihi %d \n",count1);
-            nb_obj1 = 0;
-             result1 = [];
-            for i=3:length
-                count = count+1
-                set(handles.name_img,'String',listTemplate(i).name);   
-                IMG = imread(listTemplate(i).name);
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION    
-                [IMGBi,~,IMG] = segmentation_RGB(     IMG,...
-                                                            background,...
-                                                            ADD_BINARY_THR); %Use RGB %-25
     
-                [~,out_border,~,img_label,nb_obj] = find_border_matlab(IMGBi);
-
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
-                if (nb_obj ~= 0)
-                    result = features_evaluation(   IMG,...
-                                                    out_border,...
-                                                    img_label,...
-                                                    thr_pxl,...
-                                                    thr_percent); 
-                end
-                result1 = [result1;result];
-                nb_obj1 = nb_obj1 + nb_obj;
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% segmentation
-            end
-            
-            true_object = sum(1-result1(:,2));
-            percent     = (sum(1-result1(:,2))/nb_obj1) * 100;
-            fprintf(text_color,'thr_pxl: %d    thr_percent: %d  number_object = %d true_object = %d percent = %.2f\n',...
-                thr_pxl,thr_percent,nb_obj1,true_object,percent);
+    [TP,FN]        = get_THR(ADD_BINARY_THR,text_color,length,listTemplate,BAD);
+   
+    %--------------------------------- Normal
+    
+    text_normal     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRnormal.txt','w');
+    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
+    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
+    [length,~]     = size(listTemplate);
+    [TN,FP]        = get_THR(ADD_BINARY_THR,text_normal,length,listTemplate,GOOD);
+    
+    Precision = TP(:,3) ./(TP(:,3) + FN(:,3));
+    Recall    = TP(:,3) ./(TP(:,3) + FP(:,3));
+    
+    F1_score  = 2* (Precision.*Recall)./ (Precision + Recall);
+    lenobj  = size(F1_score,1);
+    
+    max_value = 0;
+    for len=1:lenobj
+        if (F1_score(len) > max_value)
+            max_value = F1_score(len);
+            fprintf(text_F1_score,'==================== MAX HERE \n');
         end
+        fprintf(text_F1_score,'thr_pxl: %d    thr_percent: %d  Precision = %d Recall = %d F1_score = %.2f\n',...
+                TN(len,1),TN(len,2),Precision(len),Recall(len),F1_score(len));
+            
+
     end
-   fclose('all');
-        %---------------------------------------------------------------------------------------------
+    fclose('all');
+        
 
-%fprintf(Review_bad,'TP: %d    FN: %d \n',TP,FN);
 
-%Tn = 618    fp=33
-%TP = 477    FN= 36
+        
+        
+       
 
 
 

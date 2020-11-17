@@ -17,6 +17,8 @@ thr_pxl: 0    thr_percent: 1.700000e-01  number_object = 832 true_object = 413 p
 thr_pxl: 0    thr_percent: 1.800000e-01  number_object = 832 true_object = 399 percent = 47.96
 thr_pxl: 0    thr_percent: 1.900000e-01  number_object = 832 true_object = 382 percent = 45.91
 thr_pxl: 0    thr_percent: 2.000000e-01  number_object = 832 true_object = 374 percent = 44.95
+================================= 
+ 
 thr_pxl: 1    thr_percent: 2.000000e-02  number_object = 832 true_object = 754 percent = 90.63
 thr_pxl: 1    thr_percent: 3.000000e-02  number_object = 832 true_object = 717 percent = 86.18
 thr_pxl: 1    thr_percent: 4.000000e-02  number_object = 832 true_object = 682 percent = 81.97
@@ -36,6 +38,8 @@ thr_pxl: 1    thr_percent: 1.700000e-01  number_object = 832 true_object = 439 p
 thr_pxl: 1    thr_percent: 1.800000e-01  number_object = 832 true_object = 429 percent = 51.56
 thr_pxl: 1    thr_percent: 1.900000e-01  number_object = 832 true_object = 415 percent = 49.88
 thr_pxl: 1    thr_percent: 2.000000e-01  number_object = 832 true_object = 403 percent = 48.44
+================================= 
+ 
 thr_pxl: 2    thr_percent: 2.000000e-02  number_object = 832 true_object = 770 percent = 92.55
 thr_pxl: 2    thr_percent: 3.000000e-02  number_object = 832 true_object = 740 percent = 88.94
 thr_pxl: 2    thr_percent: 4.000000e-02  number_object = 832 true_object = 710 percent = 85.34
@@ -55,6 +59,8 @@ thr_pxl: 2    thr_percent: 1.700000e-01  number_object = 832 true_object = 463 p
 thr_pxl: 2    thr_percent: 1.800000e-01  number_object = 832 true_object = 453 percent = 54.45
 thr_pxl: 2    thr_percent: 1.900000e-01  number_object = 832 true_object = 438 percent = 52.64
 thr_pxl: 2    thr_percent: 2.000000e-01  number_object = 832 true_object = 433 percent = 52.04
+================================= 
+ 
 thr_pxl: 3    thr_percent: 2.000000e-02  number_object = 832 true_object = 781 percent = 93.87
 thr_pxl: 3    thr_percent: 3.000000e-02  number_object = 832 true_object = 754 percent = 90.63
 thr_pxl: 3    thr_percent: 4.000000e-02  number_object = 832 true_object = 733 percent = 88.10
@@ -74,6 +80,8 @@ thr_pxl: 3    thr_percent: 1.700000e-01  number_object = 832 true_object = 486 p
 thr_pxl: 3    thr_percent: 1.800000e-01  number_object = 832 true_object = 473 percent = 56.85
 thr_pxl: 3    thr_percent: 1.900000e-01  number_object = 832 true_object = 462 percent = 55.53
 thr_pxl: 3    thr_percent: 2.000000e-01  number_object = 832 true_object = 451 percent = 54.21
+================================= 
+ 
 thr_pxl: 4    thr_percent: 2.000000e-02  number_object = 832 true_object = 788 percent = 94.71
 thr_pxl: 4    thr_percent: 3.000000e-02  number_object = 832 true_object = 768 percent = 92.31
 thr_pxl: 4    thr_percent: 4.000000e-02  number_object = 832 true_object = 744 percent = 89.42
@@ -93,6 +101,8 @@ thr_pxl: 4    thr_percent: 1.700000e-01  number_object = 832 true_object = 507 p
 thr_pxl: 4    thr_percent: 1.800000e-01  number_object = 832 true_object = 493 percent = 59.25
 thr_pxl: 4    thr_percent: 1.900000e-01  number_object = 832 true_object = 484 percent = 58.17
 thr_pxl: 4    thr_percent: 2.000000e-01  number_object = 832 true_object = 470 percent = 56.49
+================================= 
+ 
 thr_pxl: 5    thr_percent: 2.000000e-02  number_object = 832 true_object = 797 percent = 95.79
 thr_pxl: 5    thr_percent: 3.000000e-02  number_object = 832 true_object = 779 percent = 93.63
 thr_pxl: 5    thr_percent: 4.000000e-02  number_object = 832 true_object = 761 percent = 91.47
@@ -112,6 +122,8 @@ thr_pxl: 5    thr_percent: 1.700000e-01  number_object = 832 true_object = 534 p
 thr_pxl: 5    thr_percent: 1.800000e-01  number_object = 832 true_object = 518 percent = 62.26
 thr_pxl: 5    thr_percent: 1.900000e-01  number_object = 832 true_object = 506 percent = 60.82
 thr_pxl: 5    thr_percent: 2.000000e-01  number_object = 832 true_object = 492 percent = 59.13
+================================= 
+ 
 thr_pxl: 6    thr_percent: 2.000000e-02  number_object = 832 true_object = 805 percent = 96.75
 thr_pxl: 6    thr_percent: 3.000000e-02  number_object = 832 true_object = 789 percent = 94.83
 thr_pxl: 6    thr_percent: 4.000000e-02  number_object = 832 true_object = 771 percent = 92.67
@@ -131,6 +143,8 @@ thr_pxl: 6    thr_percent: 1.700000e-01  number_object = 832 true_object = 558 p
 thr_pxl: 6    thr_percent: 1.800000e-01  number_object = 832 true_object = 547 percent = 65.75
 thr_pxl: 6    thr_percent: 1.900000e-01  number_object = 832 true_object = 532 percent = 63.94
 thr_pxl: 6    thr_percent: 2.000000e-01  number_object = 832 true_object = 517 percent = 62.14
+================================= 
+ 
 thr_pxl: 7    thr_percent: 2.000000e-02  number_object = 832 true_object = 810 percent = 97.36
 thr_pxl: 7    thr_percent: 3.000000e-02  number_object = 832 true_object = 797 percent = 95.79
 thr_pxl: 7    thr_percent: 4.000000e-02  number_object = 832 true_object = 786 percent = 94.47
@@ -150,6 +164,8 @@ thr_pxl: 7    thr_percent: 1.700000e-01  number_object = 832 true_object = 594 p
 thr_pxl: 7    thr_percent: 1.800000e-01  number_object = 832 true_object = 579 percent = 69.59
 thr_pxl: 7    thr_percent: 1.900000e-01  number_object = 832 true_object = 564 percent = 67.79
 thr_pxl: 7    thr_percent: 2.000000e-01  number_object = 832 true_object = 549 percent = 65.99
+================================= 
+ 
 thr_pxl: 8    thr_percent: 2.000000e-02  number_object = 832 true_object = 816 percent = 98.08
 thr_pxl: 8    thr_percent: 3.000000e-02  number_object = 832 true_object = 803 percent = 96.51
 thr_pxl: 8    thr_percent: 4.000000e-02  number_object = 832 true_object = 794 percent = 95.43
@@ -164,3 +180,262 @@ thr_pxl: 8    thr_percent: 1.200000e-01  number_object = 832 true_object = 682 p
 thr_pxl: 8    thr_percent: 1.300000e-01  number_object = 832 true_object = 660 percent = 79.33
 thr_pxl: 8    thr_percent: 1.400000e-01  number_object = 832 true_object = 650 percent = 78.13
 thr_pxl: 8    thr_percent: 1.500000e-01  number_object = 832 true_object = 640 percent = 76.92
+thr_pxl: 8    thr_percent: 1.600000e-01  number_object = 832 true_object = 630 percent = 75.72
+thr_pxl: 8    thr_percent: 1.700000e-01  number_object = 832 true_object = 617 percent = 74.16
+thr_pxl: 8    thr_percent: 1.800000e-01  number_object = 832 true_object = 606 percent = 72.84
+thr_pxl: 8    thr_percent: 1.900000e-01  number_object = 832 true_object = 596 percent = 71.63
+thr_pxl: 8    thr_percent: 2.000000e-01  number_object = 832 true_object = 577 percent = 69.35
+================================= 
+ 
+thr_pxl: 9    thr_percent: 2.000000e-02  number_object = 832 true_object = 822 percent = 98.80
+thr_pxl: 9    thr_percent: 3.000000e-02  number_object = 832 true_object = 812 percent = 97.60
+thr_pxl: 9    thr_percent: 4.000000e-02  number_object = 832 true_object = 801 percent = 96.27
+thr_pxl: 9    thr_percent: 5.000000e-02  number_object = 832 true_object = 792 percent = 95.19
+thr_pxl: 9    thr_percent: 6.000000e-02  number_object = 832 true_object = 784 percent = 94.23
+thr_pxl: 9    thr_percent: 7.000000e-02  number_object = 832 true_object = 769 percent = 92.43
+thr_pxl: 9    thr_percent: 8.000000e-02  number_object = 832 true_object = 757 percent = 90.99
+thr_pxl: 9    thr_percent: 9.000000e-02  number_object = 832 true_object = 746 percent = 89.66
+thr_pxl: 9    thr_percent: 1.000000e-01  number_object = 832 true_object = 730 percent = 87.74
+thr_pxl: 9    thr_percent: 1.100000e-01  number_object = 832 true_object = 714 percent = 85.82
+thr_pxl: 9    thr_percent: 1.200000e-01  number_object = 832 true_object = 707 percent = 84.98
+thr_pxl: 9    thr_percent: 1.300000e-01  number_object = 832 true_object = 693 percent = 83.29
+thr_pxl: 9    thr_percent: 1.400000e-01  number_object = 832 true_object = 664 percent = 79.81
+thr_pxl: 9    thr_percent: 1.500000e-01  number_object = 832 true_object = 656 percent = 78.85
+thr_pxl: 9    thr_percent: 1.600000e-01  number_object = 832 true_object = 650 percent = 78.13
+thr_pxl: 9    thr_percent: 1.700000e-01  number_object = 832 true_object = 640 percent = 76.92
+thr_pxl: 9    thr_percent: 1.800000e-01  number_object = 832 true_object = 626 percent = 75.24
+thr_pxl: 9    thr_percent: 1.900000e-01  number_object = 832 true_object = 617 percent = 74.16
+thr_pxl: 9    thr_percent: 2.000000e-01  number_object = 832 true_object = 611 percent = 73.44
+================================= 
+ 
+thr_pxl: 10    thr_percent: 2.000000e-02  number_object = 832 true_object = 823 percent = 98.92
+thr_pxl: 10    thr_percent: 3.000000e-02  number_object = 832 true_object = 818 percent = 98.32
+thr_pxl: 10    thr_percent: 4.000000e-02  number_object = 832 true_object = 807 percent = 97.00
+thr_pxl: 10    thr_percent: 5.000000e-02  number_object = 832 true_object = 796 percent = 95.67
+thr_pxl: 10    thr_percent: 6.000000e-02  number_object = 832 true_object = 791 percent = 95.07
+thr_pxl: 10    thr_percent: 7.000000e-02  number_object = 832 true_object = 782 percent = 93.99
+thr_pxl: 10    thr_percent: 8.000000e-02  number_object = 832 true_object = 770 percent = 92.55
+thr_pxl: 10    thr_percent: 9.000000e-02  number_object = 832 true_object = 758 percent = 91.11
+thr_pxl: 10    thr_percent: 1.000000e-01  number_object = 832 true_object = 750 percent = 90.14
+thr_pxl: 10    thr_percent: 1.100000e-01  number_object = 832 true_object = 735 percent = 88.34
+thr_pxl: 10    thr_percent: 1.200000e-01  number_object = 832 true_object = 725 percent = 87.14
+thr_pxl: 10    thr_percent: 1.300000e-01  number_object = 832 true_object = 713 percent = 85.70
+thr_pxl: 10    thr_percent: 1.400000e-01  number_object = 832 true_object = 700 percent = 84.13
+thr_pxl: 10    thr_percent: 1.500000e-01  number_object = 832 true_object = 680 percent = 81.73
+thr_pxl: 10    thr_percent: 1.600000e-01  number_object = 832 true_object = 664 percent = 79.81
+thr_pxl: 10    thr_percent: 1.700000e-01  number_object = 832 true_object = 655 percent = 78.73
+thr_pxl: 10    thr_percent: 1.800000e-01  number_object = 832 true_object = 646 percent = 77.64
+thr_pxl: 10    thr_percent: 1.900000e-01  number_object = 832 true_object = 640 percent = 76.92
+thr_pxl: 10    thr_percent: 2.000000e-01  number_object = 832 true_object = 626 percent = 75.24
+================================= 
+ 
+thr_pxl: 11    thr_percent: 2.000000e-02  number_object = 832 true_object = 825 percent = 99.16
+thr_pxl: 11    thr_percent: 3.000000e-02  number_object = 832 true_object = 820 percent = 98.56
+thr_pxl: 11    thr_percent: 4.000000e-02  number_object = 832 true_object = 816 percent = 98.08
+thr_pxl: 11    thr_percent: 5.000000e-02  number_object = 832 true_object = 806 percent = 96.88
+thr_pxl: 11    thr_percent: 6.000000e-02  number_object = 832 true_object = 798 percent = 95.91
+thr_pxl: 11    thr_percent: 7.000000e-02  number_object = 832 true_object = 790 percent = 94.95
+thr_pxl: 11    thr_percent: 8.000000e-02  number_object = 832 true_object = 782 percent = 93.99
+thr_pxl: 11    thr_percent: 9.000000e-02  number_object = 832 true_object = 771 percent = 92.67
+thr_pxl: 11    thr_percent: 1.000000e-01  number_object = 832 true_object = 761 percent = 91.47
+thr_pxl: 11    thr_percent: 1.100000e-01  number_object = 832 true_object = 752 percent = 90.38
+thr_pxl: 11    thr_percent: 1.200000e-01  number_object = 832 true_object = 745 percent = 89.54
+thr_pxl: 11    thr_percent: 1.300000e-01  number_object = 832 true_object = 734 percent = 88.22
+thr_pxl: 11    thr_percent: 1.400000e-01  number_object = 832 true_object = 718 percent = 86.30
+thr_pxl: 11    thr_percent: 1.500000e-01  number_object = 832 true_object = 705 percent = 84.74
+thr_pxl: 11    thr_percent: 1.600000e-01  number_object = 832 true_object = 690 percent = 82.93
+thr_pxl: 11    thr_percent: 1.700000e-01  number_object = 832 true_object = 677 percent = 81.37
+thr_pxl: 11    thr_percent: 1.800000e-01  number_object = 832 true_object = 665 percent = 79.93
+thr_pxl: 11    thr_percent: 1.900000e-01  number_object = 832 true_object = 656 percent = 78.85
+thr_pxl: 11    thr_percent: 2.000000e-01  number_object = 832 true_object = 646 percent = 77.64
+================================= 
+ 
+thr_pxl: 12    thr_percent: 2.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 12    thr_percent: 3.000000e-02  number_object = 832 true_object = 823 percent = 98.92
+thr_pxl: 12    thr_percent: 4.000000e-02  number_object = 832 true_object = 817 percent = 98.20
+thr_pxl: 12    thr_percent: 5.000000e-02  number_object = 832 true_object = 813 percent = 97.72
+thr_pxl: 12    thr_percent: 6.000000e-02  number_object = 832 true_object = 802 percent = 96.39
+thr_pxl: 12    thr_percent: 7.000000e-02  number_object = 832 true_object = 796 percent = 95.67
+thr_pxl: 12    thr_percent: 8.000000e-02  number_object = 832 true_object = 791 percent = 95.07
+thr_pxl: 12    thr_percent: 9.000000e-02  number_object = 832 true_object = 780 percent = 93.75
+thr_pxl: 12    thr_percent: 1.000000e-01  number_object = 832 true_object = 774 percent = 93.03
+thr_pxl: 12    thr_percent: 1.100000e-01  number_object = 832 true_object = 767 percent = 92.19
+thr_pxl: 12    thr_percent: 1.200000e-01  number_object = 832 true_object = 753 percent = 90.50
+thr_pxl: 12    thr_percent: 1.300000e-01  number_object = 832 true_object = 746 percent = 89.66
+thr_pxl: 12    thr_percent: 1.400000e-01  number_object = 832 true_object = 742 percent = 89.18
+thr_pxl: 12    thr_percent: 1.500000e-01  number_object = 832 true_object = 730 percent = 87.74
+thr_pxl: 12    thr_percent: 1.600000e-01  number_object = 832 true_object = 716 percent = 86.06
+thr_pxl: 12    thr_percent: 1.700000e-01  number_object = 832 true_object = 702 percent = 84.38
+thr_pxl: 12    thr_percent: 1.800000e-01  number_object = 832 true_object = 687 percent = 82.57
+thr_pxl: 12    thr_percent: 1.900000e-01  number_object = 832 true_object = 675 percent = 81.13
+thr_pxl: 12    thr_percent: 2.000000e-01  number_object = 832 true_object = 662 percent = 79.57
+================================= 
+ 
+thr_pxl: 13    thr_percent: 2.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 13    thr_percent: 3.000000e-02  number_object = 832 true_object = 827 percent = 99.40
+thr_pxl: 13    thr_percent: 4.000000e-02  number_object = 832 true_object = 822 percent = 98.80
+thr_pxl: 13    thr_percent: 5.000000e-02  number_object = 832 true_object = 817 percent = 98.20
+thr_pxl: 13    thr_percent: 6.000000e-02  number_object = 832 true_object = 813 percent = 97.72
+thr_pxl: 13    thr_percent: 7.000000e-02  number_object = 832 true_object = 802 percent = 96.39
+thr_pxl: 13    thr_percent: 8.000000e-02  number_object = 832 true_object = 795 percent = 95.55
+thr_pxl: 13    thr_percent: 9.000000e-02  number_object = 832 true_object = 791 percent = 95.07
+thr_pxl: 13    thr_percent: 1.000000e-01  number_object = 832 true_object = 783 percent = 94.11
+thr_pxl: 13    thr_percent: 1.100000e-01  number_object = 832 true_object = 777 percent = 93.39
+thr_pxl: 13    thr_percent: 1.200000e-01  number_object = 832 true_object = 771 percent = 92.67
+thr_pxl: 13    thr_percent: 1.300000e-01  number_object = 832 true_object = 758 percent = 91.11
+thr_pxl: 13    thr_percent: 1.400000e-01  number_object = 832 true_object = 751 percent = 90.26
+thr_pxl: 13    thr_percent: 1.500000e-01  number_object = 832 true_object = 745 percent = 89.54
+thr_pxl: 13    thr_percent: 1.600000e-01  number_object = 832 true_object = 737 percent = 88.58
+thr_pxl: 13    thr_percent: 1.700000e-01  number_object = 832 true_object = 726 percent = 87.26
+thr_pxl: 13    thr_percent: 1.800000e-01  number_object = 832 true_object = 712 percent = 85.58
+thr_pxl: 13    thr_percent: 1.900000e-01  number_object = 832 true_object = 698 percent = 83.89
+thr_pxl: 13    thr_percent: 2.000000e-01  number_object = 832 true_object = 690 percent = 82.93
+================================= 
+ 
+thr_pxl: 14    thr_percent: 2.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 14    thr_percent: 3.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 14    thr_percent: 4.000000e-02  number_object = 832 true_object = 827 percent = 99.40
+thr_pxl: 14    thr_percent: 5.000000e-02  number_object = 832 true_object = 820 percent = 98.56
+thr_pxl: 14    thr_percent: 6.000000e-02  number_object = 832 true_object = 817 percent = 98.20
+thr_pxl: 14    thr_percent: 7.000000e-02  number_object = 832 true_object = 814 percent = 97.84
+thr_pxl: 14    thr_percent: 8.000000e-02  number_object = 832 true_object = 805 percent = 96.75
+thr_pxl: 14    thr_percent: 9.000000e-02  number_object = 832 true_object = 796 percent = 95.67
+thr_pxl: 14    thr_percent: 1.000000e-01  number_object = 832 true_object = 790 percent = 94.95
+thr_pxl: 14    thr_percent: 1.100000e-01  number_object = 832 true_object = 783 percent = 94.11
+thr_pxl: 14    thr_percent: 1.200000e-01  number_object = 832 true_object = 781 percent = 93.87
+thr_pxl: 14    thr_percent: 1.300000e-01  number_object = 832 true_object = 771 percent = 92.67
+thr_pxl: 14    thr_percent: 1.400000e-01  number_object = 832 true_object = 765 percent = 91.95
+thr_pxl: 14    thr_percent: 1.500000e-01  number_object = 832 true_object = 755 percent = 90.75
+thr_pxl: 14    thr_percent: 1.600000e-01  number_object = 832 true_object = 748 percent = 89.90
+thr_pxl: 14    thr_percent: 1.700000e-01  number_object = 832 true_object = 741 percent = 89.06
+thr_pxl: 14    thr_percent: 1.800000e-01  number_object = 832 true_object = 733 percent = 88.10
+thr_pxl: 14    thr_percent: 1.900000e-01  number_object = 832 true_object = 722 percent = 86.78
+thr_pxl: 14    thr_percent: 2.000000e-01  number_object = 832 true_object = 716 percent = 86.06
+================================= 
+ 
+thr_pxl: 15    thr_percent: 2.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 15    thr_percent: 3.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 15    thr_percent: 4.000000e-02  number_object = 832 true_object = 828 percent = 99.52
+thr_pxl: 15    thr_percent: 5.000000e-02  number_object = 832 true_object = 825 percent = 99.16
+thr_pxl: 15    thr_percent: 6.000000e-02  number_object = 832 true_object = 819 percent = 98.44
+thr_pxl: 15    thr_percent: 7.000000e-02  number_object = 832 true_object = 817 percent = 98.20
+thr_pxl: 15    thr_percent: 8.000000e-02  number_object = 832 true_object = 810 percent = 97.36
+thr_pxl: 15    thr_percent: 9.000000e-02  number_object = 832 true_object = 803 percent = 96.51
+thr_pxl: 15    thr_percent: 1.000000e-01  number_object = 832 true_object = 798 percent = 95.91
+thr_pxl: 15    thr_percent: 1.100000e-01  number_object = 832 true_object = 794 percent = 95.43
+thr_pxl: 15    thr_percent: 1.200000e-01  number_object = 832 true_object = 785 percent = 94.35
+thr_pxl: 15    thr_percent: 1.300000e-01  number_object = 832 true_object = 781 percent = 93.87
+thr_pxl: 15    thr_percent: 1.400000e-01  number_object = 832 true_object = 772 percent = 92.79
+thr_pxl: 15    thr_percent: 1.500000e-01  number_object = 832 true_object = 768 percent = 92.31
+thr_pxl: 15    thr_percent: 1.600000e-01  number_object = 832 true_object = 762 percent = 91.59
+thr_pxl: 15    thr_percent: 1.700000e-01  number_object = 832 true_object = 755 percent = 90.75
+thr_pxl: 15    thr_percent: 1.800000e-01  number_object = 832 true_object = 746 percent = 89.66
+thr_pxl: 15    thr_percent: 1.900000e-01  number_object = 832 true_object = 739 percent = 88.82
+thr_pxl: 15    thr_percent: 2.000000e-01  number_object = 832 true_object = 728 percent = 87.50
+================================= 
+ 
+thr_pxl: 16    thr_percent: 2.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 16    thr_percent: 3.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 16    thr_percent: 4.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 16    thr_percent: 5.000000e-02  number_object = 832 true_object = 826 percent = 99.28
+thr_pxl: 16    thr_percent: 6.000000e-02  number_object = 832 true_object = 825 percent = 99.16
+thr_pxl: 16    thr_percent: 7.000000e-02  number_object = 832 true_object = 820 percent = 98.56
+thr_pxl: 16    thr_percent: 8.000000e-02  number_object = 832 true_object = 818 percent = 98.32
+thr_pxl: 16    thr_percent: 9.000000e-02  number_object = 832 true_object = 808 percent = 97.12
+thr_pxl: 16    thr_percent: 1.000000e-01  number_object = 832 true_object = 803 percent = 96.51
+thr_pxl: 16    thr_percent: 1.100000e-01  number_object = 832 true_object = 799 percent = 96.03
+thr_pxl: 16    thr_percent: 1.200000e-01  number_object = 832 true_object = 796 percent = 95.67
+thr_pxl: 16    thr_percent: 1.300000e-01  number_object = 832 true_object = 791 percent = 95.07
+thr_pxl: 16    thr_percent: 1.400000e-01  number_object = 832 true_object = 781 percent = 93.87
+thr_pxl: 16    thr_percent: 1.500000e-01  number_object = 832 true_object = 776 percent = 93.27
+thr_pxl: 16    thr_percent: 1.600000e-01  number_object = 832 true_object = 770 percent = 92.55
+thr_pxl: 16    thr_percent: 1.700000e-01  number_object = 832 true_object = 764 percent = 91.83
+thr_pxl: 16    thr_percent: 1.800000e-01  number_object = 832 true_object = 758 percent = 91.11
+thr_pxl: 16    thr_percent: 1.900000e-01  number_object = 832 true_object = 752 percent = 90.38
+thr_pxl: 16    thr_percent: 2.000000e-01  number_object = 832 true_object = 746 percent = 89.66
+================================= 
+ 
+thr_pxl: 17    thr_percent: 2.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 17    thr_percent: 3.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 17    thr_percent: 4.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 17    thr_percent: 5.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 17    thr_percent: 6.000000e-02  number_object = 832 true_object = 825 percent = 99.16
+thr_pxl: 17    thr_percent: 7.000000e-02  number_object = 832 true_object = 825 percent = 99.16
+thr_pxl: 17    thr_percent: 8.000000e-02  number_object = 832 true_object = 820 percent = 98.56
+thr_pxl: 17    thr_percent: 9.000000e-02  number_object = 832 true_object = 815 percent = 97.96
+thr_pxl: 17    thr_percent: 1.000000e-01  number_object = 832 true_object = 808 percent = 97.12
+thr_pxl: 17    thr_percent: 1.100000e-01  number_object = 832 true_object = 805 percent = 96.75
+thr_pxl: 17    thr_percent: 1.200000e-01  number_object = 832 true_object = 800 percent = 96.15
+thr_pxl: 17    thr_percent: 1.300000e-01  number_object = 832 true_object = 798 percent = 95.91
+thr_pxl: 17    thr_percent: 1.400000e-01  number_object = 832 true_object = 794 percent = 95.43
+thr_pxl: 17    thr_percent: 1.500000e-01  number_object = 832 true_object = 787 percent = 94.59
+thr_pxl: 17    thr_percent: 1.600000e-01  number_object = 832 true_object = 780 percent = 93.75
+thr_pxl: 17    thr_percent: 1.700000e-01  number_object = 832 true_object = 772 percent = 92.79
+thr_pxl: 17    thr_percent: 1.800000e-01  number_object = 832 true_object = 765 percent = 91.95
+thr_pxl: 17    thr_percent: 1.900000e-01  number_object = 832 true_object = 763 percent = 91.71
+thr_pxl: 17    thr_percent: 2.000000e-01  number_object = 832 true_object = 756 percent = 90.87
+================================= 
+ 
+thr_pxl: 18    thr_percent: 2.000000e-02  number_object = 832 true_object = 832 percent = 100.00
+thr_pxl: 18    thr_percent: 3.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 18    thr_percent: 4.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 18    thr_percent: 5.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 18    thr_percent: 6.000000e-02  number_object = 832 true_object = 828 percent = 99.52
+thr_pxl: 18    thr_percent: 7.000000e-02  number_object = 832 true_object = 825 percent = 99.16
+thr_pxl: 18    thr_percent: 8.000000e-02  number_object = 832 true_object = 825 percent = 99.16
+thr_pxl: 18    thr_percent: 9.000000e-02  number_object = 832 true_object = 821 percent = 98.68
+thr_pxl: 18    thr_percent: 1.000000e-01  number_object = 832 true_object = 814 percent = 97.84
+thr_pxl: 18    thr_percent: 1.100000e-01  number_object = 832 true_object = 811 percent = 97.48
+thr_pxl: 18    thr_percent: 1.200000e-01  number_object = 832 true_object = 805 percent = 96.75
+thr_pxl: 18    thr_percent: 1.300000e-01  number_object = 832 true_object = 802 percent = 96.39
+thr_pxl: 18    thr_percent: 1.400000e-01  number_object = 832 true_object = 799 percent = 96.03
+thr_pxl: 18    thr_percent: 1.500000e-01  number_object = 832 true_object = 797 percent = 95.79
+thr_pxl: 18    thr_percent: 1.600000e-01  number_object = 832 true_object = 794 percent = 95.43
+thr_pxl: 18    thr_percent: 1.700000e-01  number_object = 832 true_object = 785 percent = 94.35
+thr_pxl: 18    thr_percent: 1.800000e-01  number_object = 832 true_object = 776 percent = 93.27
+thr_pxl: 18    thr_percent: 1.900000e-01  number_object = 832 true_object = 769 percent = 92.43
+thr_pxl: 18    thr_percent: 2.000000e-01  number_object = 832 true_object = 765 percent = 91.95
+================================= 
+ 
+thr_pxl: 19    thr_percent: 2.000000e-02  number_object = 832 true_object = 832 percent = 100.00
+thr_pxl: 19    thr_percent: 3.000000e-02  number_object = 832 true_object = 831 percent = 99.88
+thr_pxl: 19    thr_percent: 4.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 19    thr_percent: 5.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 19    thr_percent: 6.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 19    thr_percent: 7.000000e-02  number_object = 832 true_object = 828 percent = 99.52
+thr_pxl: 19    thr_percent: 8.000000e-02  number_object = 832 true_object = 826 percent = 99.28
+thr_pxl: 19    thr_percent: 9.000000e-02  number_object = 832 true_object = 824 percent = 99.04
+thr_pxl: 19    thr_percent: 1.000000e-01  number_object = 832 true_object = 820 percent = 98.56
+thr_pxl: 19    thr_percent: 1.100000e-01  number_object = 832 true_object = 814 percent = 97.84
+thr_pxl: 19    thr_percent: 1.200000e-01  number_object = 832 true_object = 811 percent = 97.48
+thr_pxl: 19    thr_percent: 1.300000e-01  number_object = 832 true_object = 807 percent = 97.00
+thr_pxl: 19    thr_percent: 1.400000e-01  number_object = 832 true_object = 803 percent = 96.51
+thr_pxl: 19    thr_percent: 1.500000e-01  number_object = 832 true_object = 801 percent = 96.27
+thr_pxl: 19    thr_percent: 1.600000e-01  number_object = 832 true_object = 798 percent = 95.91
+thr_pxl: 19    thr_percent: 1.700000e-01  number_object = 832 true_object = 797 percent = 95.79
+thr_pxl: 19    thr_percent: 1.800000e-01  number_object = 832 true_object = 789 percent = 94.83
+thr_pxl: 19    thr_percent: 1.900000e-01  number_object = 832 true_object = 782 percent = 93.99
+thr_pxl: 19    thr_percent: 2.000000e-01  number_object = 832 true_object = 777 percent = 93.39
+================================= 
+ 
+thr_pxl: 20    thr_percent: 2.000000e-02  number_object = 832 true_object = 832 percent = 100.00
+thr_pxl: 20    thr_percent: 3.000000e-02  number_object = 832 true_object = 831 percent = 99.88
+thr_pxl: 20    thr_percent: 4.000000e-02  number_object = 832 true_object = 831 percent = 99.88
+thr_pxl: 20    thr_percent: 5.000000e-02  number_object = 832 true_object = 830 percent = 99.76
+thr_pxl: 20    thr_percent: 6.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 20    thr_percent: 7.000000e-02  number_object = 832 true_object = 829 percent = 99.64
+thr_pxl: 20    thr_percent: 8.000000e-02  number_object = 832 true_object = 828 percent = 99.52
+thr_pxl: 20    thr_percent: 9.000000e-02  number_object = 832 true_object = 826 percent = 99.28
+thr_pxl: 20    thr_percent: 1.000000e-01  number_object = 832 true_object = 824 percent = 99.04
+thr_pxl: 20    thr_percent: 1.100000e-01  number_object = 832 true_object = 820 percent = 98.56
+thr_pxl: 20    thr_percent: 1.200000e-01  number_object = 832 true_object = 814 percent = 97.84
+thr_pxl: 20    thr_percent: 1.300000e-01  number_object = 832 true_object = 811 percent = 97.48
+thr_pxl: 20    thr_percent: 1.400000e-01  number_object = 832 true_object = 809 percent = 97.24
+thr_pxl: 20    thr_percent: 1.500000e-01  number_object = 832 true_object = 808 percent = 97.12
+thr_pxl: 20    thr_percent: 1.600000e-01  number_object = 832 true_object = 803 percent = 96.51
+thr_pxl: 20    thr_percent: 1.700000e-01  number_object = 832 true_object = 801 percent = 96.27
+thr_pxl: 20    thr_percent: 1.800000e-01  number_object = 832 true_object = 799 percent = 96.03
+thr_pxl: 20    thr_percent: 1.900000e-01  number_object = 832 true_object = 794 percent = 95.43
+thr_pxl: 20    thr_percent: 2.000000e-01  number_object = 832 true_object = 789 percent = 94.83
+================================= 
+ 
