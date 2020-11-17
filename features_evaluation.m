@@ -1,6 +1,8 @@
-function [out_result] = features_evaluation(    IMG,...
-                                                out_border,...
-                                                img_label)
+function [color] = features_evaluation(    IMG,...
+                                           out_border,...
+                                           img_label,...
+                                           thr_pxl,...
+                                           thr_percent)
                                                                       
 %===============================================================
 %out_result = [x coordinate, y coordinate, result, object class
@@ -12,24 +14,15 @@ GOOD = 1;
 BAD  = 0;
 out_result  = [];
 
-    rs_rdness   = check_roundness(out_border,img_label);
-    convexity   = check_convexhull1(out_border,img_label);
+%    rs_rdness   = check_roundness(out_border,img_label);
+%    convexity   = check_convexhull1(out_border,img_label);
     
     num_object  = size(out_border,1);
-    color       = evaluate_color(IMG,img_label,num_object);
+    color       = evaluate_color(IMG,img_label,num_object,thr_pxl,thr_percent);
+    
 
-
-%rs_cvhull   = check_convexhull(out_border,NUM_PART,THR_block,THR_convex);
-%rs_color    = check_color();
-%{
-%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    [img,img_check]     = explore_single_img(pos_single,IMGSeg_CIE);
-    [result_color]     = check_color(img,img_check);                               % check color
-
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-%}
-    result     =  [rs_rdness,convexity];
-    out_result = [out_result;result];
+%    result     =  [rs_rdness,convexity];
+%    out_result = [out_result;result];
 end
 
 

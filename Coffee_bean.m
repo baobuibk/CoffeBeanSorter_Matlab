@@ -187,7 +187,7 @@ global SAME_POS_MT;
     Chroma_THR     = str2double(Chroma_THR);
     
     colormap('gray');
-    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\train data\background.jpg");
+    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
@@ -196,17 +196,17 @@ global SAME_POS_MT;
                                         background,...
                                         ADD_BINARY_THR); %Use RGB %-25
     axes(handles.img1);
-    imagesc(IMGBi);
+    imagesc(IMG);
     axes(handles.img2);
     imagesc(IMG_seg);
     
     
-    [img_border,out_border,IMGBi,img_label,nb_obj] = find_border_matlab(IMGBi);
+    [~,out_border,~,img_label,nb_obj] = find_border_matlab(IMGBi);
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
-    axes(handles.img3);
-    imagesc(img_border);
+%    axes(handles.img3);
+%    imagesc(IMGBi);
    % axes(handles.img4);
    % imagesc(IMGBi)
    
@@ -218,9 +218,10 @@ global SAME_POS_MT;
                                         
     end
     
-  
+    hold off;
     %==================================================END TEST
-    if (nb_obj ~= 0)
+  %{ 
+ if (nb_obj ~= 0)
         for ii=1:nb_obj
             hold on;
             if result(ii,5) == BAD 
@@ -237,6 +238,7 @@ global SAME_POS_MT;
             end
         end
     end
+    %}
 %    SAME_POS_MT = zeros(20,3);
     %}
     %======================================================
@@ -244,16 +246,7 @@ global SAME_POS_MT;
 %==========================================================================%GET THR
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function GET_THR_Callback(hObject, eventdata, handles)
-
-    GOOD = 1;
-    BAD  = 0;
-    count = 0;
-    sum_object =0;
-    number_shape = 0;
-    TP   = 0;
-    FN   = 0;
-    
-    
+        
     ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
     ADD_BINARY_THR = str2double(ADD_BINARY_THR);
     
@@ -265,78 +258,59 @@ function GET_THR_Callback(hObject, eventdata, handles)
     THR_block      = str2double(THR_block);
     
 
-%    Review_bad       = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_paper\Result_good.txt','w');
+    text_color     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRcolor.txt','w');
 
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel');
+    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\color');
+    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\color');
     [length,~]     = size(listTemplate);
-    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Data_newmodel\background.jpg");
+    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
     %====================================================================== start
-    axes(handles.img); 
     colormap('gray');
-    for i=3:length
-        set(handles.name_img,'String',listTemplate(i).name);   
-        IMG = imread(listTemplate(i).name);
-        axes(handles.img);
-        imagesc(IMG);
-        
-        IMG            = (IMG+40) - background;
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
-%    imwrite(IMG, 'D:\IMG.jpg');
+   
+    count =0;
+    for thr_pxl=0:20
+        count1 = 0;
+        for thr_percent=0.02:0.01:0.2
+            count = 0;
+            count1 = count1 +1;
+            fprintf("andepzai ahihi %d \n",count1);
+            nb_obj1 = 0;
+             result1 = [];
+            for i=3:length
+                count = count+1
+                set(handles.name_img,'String',listTemplate(i).name);   
+                IMG = imread(listTemplate(i).name);
+    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION    
+                [IMGBi,~,IMG] = segmentation_RGB(     IMG,...
+                                                            background,...
+                                                            ADD_BINARY_THR); %Use RGB %-25
     
-        [IMGBi,IMG_Gray,IMGBlue] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
-        axes(handles.img1);
-        imagesc(IMGBi);
-    
-        axes(handles.img3);
-        imagesc(IMG_Gray);
-    
-        axes(handles.img2);
-        imagesc(IMGBlue);
-        pause(0.7);
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% segmentation
-       %{
-        fprintf('%d \n',i);
-        [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(RGB,ADD_BINARY_THR);
-        imagesc(IMGSeg_CIE);
-        pause(0.1);
-        hold off;
-             %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% find border and calculate result
-       
-        [~,pos_pixel,num_object] = find_border(IMGBi); 
+                [~,out_border,~,img_label,nb_obj] = find_border_matlab(IMGBi);
 
-            if (num_object ~= 0)
-                [out_result] = check_shape_color(IMGSeg_CIE,pos_pixel,num_object,num_part,THR_convex,THR_block);
-            else
-                out_result = 0;
-            end
-            %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% Plot
-            if (num_object~=0)
-            for ii=1:num_object
-                hold on;
-                if out_result(ii,3) == BAD 
-                    plot(out_result(ii,2),out_result(ii,1),'*r');
-                    pause(0.1);
+    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
+                if (nb_obj ~= 0)
+                    result = features_evaluation(   IMG,...
+                                                    out_border,...
+                                                    img_label,...
+                                                    thr_pxl,...
+                                                    thr_percent); 
                 end
+                result1 = [result1;result];
+                nb_obj1 = nb_obj1 + nb_obj;
+    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% segmentation
             end
-            end
-           
-            %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% Write the result into txt
-            for obj=1:num_object
-                if (out_result(obj,3) == GOOD)
-                    fprintf(Review_bad,'row:%d   col:%d   result:%d  GOOD \n',out_result(obj,1),out_result(obj,2),out_result(obj,3));
-                    TP = TP + 1;
-                else
-                    fprintf(Review_bad,'row:%d   col:%d   result:%d  BAD \n',out_result(obj,1),out_result(obj,2),out_result(obj,3));
-                    FN = FN + 1;
-                end
-            end
-            %}
+            
+            true_object = sum(1-result1(:,2));
+            percent     = (sum(1-result1(:,2))/nb_obj1) * 100;
+            fprintf(text_color,'thr_pxl: %d    thr_percent: %d  number_object = %d true_object = %d percent = %.2f\n',...
+                thr_pxl,thr_percent,nb_obj1,true_object,percent);
+        end
     end
+   fclose('all');
         %---------------------------------------------------------------------------------------------
-%fprintf(Review_bad,'FP: %d    TN: %d \n',FP,TN);
+
 %fprintf(Review_bad,'TP: %d    FN: %d \n',TP,FN);
-%fclose('all');
+
 %Tn = 618    fp=33
 %TP = 477    FN= 36
 
