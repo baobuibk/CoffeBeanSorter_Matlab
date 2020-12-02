@@ -1,8 +1,7 @@
 function [out_result] = features_evaluation(    IMG,...
                                                 out_border,...
                                                 img_label)
-                                           
-                                                                      
+                                                                                                                 
 %===============================================================
 %out_result = [x coordinate, y coordinate, result, object class
 %funtion return value of good object and it's coodinate
@@ -16,15 +15,16 @@ thr_percent = 0.07;
 
 out_result  = [];
 
-    rs_rdness   = check_roundness(out_border,img_label);
-    convexity   = check_convexhull1(out_border,img_label);
-    
-    num_object  = size(out_border,1);
-    color       = evaluate_color(IMG,img_label,num_object,thr_pxl,thr_percent);
-    
+rs_rdness       = check_roundness(out_border,img_label);
+rs_convexity    = check_convexhull1(out_border,img_label);
 
-    result     =  [rs_rdness,convexity,color];
-    out_result = [out_result;result];
+rs_LBPs         = LBPs(out_border,IMG);
+    
+num_object      = size(out_border,1);
+color           = evaluate_color(IMG,img_label,num_object,thr_pxl,thr_percent);
+
+result          = [rs_rdness,rs_convexity,color];
+out_result      = [out_result;result];
 end
 
 

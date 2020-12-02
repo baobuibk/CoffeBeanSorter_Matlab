@@ -1,6 +1,12 @@
 function convexity   = check_convexhull1(out_border,img_label)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+
+%===============================================================
+% This function check whether coffee beans are broken or not. 
+% If a object is broken, it's normally deformed -> convex. By contrast, 
+% it will be concave. Using convex hull algorithm to check this
+% property.
+%===============================================================
+
 GOOD =  1;
 BAD  =  0;
 num_obj = size(out_border,1);
