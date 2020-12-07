@@ -17,10 +17,11 @@ out_result  = [];
 
 rs_rdness       = check_roundness(out_border,img_label);
 rs_convexity    = check_convexhull1(out_border,img_label);
-
-rs_LBPs         = LBPs(out_border,IMG);
-    
 num_object      = size(out_border,1);
+
+%rs_LBPs         = LBPs(out_border,IMG);
+rs_GLCM         = check_GLCM(IMG,img_label,out_border);
+    
 color           = evaluate_color(IMG,img_label,num_object,thr_pxl,thr_percent);
 
 result          = [rs_rdness,rs_convexity,color];

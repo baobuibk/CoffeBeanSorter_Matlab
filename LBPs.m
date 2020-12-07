@@ -15,7 +15,7 @@ right       = 0;
 %===============================================================
 
 num_obj     = size(out_border,1);
-IMG_gray    = IMG(:,:,1);
+IMG_gray    = IMG(:,:,2);
 
 for obj=1:num_obj
     object          = out_border{obj};
@@ -24,7 +24,7 @@ for obj=1:num_obj
     left            = min(object(:,2));
     right           = max(object(:,2));
     
-    LBP_object      = extractLBPFeatures(IMG_gray(top:down,left:right),'NumNeighbors',8,'Radius',2);
+    LBP_object      = extractLBPFeatures(IMG_gray(top:down,left:right),'NumNeighbors',16,'Radius',2);
     figure;
     bar(LBP_object,'grouped');
 

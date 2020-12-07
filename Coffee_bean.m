@@ -186,46 +186,52 @@ global SAME_POS_MT;
     Chroma_THR     = get(handles.Chroma,'string');
     Chroma_THR     = str2double(Chroma_THR);
     
-    colormap('gray');
+%    colormap('gray');
     background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_seg,IMG] = segmentation_RGB( IMG,...
+    [IMGBi,~,IMG_sub] = segmentation_RGB(   IMG,...
                                             background,...
                                             ADD_BINARY_THR); %Use RGB %-25
-  %  axes(handles.img1);
-  %  imagesc(IMG);
+    
+                                       
+%    BW = edge(IMG(:,:,2),'Canny',0.65,1);
+                                    
     axes(handles.img1);
-    imagesc(IMG_seg);
+    chanel2 = 255 - IMG_sub(:,:,2);
+    imshow(chanel2 - IMG_sub(:,:,1));
+    axes(handles.img3);
+    imagesc(IMG(:,:,2));
     
     [~,out_border,~,img_label,nb_obj] = find_border_matlab(IMGBi);
     hold on;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
-%    axes(handles.img3);
-%    imagesc(IMGBi);
+    axes(handles.img2);
+    imagesc(IMG(:,:,1));
+    axes(handles.img4);
+    imagesc(IMG(:,:,3));
    % axes(handles.img4);
    % imagesc(IMGBi)
 %   axes(handles.img4);
     if (nb_obj ~= 0)
-        result = features_evaluation(   IMG,...
+        result = features_evaluation(   IMG_sub,...
                                         out_border,...
                                         img_label);
                                         
     end
     %==================================================END TEST
-%{
     if (nb_obj ~= 0)
         for ii=1:nb_obj
             hold on;
-            if (result(ii,5)&result(ii,7)&result(ii,9)) == BAD 
+            if (result(ii,5)&result(ii,7)) == BAD 
                 plot(result(ii,3),result(ii,2),'*r');
             end
         end
     end
-%}
+
 
 %    SAME_POS_MT = zeros(20,3);
     %}
