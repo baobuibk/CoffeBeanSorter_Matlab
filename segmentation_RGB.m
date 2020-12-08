@@ -49,8 +49,6 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
         
 %    [IMGBi_label]   = bwlabel(IMGBi,8);
 %    IMGBi           = (IMGBi_label(:,:)==1);
-    
-    
     IMG_Seg = RGB(:,:,:).*(uint8(IMGBi));
 end
 

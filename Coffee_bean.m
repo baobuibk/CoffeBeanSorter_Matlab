@@ -192,9 +192,9 @@ global SAME_POS_MT;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,~,IMG_sub] = segmentation_RGB(   IMG,...
-                                            background,...
-                                            ADD_BINARY_THR); %Use RGB %-25
+    [IMGBi,IMG_Seg,IMG_sub] = segmentation_RGB( IMG,...
+                                                background,...
+                                                ADD_BINARY_THR); %Use RGB %-25
     
                                        
 %    BW = edge(IMG(:,:,2),'Canny',0.65,1);
@@ -212,27 +212,57 @@ global SAME_POS_MT;
     axes(handles.img2);
     imagesc(IMG(:,:,1));
     axes(handles.img4);
-    imagesc(IMG(:,:,3));
+    imagesc(IMG_Seg);
    % axes(handles.img4);
    % imagesc(IMGBi)
 %   axes(handles.img4);
     if (nb_obj ~= 0)
         result = features_evaluation(   IMG_sub,...
+                                        IMG_sub,...    
                                         out_border,...
                                         img_label);
                                         
     end
     %==================================================END TEST
+    axes(handles.img1);
     if (nb_obj ~= 0)
         for ii=1:nb_obj
             hold on;
-            if (result(ii,5)&result(ii,7)) == BAD 
+            if (result(ii,5) == BAD) 
+                plot(result(ii,3),result(ii,2),'*r');
+            end
+        end
+    end
+    axes(handles.img2);
+    if (nb_obj ~= 0)
+        for ii=1:nb_obj
+            hold on;
+            if (result(ii,7) == BAD) 
+                plot(result(ii,3),result(ii,2),'*r');
+            end
+        end
+    end
+    
+    axes(handles.img3);
+    if (nb_obj ~= 0)
+        for ii=1:nb_obj
+            hold on;
+            if (result(ii,9) == BAD) 
                 plot(result(ii,3),result(ii,2),'*r');
             end
         end
     end
 
-
+    
+    axes(handles.img4);
+    if (nb_obj ~= 0)
+        for ii=1:nb_obj
+            hold on;
+            if ((result(ii,5) & result(ii,7) & result(ii,9)) == BAD) 
+                plot(result(ii,3),result(ii,2),'*r');
+            end
+        end
+    end
 %    SAME_POS_MT = zeros(20,3);
     %}
     %======================================================
@@ -243,53 +273,42 @@ function GET_THR_Callback(hObject, eventdata, handles)
         
     BAD     = 0;
     GOOD    = 1;
-    ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
-    ADD_BINARY_THR = str2double(ADD_BINARY_THR);
-    text_F1_score  = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\F1_score.txt','w');
+    ADD_BINARY_THR      = get(handles.Add_binary_THR,'string');
+    ADD_BINARY_THR      = str2double(ADD_BINARY_THR);
+    GLCM_text  = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Text_value\GLCM_badvalue.txt','w');
     
-   
+    background          = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
     %---------------------------------Color 
-    text_color     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRcolor.txt','w');
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\color');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\color');
+%    text_color     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRcolor.txt','w');
+    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\shape');
+    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\shape');
     [length,~]     = size(listTemplate);
     
-    [TP,FN]        = get_THR(ADD_BINARY_THR,text_color,length,listTemplate,BAD);
-   
-    %--------------------------------- Normal
+    count = 0;
     
-    text_normal     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRnormal.txt','w');
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
-    [length,~]     = size(listTemplate);
-    [TN,FP]        = get_THR(ADD_BINARY_THR,text_normal,length,listTemplate,GOOD);
     
-    Precision = TP(:,3) ./(TP(:,3) + FN(:,3));
-    Recall    = TP(:,3) ./(TP(:,3) + FP(:,3));
-    
-    F1_score  = 2* (Precision.*Recall)./ (Precision + Recall);
-    lenobj  = size(F1_score,1);
-    
-    max_value = 0;
-    for len=1:lenobj
-        if (F1_score(len) > max_value)
-            max_value = F1_score(len);
-            fprintf(text_F1_score,'==================== MAX HERE \n');
+    for i=3:length
+        IMG = imread(listTemplate(i).name);
+        [IMGBi,~,IMG_sub] = segmentation_RGB(   IMG,...
+                                                background,...
+                                                ADD_BINARY_THR); %Use RGB %-25
+        chanel2     = 255 - IMG_sub(:,:,2);
+        GLCM_img    = chanel2 - IMG_sub(:,:,1);    
+        
+        [~,out_border,~,img_label,nb_obj] = find_border_matlab(IMGBi);
+        
+        if (nb_obj ~= 0)
+            result = features_evaluation(   IMG_sub,...
+                                            GLCM_img,...
+                                            out_border,...
+                                            img_label,...
+                                            GLCM_text,...
+                                            count);                                        
         end
-        fprintf(text_F1_score,'thr_pxl: %d    thr_percent: %d  Precision = %d Recall = %d F1_score = %.2f\n',...
-                TN(len,1),TN(len,2),Precision(len),Recall(len),F1_score(len));
-            
-
     end
+    %--------------------------------- Normal
     fclose('all');
         
-
-
-        
-        
-       
-
-
 
 
 %write_img2text();
