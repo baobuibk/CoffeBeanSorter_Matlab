@@ -168,10 +168,10 @@ global IMG;
 global SAME_POS_MT;
    
     GOOD = 1;
-    BAD  = 0;
     ADD_BINARY_THR = get(handles.Add_binary_THR,'string');
     ADD_BINARY_THR = str2double(ADD_BINARY_THR);
     
+    BAD  = 0;
     NUM_PART    = get(handles.number_part,'string');
     THR_convex     = get(handles.THR_convex,'string');
     THR_block      = get(handles.THR_block,'string');
@@ -187,6 +187,12 @@ global SAME_POS_MT;
     Chroma_THR     = str2double(Chroma_THR);
     
 %    colormap('gray');
+
+    R = IMG(:,:,1);
+    G = IMG(:,:,2);
+    B = IMG(:,:,3);
+
+
     background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION

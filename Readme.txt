@@ -10,7 +10,7 @@ Version 1.1  	This version used a new camera, using old algorithm, however it's 
 Version 1.2  	This version using Hormonophic filter to eliminate the light noises, it's good but the time is
 		 unpossible
 
-//===============================================
+//===============================================  
 Master:
-Tag 0.0: Fix lighting as version 1.1, however using subtraction method for background. It also using roundness,
-	 convexhull and histogram of RGB space to evaluate
+Tag 0.0: Fix lighting as version 1.2, however using subtraction method for background. It also using roundness,
+	 convexhull and histogram of RGB space to evaluate. 
