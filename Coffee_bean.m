@@ -202,9 +202,6 @@ global SAME_POS_MT;
                                                 background,...
                                                 ADD_BINARY_THR); %Use RGB %-25
     
-    r= IMG_sub(:,:,1);
-    g= IMG_sub(:,:,2);
-    b= IMG_sub(:,:,3);
 %    BW = edge(IMG(:,:,2),'Canny',0.65,1);
                                     
     axes(handles.img1);
