@@ -172,7 +172,7 @@ global SAME_POS_MT;
     ADD_BINARY_THR = str2double(ADD_BINARY_THR);
     
     BAD  = 0;
-    NUM_PART    = get(handles.number_part,'string');
+    NUM_PART       = get(handles.number_part,'string');
     THR_convex     = get(handles.THR_convex,'string');
     THR_block      = get(handles.THR_block,'string');
     NUM_PART       = str2double(NUM_PART);
@@ -188,13 +188,13 @@ global SAME_POS_MT;
     
 %    colormap('gray');
 
-    R = IMG(:,:,1);
-    G = IMG(:,:,2);
-    B = IMG(:,:,3);
-
+   
 
     background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
-    
+    R = background(:,:,1);
+    G = background(:,:,2);
+    B = background(:,:,3);
+
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
@@ -202,7 +202,9 @@ global SAME_POS_MT;
                                                 background,...
                                                 ADD_BINARY_THR); %Use RGB %-25
     
-                                       
+    r= IMG_sub(:,:,1);
+    g= IMG_sub(:,:,2);
+    b= IMG_sub(:,:,3);
 %    BW = edge(IMG(:,:,2),'Canny',0.65,1);
                                     
     axes(handles.img1);

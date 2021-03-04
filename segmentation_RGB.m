@@ -13,32 +13,40 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 %=========================================================================%
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= explore threshold
-    
-    IMG        = (RGB+40) - background;
-    
+    IMG        = double((double(RGB)+40) - double(background));
+    IMG(IMG(:,:,:)>255) = 255;
+    IMG(IMG(:,:,:)<0)   = 0;
+    IMG        = uint8(IMG);
     IMGBlue    = double(IMG(:,:,3));
     [row,col]  = size(IMGBlue);
 %    IMGBi           = zeros(row,col);   
 %    IMG_Gray        = rgb2gray(RGB);
 
+%=====================================Using later, now convert first***
+
     msk      = fspecial('gaussian',7,1.5);
     IMG_Gray = imfilter(IMGBlue,msk,'symmetric','same');         %using Blue channel for gray image   
     IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
     IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
-     
+    
+%    IMG_Gray  = IMGBlue;
     THR_Gray = np_otsus_process(IMG_Gray);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
     
     IMGBi(:,:)   =  (IMG_Gray(:,:)>= (THR_Gray+ADD_BINARY_THR));      
     
     IMGBi           = 1-IMGBi;
-    
+    %=====================================Using later, now convert first***
+    %{
     se              = strel('square',2);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = ~bwareaopen(~IMGBi, 570);
     IMGBi           = bwareaopen(IMGBi, 30);
+    %}
+    
+    
 %    msk     = fspecial('gaussian',5,3);
 %    IMGBi   = Gaussian_new(msk, IMGBi); 
 
@@ -49,6 +57,6 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
         
 %    [IMGBi_label]   = bwlabel(IMGBi,8);
 %    IMGBi           = (IMGBi_label(:,:)==1);
-    IMG_Seg = RGB(:,:,:).*(uint8(IMGBi));
+    IMG_Seg = RGB(:,:,:).*(uint8(IMGBi));         %Be used for imshow, don't implement
 end
 
