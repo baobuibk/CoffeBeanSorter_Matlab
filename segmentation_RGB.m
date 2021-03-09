@@ -13,12 +13,12 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 %=========================================================================%
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= explore threshold
-    IMG        = double((double(RGB)+40) - double(background));
+    IMG                 = double((double(RGB)+40) - double(background));
     IMG(IMG(:,:,:)>255) = 255;
     IMG(IMG(:,:,:)<0)   = 0;
-    IMG        = uint8(IMG);
-    IMGBlue    = double(IMG(:,:,3));
-    [row,col]  = size(IMGBlue);
+    IMG                 = uint8(IMG);
+    IMGBlue             = double(IMG(:,:,3));
+    [row,col]           = size(IMGBlue);
 %    IMGBi           = zeros(row,col);   
 %    IMG_Gray        = rgb2gray(RGB);
 
@@ -37,14 +37,14 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
     
     IMGBi           = 1-IMGBi;
     %=====================================Using later, now convert first***
-    %{
+    
     se              = strel('square',2);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = ~bwareaopen(~IMGBi, 570);
     IMGBi           = bwareaopen(IMGBi, 30);
-    %}
+    
     
     
 %    msk     = fspecial('gaussian',5,3);

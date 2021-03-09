@@ -1,4 +1,4 @@
-function [out_border,out_pst_pxl,num_object] = find_border(img)
+function [img_border1,out_pst_pxl,num_obj,img_label] = find_border(img)
 
 %=========================================================
 % This funtion find border of image and return
@@ -20,42 +20,62 @@ function [out_border,out_pst_pxl,num_object] = find_border(img)
 %              ...
 %         xm        ym
 %=========================================================
-
-[row,col]       = size(img);
-img_border      = zeros(row,col);
-out_border      = zeros(row,col);
-out_pst_pxl     = [];
-BLACK           = 0;
 WHITE           = 1;
-num_object      = 0;
-%mt_border      = [];
-%ON              = 1;
-%OFF             = 0;
-%TRUE           = 1;
+BLACK           = 0;
+[row,col]       = size(img);
+num_label       = zeros(500,1);
+img_border      = zeros(row,col);
+out_pst_pxl     = [];
+out_border      = zeros(row,col);
+num_obj         = 0;
+%===============================================  find the number of pixels
+%each object at border
 
+%=============================================== ELMINATE BORDER PIXELS
 
-%=====================================% thinning border
-%write_img2text(img_border,2);
-img(:,1:5) = 0;
-img(1:5,:) = 0;
-img(row-4:row,:) = 0;
-img(:,col-4:col) = 0;
-%write_img2text(img,2);
-%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+img_label       = bwlabel(img);
+
 for i=6:row-5
-    for j=6:col-5
-        sum_neib = sum(sum(img(i-1:i+1,j-1:j+1)));
-        if (((img(i,j) == WHITE) && (sum_neib <= 8)))
-%         if (((img(i,j) == BLACK) && (sum_neib >=1 )))
-            img_border(i,j) = WHITE;
-        end  
+    if (img_label(i,6)~=0)
+        num_label(img_label(i,6),1)       = num_label(img_label(i,6),1) + 1;
+    end
+    if  (img_label(i,col-5)~=0)
+        num_label(img_label(i,col-5),1)   = num_label(img_label(i,col-5),1) +1;
     end
 end
-%write_img2text(img_border,2);
-img_border = lammanh_process(img_border);
-%write_img2text(img_border,2);
-%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+for j=6:col-5
+    if (img_label(6,j) ~= 0)
+        num_label(img_label(6,j),1)       = num_label(img_label(6,j),1) + 1;
+    end
+    if (img_label(row-5,j)~=0)
+        num_label(img_label(row-5,j),1)   = num_label(img_label(row-5,j),1) +1;
+    end
+end
+
+%=============================================== GET BORDER PIXELS
+for ii=6:row-5
+    for jj=6:col-5
+        if img_label(ii,jj)~=0
+            if num_label(img_label(ii,jj),1) > 15        %remove object 
+                img(ii,jj) = BLACK;
+            end
+        end
+        sum_neib = sum(sum(img(ii-1:ii+1,jj-1:jj+1)));
+        if (((img(ii,jj) == WHITE) && (sum_neib <= 8)))
+            img_border(ii,jj) = WHITE;
+        end
+    end
+end
+
+img_border  = lammanh_process(img_border);
+
+%-----------------------------------------------
+%===============================================
+[img_label,num_obj]      = bwlabel(img);
+
 %=====================================% eliminate residual line
+
 for i=6:row-5
     for j=6:col-5
         %--------------------------------%
@@ -65,27 +85,11 @@ for i=6:row-5
             if (sum_neighbor == 1)              %if exist one point noise
                 img_border(i,j) = BLACK;
             %--------------------------------%    
-            elseif (sum_neighbor == 2)          %if the line is broken
-       %         if (i>=15) &&(j>=303)
-       %             check= 0;
-       %         end
-                erl_xcur = i;                  
-                erl_ycur = j;
-                img_border = eliminate_noise_line(erl_xcur,erl_ycur,img_border);
+            elseif (sum_neighbor == 2) || (sum_neighbor >3 )                %if the line is broken or so ...on
                 
-            %--------------------------------%        
-            elseif (sum_neighbor > 3)
-                erl_xcur = i;
-                erl_ycur = j;
-                img_border(erl_xcur,erl_ycur) = BLACK;
-                for iii=-1:1
-                    for jjj=-1:1
-                        if(img_border(erl_xcur+iii,erl_ycur+jjj) == WHITE)
-                            img_border = eliminate_noise_line(erl_xcur+iii,erl_ycur+jjj,img_border);
-                        end
-                    end
-                end
-            
+                del_val     = img_label(i,j);
+                img_border  = eliminate_noise_line(del_val,img_border,img_label);
+                num_obj     = num_obj - 1;
             %--------------------------------%        
             else
                 continue;
@@ -94,8 +98,8 @@ for i=6:row-5
         end
     end
 end
-
-%write_img2text(img_border,2);
+img_border1 = img_border;
+%=====================================%
 %=====================================%find border line
 for ii=6:row-5
    for jj=6:col-5
@@ -105,7 +109,7 @@ for ii=6:row-5
  %           imwrite(img_border_si, 'D:\IMG_border_sg.jpg');
             if si_flag == 0
                 out_border     = out_border|img_border_si;
-                num_object     = num_object + 1;
+                num_obj        = num_obj + 1;
                 out_pst_pxl    = [out_pst_pxl;131313,size(posi_single,1);posi_single];
             else 
                 continue;
@@ -114,7 +118,8 @@ for ii=6:row-5
             %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     end
 end
-%write_img2text(img_border,2);
+
+
 end
 
 

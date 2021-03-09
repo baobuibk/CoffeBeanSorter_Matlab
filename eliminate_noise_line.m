@@ -1,4 +1,4 @@
-function [img_border] = eliminate_noise_line(erl_xcur,erl_ycur,img_border)
+function [img_border] = eliminate_noise_line(del_val,img_border,img_label)
 
 %{
 ==========================================
@@ -7,22 +7,21 @@ and return image after eliminated
 ==========================================
 %}
 
-BLACK = 0;
-WHITE = 1;
-ON    = 1;
-OFF   = 0;
+BLACK       = 0;
+WHITE       = 1;
+ON          = 1;
+OFF         = 0;
+[row,col]   = size(img_label);
 
-img_border(erl_xcur,erl_ycur) = BLACK;  
-erl      = ON;
-while(erl == ON)
-    if (sum(sum(img_border(erl_xcur-1:erl_xcur+1,erl_ycur-1:erl_ycur+1))) ~= 1)               
-        erl = OFF;               
-    else              
-        [erl_xnext,erl_ynext] = find(img_border(erl_xcur-1:erl_xcur+1,erl_ycur-1:erl_ycur+1) == 1);                
-        erl_xcur = erl_xnext - 2 + erl_xcur;              
-        erl_ycur = erl_ynext - 2 + erl_ycur;              
-        img_border(erl_xcur,erl_ycur) = BLACK;              
-    end            
-end          
+
+for  i=1:row
+    for j=1:col
+        if img_label(i,j) ==  del_val
+            img_border(i,j) = BLACK;
+        end
+    end
+end
+
+
 end
 

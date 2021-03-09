@@ -21,7 +21,9 @@ img_border_si(x_cur,y_cur)   = WHITE;
 %=====================================%
 mt_temp                 = img_border(x_cur-1:x_cur+1,y_cur-1:y_cur+1);     %search original pixel and next pixel
 mt_temp(2,2)            = BLACK; 
-[pos33_row,pos33_col]   = find(mt_temp == 1);  
+[pos33_row,pos33_col]   = find(mt_temp == 1);
+
+%Using "if" statement here to avoid error
 %-------------------------------------
 if pos33_col(1,1) > pos33_col(2,1)
     x_next      = x_cur + pos33_row(1,1) - 2;
