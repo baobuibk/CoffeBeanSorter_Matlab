@@ -1,4 +1,4 @@
-function [posi_single, img_border_si,img_border] = find_border_single(img_border,x_cur,y_cur)
+function [posi_single, si_flag, img_border_si,img_border] = find_border_single(img_border,x_cur,y_cur)
 
 %=====================================%
 % This funtion explore single border of object and return single border 
@@ -13,17 +13,16 @@ WHITE = 1;
 
 [row,col]       = size(img_border);
 img_border_si   = zeros(row,col);
-posi_single     = [x_cur,y_cur];                                           % initializing si_posi, this value is used to contain the position of an object
-%si_flag         = 0;                                                       % Use to check whether this function get error or not
+posi_single     = [x_cur,y_cur];                                           % initializing si_posi
+si_flag         = 0;
 check_border    = 0;
-img_border(x_cur,y_cur)      = BLACK;                                      % Eliminate original pixel in img_border
-img_border_si(x_cur,y_cur)   = WHITE;                                      % Using to get border that utilizes for display purpose,should be eliminated in C 
+img_border(x_cur,y_cur)      = BLACK;                                      %eliminate starting pixel
+img_border_si(x_cur,y_cur)   = WHITE;
 %=====================================%
 mt_temp                 = img_border(x_cur-1:x_cur+1,y_cur-1:y_cur+1);     %search original pixel and next pixel
 mt_temp(2,2)            = BLACK; 
 [pos33_row,pos33_col]   = find(mt_temp == 1);  
-%-------------------------------------%                                    %Get right and left of original point. Using right point to start the journey clockwise
-
+%-------------------------------------
 if pos33_col(1,1) > pos33_col(2,1)
     x_next      = x_cur + pos33_row(1,1) - 2;
     y_next      = y_cur + pos33_col(1,1) - 2;
@@ -44,9 +43,9 @@ while(flag_explore_line == ON)
     x_cur           =  x_next;
     y_cur           =  y_next;
     posi_single     =  [posi_single;x_cur,y_cur];
-%    if (x_cur==6)||(x_cur==row-5)||(y_cur==6)||(y_cur==col-5)
-%        check_border = check_border + 1;
-%    end
+    if (x_cur==6)||(x_cur==row-5)||(y_cur==6)||(y_cur==col-5)
+        check_border = check_border + 1;
+    end
     img_border(x_cur,y_cur)      = BLACK;
     img_border_si(x_cur,y_cur)   = WHITE;
     
@@ -57,9 +56,9 @@ while(flag_explore_line == ON)
     end
 end
 %=====================================% (1)
-%if (size(posi_single,1) <= 100)||(check_border>=15)
-%    si_flag = 1;
-%end
+if (size(posi_single,1) <= 100)||(check_border>=15)
+    si_flag = 1;
+end
 %write_img2text(img_border,2);
 
 end

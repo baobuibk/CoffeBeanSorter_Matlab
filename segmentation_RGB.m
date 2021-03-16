@@ -23,28 +23,28 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 %    IMG_Gray        = rgb2gray(RGB);
 
 %=====================================Using later, now convert first***
-
+%{
     msk      = fspecial('gaussian',7,1.5);
     IMG_Gray = imfilter(IMGBlue,msk,'symmetric','same');         %using Blue channel for gray image   
     IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
     IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
-    
-%    IMG_Gray  = IMGBlue;
-    THR_Gray = np_otsus_process(IMG_Gray);
+    %}
+    IMG_Gray  = IMGBlue;
+    THR_Gray  = np_otsus_process(IMG_Gray);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
     
     IMGBi(:,:)   =  (IMG_Gray(:,:)>= (THR_Gray+ADD_BINARY_THR));      
     
     IMGBi           = 1-IMGBi;
     %=====================================Using later, now convert first***
-    
+ %{   
     se              = strel('square',2);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = imerode(IMGBi,se);
     IMGBi           = ~bwareaopen(~IMGBi, 570);
     IMGBi           = bwareaopen(IMGBi, 30);
-    
+    %}
     
     
 %    msk     = fspecial('gaussian',5,3);

@@ -210,13 +210,13 @@ global SAME_POS_MT;
 %    axes(handles.img1);
 %    imagesc(IMG(:,:,2));
     
-    [img_border,~,~,img_label] = pre_evaluation(IMGBi);
+    [out_border,out_pst_pxl,num_obj,order_lb,img_label] = pre_evaluation(IMGBi);
     
     hold on;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
     axes(handles.img2);
-    imagesc(img_border);
+    imagesc(out_border);
     axes(handles.img3);
     imagesc(IMG_Seg);
     
