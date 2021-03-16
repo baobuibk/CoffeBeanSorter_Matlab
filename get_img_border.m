@@ -1,5 +1,7 @@
 function [img_border] = get_img_border(img,img_label)
 
+
+WHITE           = 1;
 [row,col]       = size(img);
 
 num_label       = zeros(500,1);
