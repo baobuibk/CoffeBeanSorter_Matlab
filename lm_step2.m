@@ -8,7 +8,7 @@ function [ out_img ] = lm_step2( in_img )
 %========================================= Proposal our algorithm
 out_img = lm_step2_cd1(in_img);
 out_img = lm_step2_cd2(out_img);
-
+a=1;
 
 end
 

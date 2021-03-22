@@ -203,7 +203,8 @@ global SAME_POS_MT;
                                                 ADD_BINARY_THR); %Use RGB %-25
     
 %    BW = edge(IMG(:,:,2),'Canny',0.65,1);
-                                    
+    R = IMG_sub(:,:,1);
+    
     axes(handles.img1);
     chanel2 = 255 - IMG_sub(:,:,2);
     imshow(chanel2 - IMG_sub(:,:,1));

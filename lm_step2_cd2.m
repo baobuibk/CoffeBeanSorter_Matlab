@@ -34,12 +34,12 @@ for h=2:(hang-1)
                               end
                          end
                      end
-                %==================%
-                if checknei==3 
-                    dem1=dem1+1;
-                elseif checknei==4 
-                    dem2=dem2+1;
-                end
+                    %==================%
+                    if checknei==3
+                        dem1=dem1+1;
+                    elseif checknei==4 
+                        dem2=dem2+1;
+                    end
                 %==================%
                 end
                 if (dem1==2)&&(dem2==1) 
