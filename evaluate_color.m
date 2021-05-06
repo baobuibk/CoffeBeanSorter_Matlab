@@ -4,11 +4,11 @@ GOOD = 1;
 BAD  = 0;
 R = IMG_seg(:,:,1);             %Using red channel to analyze 
 color = [];
-%===================================================Check histogram object
+
 for obj=1:num_object
     [row_his,col_his]   =   find(img_label == obj);
     len_his             =   size(row_his,1);
-    his_obj = [];
+    his_obj             =   [];
     %-----------------------------
     for ii=1:len_his
         his_obj         =   [his_obj;R(row_his(ii),col_his(ii))];

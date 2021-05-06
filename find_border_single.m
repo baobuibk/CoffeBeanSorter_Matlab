@@ -17,7 +17,7 @@ posi_single     = [x_cur,y_cur];                                           % ini
 si_flag         = 0;
 check_border    = 0;
 img_border(x_cur,y_cur)      = BLACK;                                      %eliminate starting pixel
-img_border_si(x_cur,y_cur)   = WHITE;
+img_border_si(x_cur,y_cur)   = WHITE;           % be used for display purpose
 %=====================================%
 mt_temp                 = img_border(x_cur-1:x_cur+1,y_cur-1:y_cur+1);     %search original pixel and next pixel
 mt_temp(2,2)            = BLACK; 
@@ -43,7 +43,7 @@ while(flag_explore_line == ON)
     x_cur           =  x_next;
     y_cur           =  y_next;
     posi_single     =  [posi_single;x_cur,y_cur];
-    if (x_cur==6)||(x_cur==row-5)||(y_cur==6)||(y_cur==col-5)
+    if (x_cur==6)||(x_cur==row-5)||(y_cur==6)||(y_cur==col-5)...
         check_border = check_border + 1;
     end
     img_border(x_cur,y_cur)      = BLACK;
@@ -56,7 +56,7 @@ while(flag_explore_line == ON)
     end
 end
 %=====================================% (1)
-if (size(posi_single,1) <= 100)||(check_border>=15)
+if (check_border>=15)  %size(posi_single,1) <= 100)||
     si_flag = 1;
 end
 %write_img2text(img_border,2);

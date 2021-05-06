@@ -5,6 +5,7 @@ THR_SHAPE       = 1.16;
 GOOD            = 1;
 BAD             = 0;
 result_shape    = [];
+
 %====================================================
 num_obj = size(out_border,1);
 for obj=1:num_obj

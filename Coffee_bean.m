@@ -191,9 +191,9 @@ global SAME_POS_MT;
    
 
     background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
-    R = background(:,:,1);
-    G = background(:,:,2);
-    B = background(:,:,3);
+    R = IMG(:,:,1);
+    G = IMG(:,:,2);
+    B = IMG(:,:,3);
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
@@ -203,7 +203,7 @@ global SAME_POS_MT;
                                                 ADD_BINARY_THR); %Use RGB %-25
     
 %    BW = edge(IMG(:,:,2),'Canny',0.65,1);
-    R = IMG_sub(:,:,1);
+%    R = IMG_sub(:,:,1);
     
     axes(handles.img1);
     chanel2 = 255 - IMG_sub(:,:,2);
@@ -211,7 +211,7 @@ global SAME_POS_MT;
 %    axes(handles.img1);
 %    imagesc(IMG(:,:,2));
     
-    [out_border,out_pst_pxl,num_obj,order_lb,img_label] = pre_evaluation(IMGBi);
+    [center,out_border,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
     
     hold on;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
@@ -223,17 +223,28 @@ global SAME_POS_MT;
     
     axes(handles.img4);
     imagesc(img_label);
+    
+    if (num_obj_real ~= 0)
+        for ii=1:num_obj_real
+            hold on;
+                plot(center(ii,2),center(ii,1),'*r');
+        end
+    end
+   
    % axes(handles.img4);
    % imagesc(IMGBi)
 %   axes(handles.img4);
-%{
-    if (nb_obj ~= 0)
-        result = features_evaluation(   IMG_sub,...
-                                        IMG_sub,...    
-                                        out_border,...
-                                        img_label);
-    end
 
+    %{
+    if (num_obj ~= 0)
+        result = features_evaluation(   IMG_sub,...                         %remember to add some broken line into result 
+                                        out_pst_pxl,...
+                                        order_lb,...
+                                        img_label,...
+                                        nb_obj_eva);
+    end
+%}
+    %{
     %==================================================END TEST
     axes(handles.img1);
     if (nb_obj ~= 0)

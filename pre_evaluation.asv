@@ -37,7 +37,6 @@ center          = [];
 %[img_label,num_obj]     = bwlabel(img);   
 [img_label,num_obj_real,~]     = CC_label(img,5);   
 
-
 nb_obj_eva  = num_obj_real;
 %=====================================% thinning border
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
