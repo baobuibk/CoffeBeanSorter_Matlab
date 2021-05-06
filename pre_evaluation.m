@@ -36,8 +36,6 @@ center          = [];
 
 %[img_label,num_obj]     = bwlabel(img);   
 [img_label,num_obj_real,~]     = CC_label(img,5);   
-
-
 nb_obj_eva  = num_obj_real;
 %=====================================% thinning border
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -85,22 +83,16 @@ for ii=6:row-5
    for jj=6:col-5
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         if img_border(ii,jj) == WHITE
-            cur_label   = img_label(ii,jj);
-            [posi_single, si_flag, img_border_si,img_border] = find_border_single(img_border,ii,jj);
+            cur_label      = img_label(ii,jj);
+            [posi_single, img_border_si,img_border] = find_border_single(img_border,ii,jj);
  %           imwrite(img_border_si, 'D:\IMG_border_sg.jpg');
-            if si_flag == 0
-                out_border     = out_border|img_border_si;
-                out_pst_pxl    = [out_pst_pxl;131313,size(posi_single,1);posi_single];
-                center         = [center;round(sum(posi_single,1)/size(posi_single,1))];
-                order_lb       = [order_lb;img_label(ii,jj)];
-            else 
-                num_obj_real   = num_obj_real - 1;
-                nb_obj_eva     = nb_obj_eva - 1;
-                continue;
-            end
-        end 
+            out_border     = out_border|img_border_si;
+            out_pst_pxl    = [out_pst_pxl;131313,size(posi_single,1);posi_single];
+            center         = [center;floor(sum(posi_single,1)/size(posi_single,1))];
+            order_lb       = [order_lb;img_label(ii,jj)];
+        end
+   end 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    end
 end
 end
 

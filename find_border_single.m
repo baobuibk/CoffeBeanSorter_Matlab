@@ -1,4 +1,4 @@
-function [posi_single, si_flag, img_border_si,img_border] = find_border_single(img_border,x_cur,y_cur)
+function [posi_single, img_border_si,img_border] = find_border_single(img_border,x_cur,y_cur)
 
 %=====================================%
 % This funtion explore single border of object and return single border 
@@ -15,7 +15,6 @@ WHITE = 1;
 img_border_si   = zeros(row,col);
 posi_single     = [x_cur,y_cur];                                           % initializing si_posi
 si_flag         = 0;
-check_border    = 0;
 img_border(x_cur,y_cur)      = BLACK;                                      %eliminate starting pixel
 img_border_si(x_cur,y_cur)   = WHITE;           % be used for display purpose
 %=====================================%
@@ -43,9 +42,7 @@ while(flag_explore_line == ON)
     x_cur           =  x_next;
     y_cur           =  y_next;
     posi_single     =  [posi_single;x_cur,y_cur];
-    if (x_cur==6)||(x_cur==row-5)||(y_cur==6)||(y_cur==col-5)...
-        check_border = check_border + 1;
-    end
+ 
     img_border(x_cur,y_cur)      = BLACK;
     img_border_si(x_cur,y_cur)   = WHITE;
     
@@ -55,10 +52,7 @@ while(flag_explore_line == ON)
         y_next = y_cur + pos33_col - 2;
     end
 end
-%=====================================% (1)
-if (check_border>=15)  %size(posi_single,1) <= 100)||
-    si_flag = 1;
-end
+
 %write_img2text(img_border,2);
 
 end
