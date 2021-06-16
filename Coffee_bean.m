@@ -81,6 +81,9 @@ SAME_POS_MT = zeros(20,3);
 function OPEN_IMAGE_button_Callback(hObject, eventdata, handles)
 global IMG;
 
+
+%{
+
      [IMG,row,col,dir3,name_img] = Load_img();
      
      
@@ -98,7 +101,58 @@ global IMG;
 %     IMG = imresize(IMG,[240 320]);
      imagesc(IMG);
      colormap(gray); 
-  
+  %}
+    ROW = 240;
+    COL = 320;
+    
+    B = zeros(15,ROW,COL);
+    D = zeros(ROW,COL);
+    
+    
+    
+    fileID = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Text_value\Gray.txt','r');
+    formatSpec = '%f';
+    A = fscanf(fileID,formatSpec);
+    fclose(fileID);
+    
+    for chanel = 1:15
+        for r=1:ROW
+            for c=1:COL
+                B(chanel,r,c) = A(((chanel-1)*ROW*COL) + (r-1)*COL +c);
+            
+            end
+        end
+    end
+
+    
+    B = uint8(B);
+    C1(:,:) =B(1,:,:);
+    C2(:,:) =B(2,:,:);
+    C3(:,:) =B(3,:,:);
+    C4(:,:) =B(4,:,:);
+    C5(:,:) =B(5,:,:);
+    
+    
+    axes(handles.img);
+    imagesc(C1);
+    
+    axes(handles.img1);
+    imagesc(C2);
+    
+    axes(handles.img2);
+    imagesc(C3);
+    
+    axes(handles.img3);
+    imagesc(C4);
+    
+    axes(handles.img4);
+    imagesc(C5);
+    
+    
+    
+
+
+    
     
 
 
@@ -342,7 +396,7 @@ global i;
 i=44;
 axes (handles.img);
 cam = webcam(2);
-hImage = image(handles.img, zeros(480,640,3)); %384  512
+hImage = image(handles.img, zeros(480,640,3)); %384  512 %480,640
 preview (cam, hImage);
 %pause;
 
@@ -358,7 +412,8 @@ IMG = IMGcam;
 imagesc(IMGcam);
 i=i+1;
 
-outputFileName = fullfile(strcat('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\Data\shape\',num2str(i),'shape.jpg'));
+%outputFileName = fullfile(strcat('D:\B. WORK\LAB\REPORT + PAPER\Coffee_shap_color\Data\shape\',num2str(i),'shape.jpg'));
+outputFileName = fullfile(strcat('D:\',num2str(i),'shape.jpg'));
 imwrite(IMGcam, outputFileName);
 
 
