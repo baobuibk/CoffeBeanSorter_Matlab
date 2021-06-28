@@ -71,7 +71,7 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
     IMGBi          = remove_sm_obj(~IMGBi,30,5);   %remove small bean
   
    
-    
+    RGB     = uint8(RGB);
     
     
     

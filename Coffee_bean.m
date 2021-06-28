@@ -81,6 +81,7 @@ SAME_POS_MT = zeros(20,3);
 function OPEN_IMAGE_button_Callback(hObject, eventdata, handles)
 global IMG;
 
+%{
      [IMG,row,col,dir3,name_img] = Load_img();
 %     Red = IMG(:,:,1);
 %     Green = IMG(:,:,2);
@@ -96,9 +97,42 @@ global IMG;
 %     IMG = imresize(IMG,[240 320]);
      imagesc(IMG);
      colormap(gray);  
+   %}
+
+    ROW = 240;
+    COL = 320;
+    A1 = zeros(ROW,COL);
+    B1 = zeros(ROW,COL);
+    C1 = zeros(ROW,COL);
     
-
-
+    fileA = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Text_value\path_bgr1_240.txt','r');
+    fileB = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Text_value\path_bgr2_240.txt','r');
+    fileC = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\Text_value\path_bgr3_240.txt','r');
+    formatSpec = '%d';
+    A = fscanf(fileA,formatSpec);
+    B = fscanf(fileB,formatSpec);
+    C = fscanf(fileC,formatSpec);
+    
+    
+    for r=1:ROW
+        for c=1:COL
+            A1(r,c) = A((r-1)*COL + c,1);
+            B1(r,c) = B((r-1)*COL + c,1);
+            C1(r,c) = C((r-1)*COL + c,1);
+        end
+    end
+    
+    
+    fclose('all');
+    
+    IMG = zeros(ROW,COL,3);
+    
+    IMG(:,:,1) = A1;
+    IMG(:,:,2) = B1;
+    IMG(:,:,3) = C1;
+    axes(handles.img1);
+    imagesc(uint8(IMG));
+    
 %==========================================================================PROCESSING OFLINE SINGLE
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function Processing_offline_Callback(hObject, eventdata, handles)
@@ -188,9 +222,10 @@ global SAME_POS_MT;
    
 
     background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
-    R = IMG(:,:,1);
-    G = IMG(:,:,2);
-    B = IMG(:,:,3);
+    background     = imresize(background,0.5);
+ %   R = IMG(:,:,1);
+  %  G = IMG(:,:,2);
+  %  B = IMG(:,:,3);
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
