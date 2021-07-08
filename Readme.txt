@@ -14,8 +14,8 @@ br1.0       br1.1      br1.2	 tag0.0    tag0.1
 //===============================================
 Branch:
 + Version 1.0  	This version was created by old algorithm (old camera) by using Lab color space and detecting 
-		convex, concavex position.  
-Tag 1.0.0 	Success for old datas, it is initial version
+		convex, concave position.  
+Tag 1.0.0 	Success for old data, it is initial version
 Tag 1.0.1	Fix error from tag1.0.0, it's adequate version for old data.		
 
 + Version 1.1  	This version used a new camera, using old algorithm, however it's not effective 
