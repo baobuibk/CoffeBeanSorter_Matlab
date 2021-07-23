@@ -1,5 +1,6 @@
 function [IMGBi,IMGSeg_CIE,IMGSeg_RGB] = segmentation_RGB(RGB,ADD_BINARY_THR)
 
+
 %=========================================================================%
 % This funtion segmentate image and reture two value:
 % The one is binarry image and another is segmentation image with black
@@ -42,7 +43,7 @@ function [IMGBi,IMGSeg_CIE,IMGSeg_RGB] = segmentation_RGB(RGB,ADD_BINARY_THR)
     
 %    THRRed          = np_otsus_process(IMGRed)   ;
 %    THRGreen        = np_otsus_process(IMGGreen) ;
-    THRBlue         = np_otsus_process(IMGBlue);
+    THRBlue          = np_otsus_process(IMGBlue);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
 %    IMGBi(:,:)   = (IMGRed(:,:)>= (THRRed-50));
 %    IMGBi(:,:)   = IMGBi(:,:)|(IMGGreen(:,:)>= (THRGreen-15));
@@ -61,7 +62,6 @@ function [IMGBi,IMGSeg_CIE,IMGSeg_RGB] = segmentation_RGB(RGB,ADD_BINARY_THR)
     IMGBi(:,col -4:col) = 1;
     
 %    write_img2text(IMGBi,2);  
-    
     [IMGBi_label]   = bwlabel(IMGBi,8);
     IMGBi           = (IMGBi_label(:,:)==1);
     IMGBi           = 1-IMGBi;

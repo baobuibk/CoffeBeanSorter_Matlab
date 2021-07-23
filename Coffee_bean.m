@@ -166,6 +166,20 @@ end
 function Multi_Callback(hObject, eventdata, handles)
 global IMG;
 global SAME_POS_MT;
+
+    r = IMG(:,:,1);
+    g = IMG(:,:,2);
+    b = IMG(:,:,3);
+    
+    axes(handles.img);
+    imagesc(IMG);
+    axes(handles.img1);
+    imagesc(r);
+    axes(handles.img2);
+    imagesc(g);
+    axes(handles.img3);
+    imagesc(b);
+    
    
     GOOD = 1;
     BAD  = 0;
@@ -205,6 +219,8 @@ global SAME_POS_MT;
 %    imagesc(IMGBi);
 %    bi = double(IMGBi);
 %    imwrite(bi, 'D:\IMGBi.jpg');
+    axes(handles.img1);
+    imagesc(IMGBi);
     axes(handles.img2);
     imagesc(IMGSeg_CIE);
 %    imwrite(IMGSeg_CIE, 'D:\IMGSeg_CIE.jpg');
