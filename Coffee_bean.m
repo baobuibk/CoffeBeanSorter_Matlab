@@ -81,7 +81,7 @@ SAME_POS_MT = zeros(20,3);
 function OPEN_IMAGE_button_Callback(hObject, eventdata, handles)
 global IMG;
 
-%{
+
      [IMG,row,col,dir3,name_img] = Load_img();
 %     Red = IMG(:,:,1);
 %     Green = IMG(:,:,2);
@@ -97,8 +97,9 @@ global IMG;
 %     IMG = imresize(IMG,[240 320]);
      imagesc(IMG);
      colormap(gray);  
-   %}
 
+
+%{
     ROW = 240;
     COL = 320;
     A1 = zeros(ROW,COL);
@@ -132,7 +133,8 @@ global IMG;
     IMG(:,:,3) = C1;
     axes(handles.img1);
     imagesc(uint8(IMG));
-    
+   
+%}
 %==========================================================================PROCESSING OFLINE SINGLE
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function Processing_offline_Callback(hObject, eventdata, handles)
