@@ -83,6 +83,7 @@ global IMG;
 
 
      [IMG,row,col,dir3,name_img] = Load_img();
+     IMG = imresize(IMG,[240 320]);
 %     Red = IMG(:,:,1);
 %     Green = IMG(:,:,2);
 %     Blue = IMG(:,:,3);
@@ -94,7 +95,6 @@ global IMG;
      set(handles.col,'string',col);    
      set(handles.dir3,'string',dir3); 
      axes(handles.img);   
-%     IMG = imresize(IMG,[240 320]);
      imagesc(IMG);
      colormap(gray);  
 
@@ -141,9 +141,9 @@ function Processing_offline_Callback(hObject, eventdata, handles)
 global IMG;
     IMG = read_imgtxt();
     IMG = uint8(IMG);
+    IMG = imresize(IMG,[240 320]);
     axes(handles.img);
     imagesc(IMG);
-%    IMG = imresize(IMG,[240 320]);
     colormap(gray);
 %{
     number_part    = get(handles.number_part,'string');
@@ -225,25 +225,25 @@ global SAME_POS_MT;
 
     background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
     background     = imresize(background,0.5);
- %   R = IMG(:,:,1);
-  %  G = IMG(:,:,2);
-  %  B = IMG(:,:,3);
+    R = IMG(:,:,1);
+    G = IMG(:,:,2);
+    B = IMG(:,:,3);
 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_Seg,IMG_sub] = segmentation_RGB( IMG,...
+    [IMGBi,IMG_Seg,IMG_sub,IMG_Gray] = segmentation_RGB( IMG,...
                                                 background,...
                                                 ADD_BINARY_THR); %Use RGB %-25
     
 %    BW = edge(IMG(:,:,2),'Canny',0.65,1);
 %    R = IMG_sub(:,:,1);
     
-    axes(handles.img1);
-    chanel2 = 255 - IMG_sub(:,:,2);
-    imshow(chanel2 - IMG_sub(:,:,1));
 %    axes(handles.img1);
-%    imagesc(IMG(:,:,2));
+%    chanel2 = 255 - IMG_sub(:,:,2);
+%    imshow(chanel2 - IMG_sub(:,:,1));
+    axes(handles.img1);
+    imagesc(IMG_Gray);
     
     [center,out_border,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
     

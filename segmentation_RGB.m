@@ -1,4 +1,4 @@
-function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
+function [IMGBi,IMG_Seg,IMG,IMG_Gray] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 
 
 %=========================================================================%
@@ -13,7 +13,7 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 %=========================================================================%
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= explore threshold
-    IMG                 = double((double(RGB)+40) - double(background));
+    IMG                 = double((double(RGB)+40) - double(background));   %+40
     IMG(IMG(:,:,:)>255) = 255;
     IMG(IMG(:,:,:)<0)   = 0;
     IMG                 = uint8(IMG);
@@ -36,9 +36,7 @@ function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
     IMG_Gray  = IMGBlue;
     THR_Gray  = np_otsus_process(IMG_Gray);
     
-    
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
-    
     IMGBi(:,:)      =  (IMG_Gray(:,:) < (THR_Gray + ADD_BINARY_THR));      
     
 %    IMGBi           = 1-IMGBi;
