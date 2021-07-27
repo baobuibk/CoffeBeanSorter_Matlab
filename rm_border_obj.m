@@ -1,7 +1,5 @@
 function IMGBi          = rm_border_obj(IMGBi)
 
-
-
 [row,col]   = size(IMGBi);
 ON          = 1;
 OFF         = 0;

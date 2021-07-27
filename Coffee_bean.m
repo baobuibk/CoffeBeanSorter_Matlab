@@ -251,7 +251,7 @@ global SAME_POS_MT;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
     axes(handles.img2);
-    imagesc(out_border);
+    imagesc(B);
     axes(handles.img3);
     imagesc(IMG_Seg);
     

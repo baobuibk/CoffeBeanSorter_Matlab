@@ -22,18 +22,16 @@ function [IMGBi,IMG_Seg,IMG,IMG_Gray] = segmentation_RGB(RGB,background,ADD_BINA
 %    IMGBi           = zeros(row,col);   
 %    IMG_Gray        = rgb2gray(RGB);
 
-%=====================================Using later, now convert first***
+%===================================== Using later, now convert first***
 
-%{
-    msk      = fspecial('gaussian',7,1.5);
+
+    msk      = fspecial('gaussian',5,1.2);  %7,1.5
     IMG_Gray = imfilter(IMGBlue,msk,'symmetric','same');         %using Blue channel for gray image   
-    IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
-    IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
-%}
+%    IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
+%    IMG_Gray = imfilter(IMG_Gray,msk,'symmetric','same');
 
-
-
-    IMG_Gray  = IMGBlue;
+    
+%    IMG_Gray  = IMGBlue;
     THR_Gray  = np_otsus_process(IMG_Gray);
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
@@ -53,8 +51,8 @@ function [IMGBi,IMG_Seg,IMG,IMG_Gray] = segmentation_RGB(RGB,background,ADD_BINA
     IMGBi(row -4:row,:) = 0;
     IMGBi(:,col -4:col) = 0;
     
-    IMGBi          = rm_border_obj(IMGBi);
     
+    IMGBi          = rm_border_obj(IMGBi);
     
     IMGBi          = erosion_square2x2(IMGBi);
     IMGBi          = erosion_square2x2(IMGBi);
