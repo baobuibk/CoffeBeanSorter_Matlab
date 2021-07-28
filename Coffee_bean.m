@@ -170,7 +170,7 @@ global SAME_POS_MT;
     r = IMG(:,:,1);
     g = IMG(:,:,2);
     b = IMG(:,:,3);
-    
+%{    
     axes(handles.img);
     imagesc(IMG);
     axes(handles.img1);
@@ -179,7 +179,7 @@ global SAME_POS_MT;
     imagesc(g);
     axes(handles.img3);
     imagesc(b);
-    
+ %}   
    
     GOOD = 1;
     BAD  = 0;
@@ -215,23 +215,26 @@ global SAME_POS_MT;
     [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
    
 %    write_img2text(IMGBi,2);
-%    axes(handles.img1);
-%    imagesc(IMGBi);
-%    bi = double(IMGBi);
-%    imwrite(bi, 'D:\IMGBi.jpg');
     axes(handles.img1);
     imagesc(IMGBi);
-    axes(handles.img2);
-    imagesc(IMGSeg_CIE);
+%    bi = double(IMGBi);
+%    imwrite(bi, 'D:\IMGBi.jpg');
+%    axes(handles.img1);
+%    imagesc(IMGBi);
+%    axes(handles.img2);
+%    imagesc(IMGSeg_CIE);
 %    imwrite(IMGSeg_CIE, 'D:\IMGSeg_CIE.jpg');
 %    axes(handles.img3);
 %    Trig = IMGBi(215:235,285:315);         %check if trigger ok -> capture
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
-     [img_border,pos_pixel,num_object] = find_border(IMGBi); 
+     [img_border,pos_pixel,num_object,a] = find_border(IMGBi); 
 %     write_img2text(img_border,2);
  %   img_border = find_border(IMGBi);
-%     axes(handles.img3);
- %    imagesc(img_border);
+    
+     axes(handles.img2);
+     imagesc(a);
+     axes(handles.img3);
+     imagesc(img_border);
 %     imwrite(img_border, 'D:\IMG_border.jpg');
      
       %==================================================TEST HERE
@@ -249,7 +252,7 @@ global SAME_POS_MT;
      end
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% display
 
-%    axes(handles.img3);
+    axes(handles.img4);
     if (num_object ~= 0)
         for ii=1:num_object
             hold on;

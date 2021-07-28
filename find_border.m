@@ -1,4 +1,4 @@
-function [out_border,out_pst_pxl,num_object] = find_border(img)
+function [out_border,out_pst_pxl,num_object,a] = find_border(img)
 
 %=========================================================
 % This funtion find border of image and return
@@ -41,6 +41,7 @@ img(1:5,:) = 0;
 img(row-4:row,:) = 0;
 img(:,col-4:col) = 0;
 %write_img2text(img,2);
+
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 for i=6:row-5
     for j=6:col-5
@@ -48,14 +49,17 @@ for i=6:row-5
         if (((img(i,j) == WHITE) && (sum_neib <= 8)))
 %         if (((img(i,j) == BLACK) && (sum_neib >=1 )))
             img_border(i,j) = WHITE;
-        end  
+        end 
     end
 end
 %write_img2text(img_border,2);
+
+a = img_border;
 img_border = lammanh_process(img_border);
 %write_img2text(img_border,2);
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 %=====================================% eliminate residual line
+
 for i=6:row-5
     for j=6:col-5
         %--------------------------------%
@@ -95,6 +99,8 @@ for i=6:row-5
     end
 end
 
+
+
 %write_img2text(img_border,2);
 %=====================================%find border line
 for ii=6:row-5
@@ -115,6 +121,7 @@ for ii=6:row-5
     end
 end
 %write_img2text(img_border,2);
+
 end
 
 

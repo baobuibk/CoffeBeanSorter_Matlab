@@ -56,7 +56,7 @@ while(flag_explore_line == ON)
     end
 end
 %=====================================% (1)
-if (size(posi_single,1) <= 100)||(check_border>=15)
+if (check_border>=15)
     si_flag = 1;
 end
 %write_img2text(img_border,2);
