@@ -232,31 +232,29 @@ global SAME_POS_MT;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_Seg,IMG_sub,IMG_Gray] = segmentation_RGB( IMG,...
-                                                background,...
-                                                ADD_BINARY_THR); %Use RGB %-25
+    [IMGBi,IMG_Seg,IMG_sub,IMG_Gray,a] = segmentation_RGB( IMG,...
+                                                         background,...
+                                                         ADD_BINARY_THR); %Use RGB %-25
     
-%    BW = edge(IMG(:,:,2),'Canny',0.65,1);
-%    R = IMG_sub(:,:,1);
-    
-%    axes(handles.img1);
-%    chanel2 = 255 - IMG_sub(:,:,2);
-%    imshow(chanel2 - IMG_sub(:,:,1));
     axes(handles.img1);
     imagesc(IMG_Gray);
-    
-    [center,out_border,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
+    axes(handles.img3);
+    imagesc(IMG_Seg);
+    axes(handles.img2);
+    imagesc(a);
+ %{
+    [center,~,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
     
     hold on;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
-    axes(handles.img2);
-    imagesc(B);
-    axes(handles.img3);
-    imagesc(IMG_Seg);
+%    axes(handles.img2);
+%    imagesc(B);
+%    axes(handles.img3);
+%    imagesc(IMG_Seg);
     
-    axes(handles.img4);
-    imagesc(img_label);
+%    axes(handles.img4);
+%    imagesc(img_label);
     
     if (num_obj_real ~= 0)
         for ii=1:num_obj_real
@@ -269,14 +267,14 @@ global SAME_POS_MT;
    % imagesc(IMGBi)
 %   axes(handles.img4);
 
-    %{
-    if (num_obj ~= 0)
+    
+%    if (num_obj ~= 0)
         result = features_evaluation(   IMG_sub,...                         %remember to add some broken line into result 
                                         out_pst_pxl,...
                                         order_lb,...
                                         img_label,...
                                         nb_obj_eva);
-    end
+ %   end
 %}
     %{
     %==================================================END TEST
