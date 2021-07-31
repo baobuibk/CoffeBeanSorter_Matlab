@@ -1,6 +1,6 @@
 function [out] = remove_sm_obj(img,THR,cut_bd)
 
-[img_lb,nb_obj] =  CC_label(img,cut_bd);
+[img_lb,nb_obj] = CC_label(img,cut_bd);
 [row,col]       = size(img);
 each_obj        = zeros(nb_obj,1);
 out             = zeros(row,col);

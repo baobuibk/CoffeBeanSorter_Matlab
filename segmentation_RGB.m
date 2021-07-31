@@ -1,4 +1,4 @@
-function [IMGBi,IMG_Seg,IMG,IMG_Gray,b] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
+function [IMGBi,IMG_Seg,IMG,IMG_Gray] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 
 
 %=========================================================================%
@@ -110,6 +110,5 @@ function [IMGBi,IMG_Seg,IMG,IMG_Gray,b] = segmentation_RGB(RGB,background,ADD_BI
 %    [IMGBi_label]   = bwlabel(IMGBi,8);
 %    IMGBi           = (IMGBi_label(:,:)==1);
     IMG_Seg = RGB(:,:,:).*(uint8(IMGBi));         %Be used for imshow, don't implement
-    b       = RGB(:,:,:).*(uint8(a));
 end
 

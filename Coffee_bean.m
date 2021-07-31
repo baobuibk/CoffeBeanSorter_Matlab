@@ -232,17 +232,11 @@ global SAME_POS_MT;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_Seg,IMG_sub,IMG_Gray,a] = segmentation_RGB( IMG,...
+    [IMGBi,IMG_Seg,IMG_sub,IMG_Gray] = segmentation_RGB( IMG,...
                                                          background,...
                                                          ADD_BINARY_THR); %Use RGB %-25
     
-    axes(handles.img1);
-    imagesc(IMG_Gray);
-    axes(handles.img3);
-    imagesc(IMG_Seg);
-    axes(handles.img2);
-    imagesc(a);
- %{
+ 
     [center,~,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
     
     hold on;
