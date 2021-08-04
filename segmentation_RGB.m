@@ -1,4 +1,4 @@
-function [IMGBi,IMG_Seg,IMG,IMG_Gray] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
+function [IMGBi,IMG_Seg,IMG] = segmentation_RGB(RGB,background,ADD_BINARY_THR)
 
 
 %=========================================================================%
@@ -36,7 +36,6 @@ function [IMGBi,IMG_Seg,IMG,IMG_Gray] = segmentation_RGB(RGB,background,ADD_BINA
     
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= binary image
     IMGBi(:,:)      =  (IMG_Gray(:,:) < (THR_Gray + ADD_BINARY_THR));      
-    a = IMGBi(:,:);
 %    IMGBi           = 1-IMGBi;
     %=====================================
 

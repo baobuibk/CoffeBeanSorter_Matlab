@@ -7,14 +7,15 @@ color = [];
 
 for obj=1:num_object
     [row_his,col_his]   =   find(img_label == obj);
-    len_his             =   size(row_his,1);
+    len_his             =   size(row_his,1);             %the number of pixel in each object
     his_obj             =   [];
     %-----------------------------
     for ii=1:len_his
         his_obj         =   [his_obj;R(row_his(ii),col_his(ii))];
     end
     %-----------------------------
-%    his_R   =   histogram(his_obj,'Normalization','probability');
+%    his_R   =   histogram(his_obj,'BinLimits',[0,255],'Normalization','probability');
+%    his_R   =   histogram(his_obj,'BinLimits',[0,25],'Normalization','probability');
     hist_zeros = sum(his_obj <= THR_PXL)/len_his;
     
     %-----------------------------

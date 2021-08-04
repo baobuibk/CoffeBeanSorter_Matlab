@@ -6,7 +6,7 @@ function [center,out_border,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_lab
 %
 % out_border: border image 
 % out_pst_pxl : pixel position 
-% num_object  : number of good object
+% num_object  : number of  objects
 % er_find_line: check error when find border (ON=1, OFF=0)
 % 
 % The out_pst_pxl is organized as following:
@@ -20,7 +20,11 @@ function [center,out_border,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_lab
 %              ...
 %         xm        ym
 %---------------------------------------------------------
+num_obj_real    = 0; %contain the number of objects before removing noise line
+nb_obj_eva      = 0; %contain the number of objects after removing. This is used for evaluation
 
+
+pre_result      = [];
 [row,col]       = size(img);
 img_border      = zeros(row,col);
 out_border      = zeros(row,col);
@@ -47,7 +51,7 @@ for i=6:row-5
         end  
     end
 end
-img_border = lammanh_process(img_border);
+img_border = lammanh_process(img_border);     
 
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 %=====================================% eliminate residual line
@@ -86,10 +90,10 @@ for ii=6:row-5
             cur_label      = img_label(ii,jj);
             [posi_single, img_border_si,img_border] = find_border_single(img_border,ii,jj);
  %           imwrite(img_border_si, 'D:\IMG_border_sg.jpg');
-            out_border     = out_border|img_border_si;
-            out_pst_pxl    = [out_pst_pxl;131313,size(posi_single,1);posi_single];
-            center         = [center;floor(sum(posi_single,1)/size(posi_single,1))];
-            order_lb       = [order_lb;img_label(ii,jj)];
+            out_border     = out_border|img_border_si;                               %contain the border image of object, used to display
+            out_pst_pxl    = [out_pst_pxl;131313,size(posi_single,1);posi_single];   %array of border pixel position
+            center         = [center;floor(sum(posi_single,1)/size(posi_single,1))]; %contain the center of object
+            order_lb       = [order_lb;img_label(ii,jj)];                            %contain the order of object array
         end
    end 
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

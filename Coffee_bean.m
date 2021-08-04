@@ -232,55 +232,60 @@ global SAME_POS_MT;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
     
-    [IMGBi,IMG_Seg,IMG_sub,IMG_Gray] = segmentation_RGB( IMG,...
-                                                         background,...
-                                                         ADD_BINARY_THR); %Use RGB %-25
+    [IMGBi,IMG_Seg,IMG_sub] = segmentation_RGB( IMG,...
+                                                background,...
+                                                ADD_BINARY_THR); %Use RGB %-25
     
  
-    [center,~,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
-    
+    [center,out_border_img,out_pst_pxl,nb_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
     hold on;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
-%    axes(handles.img2);
-%    imagesc(B);
-%    axes(handles.img3);
-%    imagesc(IMG_Seg);
+    red = IMG_sub(:,:,1);
+    blue =IMG_sub(:,:,3);
+    axes(handles.img1);
+    imagesc(red);
+    axes(handles.img2);
+    imagesc(blue);
+    axes(handles.img3);
+    imagesc(out_border_img);
+    axes(handles.img4);
     
-%    axes(handles.img4);
-%    imagesc(img_label);
-    
+ %{   
     if (num_obj_real ~= 0)
         for ii=1:num_obj_real
             hold on;
                 plot(center(ii,2),center(ii,1),'*r');
         end
     end
-   
-   % axes(handles.img4);
-   % imagesc(IMGBi)
-%   axes(handles.img4);
+   %}
 
     
-%    if (num_obj ~= 0)
+    if (nb_obj_real ~= 0)
         result = features_evaluation(   IMG_sub,...                         %remember to add some broken line into result 
                                         out_pst_pxl,...
-                                        order_lb,...
+                                        order_lb,...,
+                                        center,...
                                         img_label,...
-                                        nb_obj_eva);
- %   end
-%}
-    %{
+                                        nb_obj_real);
+    end
+
+    
+    
     %==================================================END TEST
-    axes(handles.img1);
-    if (nb_obj ~= 0)
-        for ii=1:nb_obj
+    axes(handles.img);
+    if (nb_obj_real ~= 0)
+        for ii=1:nb_obj_real
+            roundness = result(ii,5);
+            color     = result(ii,7);
+            shape_line= result(ii,8);
             hold on;
-            if (result(ii,5) == BAD) 
+            if ((roundness & color & shape_line) == BAD) 
                 plot(result(ii,3),result(ii,2),'*r');
             end
         end
     end
+    %{
     axes(handles.img2);
     if (nb_obj ~= 0)
         for ii=1:nb_obj

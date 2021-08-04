@@ -1,8 +1,9 @@
 function [result] = features_evaluation(    IMG,...
-                                                out_border,...
-                                                order_lb,...
-                                                img_label,...
-                                                num_obj)
+                                            out_pst_pxl,...
+                                            order_lb,... %using this one to synchronize shape and color in array
+                                            center,...
+                                            img_label,...
+                                            num_obj)
                                                 
                                                                                                                  
 %===============================================================
@@ -18,18 +19,21 @@ thr_percent = 0.07;
 
 result  = [];
 
-rs_rdness       = check_roundness(out_border,img_label);
-%{
-rs_convexity    = check_convexhull1(out_border,img_label);
-num_object      = size(out_border,1);
+
+
+rs_shape_line   = check_shape_line(out_pst_pxl,num_obj);
+rs_rdness       = check_roundness(out_pst_pxl,img_label,center,num_obj);
+
+%rs_convexity    = check_convexhull1(out_border,img_label);
+%num_object      = size(out_border,1);
 
 %rs_LBPs         = LBPs(out_border,IMG);
-rs_GLCM         = check_GLCM(GLCM_img,img_label,out_border);
-%}    
+%rs_GLCM         = check_GLCM(IMG,img_label,out_pst_pxl);
+ 
 %num_object      = size(out_border,1);
 color           = evaluate_color(IMG,img_label,num_obj,thr_pxl,thr_percent);
 
-result          = [rs_rdness,rs_convexity,rs_GLCM,color];
+result          = [rs_rdness,color,rs_shape_line];
 %out_result      = [out_result;color];
 end
 
