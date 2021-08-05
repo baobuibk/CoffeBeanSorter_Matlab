@@ -1,4 +1,4 @@
-function [center,out_border,out_pst_pxl,num_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(img)
+function [center,out_border,out_pst_pxl,num_obj_real,order_lb,img_label] = pre_evaluation(img)
 
 %=========================================================
 % This funtion find border of image and return
@@ -24,7 +24,6 @@ num_obj_real    = 0; %contain the number of objects before removing noise line
 nb_obj_eva      = 0; %contain the number of objects after removing. This is used for evaluation
 
 
-pre_result      = [];
 [row,col]       = size(img);
 img_border      = zeros(row,col);
 out_border      = zeros(row,col);
@@ -40,7 +39,6 @@ center          = [];
 
 %[img_label,num_obj]     = bwlabel(img);   
 [img_label,num_obj_real,~]     = CC_label(img,5);   
-nb_obj_eva  = num_obj_real;
 %=====================================% thinning border
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 for i=6:row-5
@@ -70,7 +68,7 @@ for i=6:row-5
                 out_pst_pxl                    = [out_pst_pxl;131313,1;coor_noise_obj]; 
                 center                         = [center;coor_noise_obj];
                 order_lb                       = [order_lb;del_val];
-                nb_obj_eva                     = nb_obj_eva - 1;
+        
             
             %--------------------------------%        
             else

@@ -212,12 +212,6 @@ global SAME_POS_MT;
     THR_convex     = str2double(THR_convex);
     THR_block      = str2double(THR_block);
     
-    L_THR          = get(handles.L,'string');
-    L_THR          = str2double(L_THR);
-    b_THR          = get(handles.b,'string');
-    b_THR          = str2double(b_THR);
-    Chroma_THR     = get(handles.Chroma,'string');
-    Chroma_THR     = str2double(Chroma_THR);
     
 %    colormap('gray');
 
@@ -237,7 +231,7 @@ global SAME_POS_MT;
                                                 ADD_BINARY_THR); %Use RGB %-25
     
  
-    [center,out_border_img,out_pst_pxl,nb_obj_real,nb_obj_eva,order_lb,img_label] = pre_evaluation(IMGBi);
+    [center,out_border_img,out_pst_pxl,nb_obj_real,order_lb,img_label] = pre_evaluation(IMGBi);
     hold on;
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-% find border and calculate result
 %    [out_border,pos_pixel,num_object] = find_border(IMGBi); 
@@ -276,12 +270,12 @@ global SAME_POS_MT;
     axes(handles.img);
     if (nb_obj_real ~= 0)
         for ii=1:nb_obj_real
-            roundness = result(ii,5);
-            color     = result(ii,7);
-            shape_line= result(ii,8);
+            roundness   = result(ii,3);
+            shape_line  = result(ii,4);
+            color       = result(ii,5);
             hold on;
-            if ((roundness & color & shape_line) == BAD) 
-                plot(result(ii,3),result(ii,2),'*r');
+            if (shape_line == BAD) 
+                plot(result(ii,2),result(ii,1),'*r');
             end
         end
     end

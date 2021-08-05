@@ -31,9 +31,9 @@ rs_rdness       = check_roundness(out_pst_pxl,img_label,center,num_obj);
 %rs_GLCM         = check_GLCM(IMG,img_label,out_pst_pxl);
  
 %num_object      = size(out_border,1);
-color           = evaluate_color(IMG,img_label,num_obj,thr_pxl,thr_percent);
-
-result          = [rs_rdness,color,rs_shape_line];
+color           = evaluate_color(IMG,img_label,num_obj,thr_pxl,thr_percent,order_lb);
+            
+result          = [rs_rdness,rs_shape_line,color];
 %out_result      = [out_result;color];
 end
 
