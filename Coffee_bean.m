@@ -329,7 +329,7 @@ function GET_THR_Callback(hObject, eventdata, handles)
     listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\shape');
     [length,~]     = size(listTemplate);
     
-    [TP,FN]        = get_THR(ADD_BINARY_THR,text_shapeline,length,listTemplate,BAD);
+    [TP,FN]        = get_THR_shape(ADD_BINARY_THR,text_shapeline,length,listTemplate,BAD);
    
     %--------------------------------- Normal
     
