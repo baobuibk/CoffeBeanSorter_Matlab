@@ -19,94 +19,99 @@
 //=========================================================================%
 %}
 
-function [IMG_label,nb_obj,error] = CC_label(img,cut_bd)
+function [IMG_label,nb_obj_now] = CC_label(img,cut_bd)
 
 BLACK       = 0;
 [row,col]   = size(img);
-same_lbst1  = zeros(1,500); 
-same_lbst2  = zeros(1,500);
 IMG_label   = zeros(row,col);
 nei         = zeros(1,4);
 ON          = 1;
 OFF         = 0;
-label_new   = 0;
-label_real  = 0;
-OV_LB      = 501;
-flag_overflow = OFF;
-error       = OFF;
+nb_obj_now      = 0;
+
+st1_labelnow = 0;
+equi        = zeros(255,255);        %contain similar label
+equi_tem    = zeros(1,255);
+equi_final  = zeros(1,255);
+
 %=========================================================================STEP 1
 
 for i=cut_bd+1:(row - cut_bd)
     for j=cut_bd+1:(col - cut_bd)
         if (img(i,j) ~= BLACK)
-		%--------------------------------------------
-			lb_min = OV_LB;
-			nei(1,1) = IMG_label(i      ,j - 1);    %West
-			nei(1,2) = IMG_label(i - 1  ,j - 1);    %North West
-			nei(1,3) = IMG_label(i - 1  ,j    );    %North
-			nei(1,4) = IMG_label(i - 1  ,j + 1);    %North East
-		%-------------------------------------------- calculate min label
-            for ii=1:4
-                if (nei(1,ii) ~= 0)&&(nei(1,ii) < lb_min)	 
-                    lb_min = nei(1,ii);                             %if don't have any satisfying label: lb_min =500
-                end
-            end
-            
-				%-------------------------------------------- save same values and attach label for IMG
-            if (lb_min ~= OV_LB)    
-				IMG_label(i,j) = lb_min;
-                for ii = 1:4 
-                    if (nei(1,ii) ~= 0) 
-                    	same_lbst1(1,nei(1,ii)) = lb_min;               %label have not been written-> write new for all 4 elements
+            lb_min=255;
+            %------------------------------------
+            % Get neibor of the considered pixel
+            %------------------------------------
+            nei(1,1) = IMG_label(i,j-1);   %West
+            nei(1,2) = IMG_label(i-1,j-1); %North-West
+            nei(1,3) = IMG_label(i-1,j);   %North
+            nei(1,4) = IMG_label(i-1,j+1); %North-East
+        
+            %------------------------------------
+            % Get new label or assign min label for current pixel 
+            %------------------------------------
+            if sum(nei) == 0
+                st1_labelnow     = st1_labelnow + 1;
+                IMG_label(i,j)   = st1_labelnow;
+            else
+                %-------------------
+                % get min label from neighbor
+                %-------------------
+                for ii=1:4
+                    if (nei(1,ii) ~= 0)&&(nei(1,ii) < lb_min)
+                        lb_min = nei(1,ii);
                     end
                 end
-            else
-                label_new               = label_new +1;
-				IMG_label(i,j)          = label_new;
-				same_lbst1(1,label_new) = label_new;			% replace
+                %-------------------
+                % assign to min label and store equivalent
+                %-------------------
+                IMG_label(i,j)    = lb_min;  
+                for ii= 1:4
+                    if nei(1,ii)~=0
+                        equi(nei(1,ii),lb_min) = 1;
+                    end
+                end
+                %-------------------
             end
-				%--------------------------------------------
-        end
-        if (label_new >= OV_LB) 
-            break;
+            %------------------------------------
         end
     end
-    if (label_new >= OV_LB) 
-        break;
-    end	
 end
 
-if (label_new >= OV_LB) 
-    flag_overflow = ON;
-end
-
-%========================================================================= STEP 2
-if (flag_overflow == ON || label_new == 0) 
-    error = ON;
-else
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ARRANGING STORE
-    for ii = 1:label_new
-        tem = ii;
-        if (same_lbst1(1,ii) == ii)
-            label_real = label_real+1;
-            same_lbst2(1,ii) = label_real;
-        else
-            while (same_lbst1(1,tem) ~= tem)
-				tem = same_lbst1(1,tem);
-				same_lbst1(1,ii) = tem;
-            end
+%------------------------------------
+% Arrange the equivalent table
+%------------------------------------
+            
+for value_cur=1:255
+    for value_min=1:255
+        if (equi(value_cur,value_min) == 1)
+           equi_tem(1,value_cur) =  value_min;
+           break;
         end
     end
-	%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    for i = cut_bd+1:(row - cut_bd)
+end
+
+for value=1:st1_labelnow
+    tem = value;
+    if (equi_tem(1,value) == value)
+        nb_obj_now = nb_obj_now + 1;
+        equi_final(1,value) = nb_obj_now;
+    else
+        while (equi_tem(1,tem) ~= tem)
+            tem = equi_tem(1,tem);
+            equi_tem(1,value) = tem;
+        end
+    end
+end
+%========================================================================= STEP 2            
+for i= cut_bd+1:(row - cut_bd)
         for j = cut_bd+1:(col- cut_bd)
             if IMG_label(i, j) ~= BLACK
-                IMG_label(i, j) = same_lbst2(1,same_lbst1(IMG_label(i,j)));
+                IMG_label(i, j) = equi_final(1,equi_tem(IMG_label(i,j)));
             end
         end	
-    end
 end
-nb_obj = label_real;
 end
 
 

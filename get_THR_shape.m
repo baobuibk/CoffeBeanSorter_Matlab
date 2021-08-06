@@ -23,11 +23,12 @@ for add_thres_otsu=9:20
                 %--------------------------------------------
                 for i=3:length
                     IMG = imread(listTemplate(i).name);
+                    IMG = imresize(IMG,[240 320]);
                     %---------------------------------% SEGMENTATION    
                     [IMGBi,~,IMG_sub] = segmentation_RGB(   IMG,...
                                                             background,...
                                                             add_thres_otsu); %Use RGB %-25
-    
+                      
                     [center,~,out_pst_pxl,nb_obj_real,order_lb,img_label] = pre_evaluation(IMGBi);
 
                     %---------------------------------% find border and calculate result
@@ -60,7 +61,7 @@ for add_thres_otsu=9:20
                 end
         
                 True_value = [True_value ;add_thres_otsu,num_part,THR_convex,THR_block,true_object,nb_obj_ge];
-                False_value= [False_value;add_thres_otsu,num_part,THR_convex,THR_block,true_object,nb_obj_ge];
+                False_value= [False_value;add_thres_otsu,num_part,THR_convex,THR_block,nb_obj_ge-true_object,nb_obj_ge];
         
                 fprintf(file,'add_thres_otsu: %d    num_part: %d  THR_convex = %d THR_block = %d true_object= %d nb_obj_ge= %d  percent = %.2f\n',...
                             add_thres_otsu,num_part,THR_convex,THR_block,true_object,nb_obj_ge,percent);

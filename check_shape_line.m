@@ -8,6 +8,9 @@ pnt = 1;
 %THR_block = 1;
 out_shape_line =[];
 for i=1:num_obj
+    if i==20
+        here = 0;
+    end
     nb_border_pxl   = out_pst_pxl(pnt,2);
     if (nb_border_pxl ~=1)                %if not containing the noise
         pst_each_obj    = out_pst_pxl(pnt+1:nb_border_pxl+pnt,:);
@@ -16,6 +19,7 @@ for i=1:num_obj
         out_shape_line  = [out_shape_line;rs_shape];
     else                                  %if containing the noise
         out_shape_line  = [out_shape_line;BAD];
+        pnt             = pnt+2;
     end
 end
 end

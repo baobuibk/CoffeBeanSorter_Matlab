@@ -1,7 +1,7 @@
 function result_shape = check_roundness(out_pst_pxl,img_label,center,num_obj)
 
 %====================================================
-%THR_SHAPE       = 1.16;
+THR_SHAPE       = 1.16;
 GOOD            = 1;
 BAD             = 0;
 result_shape    = [];
@@ -25,8 +25,9 @@ for obj=1:num_obj
             result_shape = [result_shape;[x_center,y_center,BAD]];
         end
     else
-         thres       = [thres;1313];
+        thres       = [thres;1313];
         result_shape = [result_shape;[x_center,y_center,BAD]];
+        pnt          = pnt + 2;
     end
 end
 %====================================================

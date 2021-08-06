@@ -38,7 +38,7 @@ center          = [];
 %TRUE           = 1;
 
 %[img_label,num_obj]     = bwlabel(img);   
-[img_label,num_obj_real,~]     = CC_label(img,5);   
+[img_label,num_obj_real]     = CC_label(img,5);   
 %=====================================% thinning border
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 for i=6:row-5

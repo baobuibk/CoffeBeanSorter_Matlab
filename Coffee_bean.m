@@ -212,6 +212,9 @@ global SAME_POS_MT;
     THR_convex     = str2double(THR_convex);
     THR_block      = str2double(THR_block);
     
+    num_part = 5;
+    THR_convex = 0.25;
+    THR_block = 1;
     
 %    colormap('gray');
 
@@ -253,7 +256,7 @@ global SAME_POS_MT;
         end
     end
    %}
-
+        
     
     if (nb_obj_real ~= 0)
         result = features_evaluation(   IMG_sub,...                         %remember to add some broken line into result 
@@ -261,7 +264,10 @@ global SAME_POS_MT;
                                         order_lb,...,
                                         center,...
                                         img_label,...
-                                        nb_obj_real);
+                                        nb_obj_real,...
+                                        num_part,...
+                                        THR_convex,...
+                                        THR_block);
     end
 
     
@@ -329,18 +335,18 @@ function GET_THR_Callback(hObject, eventdata, handles)
     listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\shape');
     [length,~]     = size(listTemplate);
     
-    [TP,FN]        = get_THR_shape(ADD_BINARY_THR,text_shapeline,length,listTemplate,BAD);
+    [TP,FN]        = get_THR_shape(text_shapeline,length,listTemplate,BAD);
    
-    %--------------------------------- Normal
     
+    %--------------------------------- Normal
     text_normal     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRnormal.txt','w');
     addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
     listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
     [length,~]     = size(listTemplate);
-    [TN,FP]        = get_THR(ADD_BINARY_THR,text_normal,length,listTemplate,GOOD);
+    [TN,FP]        = get_THR_shape(text_normal,length,listTemplate,GOOD);
     
-    Precision = TP(:,3) ./(TP(:,3) + FN(:,3));
-    Recall    = TP(:,3) ./(TP(:,3) + FP(:,3));
+    Precision = TP(:,5) ./(TP(:,5) + FN(:,5));
+    Recall    = TP(:,5) ./(TP(:,5) + FP(:,5));
     
     F1_score  = 2* (Precision.*Recall)./ (Precision + Recall);
     lenobj  = size(F1_score,1);
@@ -351,15 +357,11 @@ function GET_THR_Callback(hObject, eventdata, handles)
             max_value = F1_score(len);
             fprintf(text_F1_score,'==================== MAX HERE \n');
         end
-        fprintf(text_F1_score,'thr_pxl: %d    thr_percent: %d  Precision = %d Recall = %d F1_score = %.2f\n',...
-                TN(len,1),TN(len,2),Precision(len),Recall(len),F1_score(len));
-            
-
+        fprintf(text_F1_score,'add_thres_otsu: %d    num_part: %d  THR_convex = %d THR_block = %d  Precision = %d Recall = %d F1_score = %.2f\n',...
+                TN(len,1),TN(len,2),TN(len,3),TN(len,4),Precision(len),Recall(len),F1_score(len));
     end
     fclose('all');
         
-
-
 %write_img2text();
 %==========================================================================%OPEN CAMERA
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
