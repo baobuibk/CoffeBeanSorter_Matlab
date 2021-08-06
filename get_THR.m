@@ -1,49 +1,53 @@
-function [True_value,False_value] = get_THR(    ADD_BINARY_THR,...
-                                                file,...
+function [True_value,False_value] = get_THR(   file,...
                                                 length,...
                                                 listTemplate,...
-                                                type)
+                                                type) 
+                                                
 
 %==========================================================================
 background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
+background     = imresize(background,0.5);
+
 True_value     = [];
 False_value    = [];
 BAD            = 0;
 GOOD           = 1;
 
-for thr_pxl=0:20
-    count1 = 0;
-    for thr_percent=0.02:0.01:0.2
-        %-------------------------------------------- prepare parameter
-        count = 0;
-        count1 = count1 +1;
-        fprintf("andepzai ahihi %d \n",count1);
-        nb_obj = 0;
-        result = [];                          
-        %--------------------------------------------
-        for i=3:length
-            count = count+1
-            IMG = imread(listTemplate(i).name);
-            %---------------------------------% SEGMENTATION    
-            [IMGBi,~,IMG] = segmentation_RGB(   IMG,...
-                                                background,...
-                                                ADD_BINARY_THR); %Use RGB %-25
+for add_thres_otsu=9:20
+    for num_part=5:9
+        for THR_convex=0.1:0.05:0.45
+            for THR_block=1:3
+            %-------------------------------------------- prepare parameter
+            nb_obj = 0;
+            result = [];                          
+            %--------------------------------------------
+            for i=3:length
+                IMG = imread(listTemplate(i).name);
+                %---------------------------------% SEGMENTATION    
+                [IMGBi,~,IMG_sub] = segmentation_RGB(   IMG,...
+                                                        background,...
+                                                        add_thres_otsu); %Use RGB %-25
     
-            [~,out_border,~,img_label,nb_obj_single] = find_border_matlab(IMGBi);
+                 [center,~,out_pst_pxl,nb_obj_real,order_lb,img_label] = pre_evaluation(IMGBi);
 
-            %---------------------------------% find border and calculate result
-            if (nb_obj_single ~= 0)
-                result_single = features_evaluation(    IMG,...
-                                                        out_border,...
-                                                        img_label,...
-                                                        thr_pxl,...
-                                                        thr_percent); 
-            end
-            result  = [result;result_single];
-            nb_obj  = nb_obj + nb_obj_single;
-            %---------------------------------%
-        end         %end round 1
-        %--------------------------------------------
+                %---------------------------------% find border and calculate result
+                 if (nb_obj_real ~= 0)
+                    result = features_evaluation(   IMG_sub,...                         %remember to add some broken line into result 
+                                                    out_pst_pxl,...
+                                                    order_lb,...,
+                                                    center,...
+                                                    img_label,...
+                                                    nb_obj_real,...
+                                                    num_part,...
+                                                    THR_convex,...
+                                                    THR_block);
+                 end
+                result  = [result;result_single];
+                nb_obj  = nb_obj + nb_obj_single;
+                %---------------------------------%
+            end         %end round 1
+            %--------------------------------------------
+            
         
         if type == BAD
             true_object = sum(1-result(:,2));
@@ -60,9 +64,10 @@ for thr_pxl=0:20
                 thr_pxl,thr_percent,nb_obj,true_object,percent);
             
     %--------------------------------------------
-    end
+            end
+        end
     fprintf(file,'================================= \n');
     fprintf(file,' \n'); 
-end
+    end
 end
 
