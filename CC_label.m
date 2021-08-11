@@ -54,6 +54,7 @@ for i=cut_bd+1:(row - cut_bd)
             if sum(nei) == 0
                 st1_labelnow     = st1_labelnow + 1;
                 IMG_label(i,j)   = st1_labelnow;
+                equi(st1_labelnow,st1_labelnow) = 1;
             else
                 %-------------------
                 % get min label from neighbor

@@ -13,10 +13,11 @@ False_value    = [];
 BAD            = 0;
 GOOD           = 1;
 
-for add_thres_otsu=9:20
+for add_thres_otsu=-20:1:-9
     for num_part=5:9
-        for THR_convex=0.1:0.02:0.45
-            for THR_block=1:3
+        for THR_convex=0.1:0.02:0.5
+            for THR_block=1:3 
+
                 %-------------------------------------------- prepare parameter
                 nb_obj_ge = 0;
                 result_ge = [];                          
@@ -53,11 +54,11 @@ for add_thres_otsu=9:20
             %--------------------------------------------
             
                 if type == BAD
-                    true_object = sum(1-result(:,3));                  %if result get BAD value, result = 0=> 1-result will get 1
-                    percent     = (sum(1-result(:,3))/nb_obj_ge) * 100;
+                    true_object = sum(1-result_ge(:,4));                  %if result get BAD value, result = 0=> 1-result will get 1
+                    percent     = (sum(1-result_ge(:,4))/nb_obj_ge) * 100;
                 else 
-                    true_object = sum(result(:,3));
-                    percent     = (sum(result(:,3))/nb_obj_ge) * 100;
+                    true_object = sum(result_ge(:,4));
+                    percent     = (sum(result_ge(:,4))/nb_obj_ge) * 100;
                 end
         
                 True_value = [True_value ;add_thres_otsu,num_part,THR_convex,THR_block,true_object,nb_obj_ge];
@@ -68,11 +69,11 @@ for add_thres_otsu=9:20
                 
             %--------------------------------------------
             end
-            fprintf(file,'================================= \n');
+            fprintf(file,'================\n');
         end
         fprintf(file,'================================= \n');
     end
-    fprintf(file,'================================= \n');
+    fprintf(file,'================*****================= \n');
 end
 end
 

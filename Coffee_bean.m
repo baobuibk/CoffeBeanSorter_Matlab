@@ -256,7 +256,10 @@ global SAME_POS_MT;
         end
     end
    %}
-        
+    num_part = 5;
+    
+    THR_convex =0.25;
+    THR_block = 1;
     
     if (nb_obj_real ~= 0)
         result = features_evaluation(   IMG_sub,...                         %remember to add some broken line into result 
