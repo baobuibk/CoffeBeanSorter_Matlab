@@ -212,11 +212,11 @@ global SAME_POS_MT;
 %    write_img2text(a,2);
     %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
 %    imwrite(IMG, 'D:\IMG.jpg');
-    [IMGBi,IMGSeg_CIE,~,a] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
+    [IMGBi,IMGSeg_CIE,IMGSeg_RGB,a] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
    
 %    write_img2text(IMGBi,2);
     axes(handles.img1);
-    imagesc(a);
+    imagesc(IMGSeg_CIE);
 %    bi = double(IMGBi);
 %    imwrite(bi, 'D:\IMGBi.jpg');
 %    axes(handles.img1);
