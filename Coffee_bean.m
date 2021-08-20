@@ -241,7 +241,7 @@ global SAME_POS_MT;
     red = IMG_sub(:,:,1);
     blue =IMG_sub(:,:,3);
     axes(handles.img1);
-    imagesc(red);
+    imagesc(IMG_Seg);
     axes(handles.img2);
     imagesc(blue);
     axes(handles.img3);
