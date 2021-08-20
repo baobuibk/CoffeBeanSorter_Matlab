@@ -1,4 +1,4 @@
-function [IMGBi,IMGSeg_CIE,IMGSeg_RGB,a] = segmentation_RGB(RGB,ADD_BINARY_THR)
+function [IMGBi,IMGSeg_CIE,IMGSeg_RGB,IMG_Gray] = segmentation_RGB(RGB,ADD_BINARY_THR)
 
 
 %=========================================================================%
@@ -16,7 +16,7 @@ function [IMGBi,IMGSeg_CIE,IMGSeg_RGB,a] = segmentation_RGB(RGB,ADD_BINARY_THR)
     IMGRed          = double(RGB(:,:,1));
     IMGGreen        = double(RGB(:,:,2));
     IMGBlue         = double(RGB(:,:,3));
-    
+    IMG_Gray        = IMGBlue;
     [row,col]       = size(IMGRed);
 %    IMGBi           = zeros(row,col);
  
@@ -50,7 +50,6 @@ function [IMGBi,IMGSeg_CIE,IMGSeg_RGB,a] = segmentation_RGB(RGB,ADD_BINARY_THR)
     IMGBi(:,:)   =  (IMGBlue(:,:)>= (THRBlue+ADD_BINARY_THR));      
 %    write_img2text(IMGBi,2);
 %    IMGBi(:,:) = (IMGRed(:,:)>= THR) | (IMGGreen(:,:)>= THR) | (IMGBlue(:,:)>= THR);
-    a = 1-IMGBi;
  %   write_img2text(IMGRed,2);
      
     msk     = fspecial('gaussian',5,3);

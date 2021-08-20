@@ -214,16 +214,15 @@ global SAME_POS_MT;
 %    imwrite(IMG, 'D:\IMG.jpg');
     [IMGBi,IMGSeg_CIE,~,IMG_Gray] = segmentation_RGB(IMG,ADD_BINARY_THR); %Use RGB %-25
     r = IMG(:,:,1);
-    g = IMG(:,:,2);
-    b = IMG(:,:,3);
+    g = IMG(:,:,2
 %    write_img2text(IMGBi,2);
     axes(handles.img1);
-    imagesc(r);
+    imagesc(IMG_Gray);
     axes(handles.img2);
-    imagesc(g);
+    imagesc(IMGBi);
     
     axes(handles.img3);
-    imagesc(b);
+    imagesc(IMGSeg_CIE);
 
 %    bi = double(IMGBi);
 %    imwrite(bi, 'D:\IMGBi.jpg');
@@ -238,7 +237,9 @@ global SAME_POS_MT;
      [img_border,pos_pixel,num_object] = find_border(IMGBi); 
 %     write_img2text(img_border,2);
  %   img_border = find_border(IMGBi);
- 
+ axes(handles.img3);
+    imagesc(img_border);
+
     axes(handles.img4);
     imagesc(img_border);
     

@@ -1,4 +1,4 @@
-function [out_border,out_pst_pxl,num_object,a] = find_border(img)
+function [out_border,out_pst_pxl,num_object] = find_border(img)
 
 %=========================================================
 % This funtion find border of image and return
@@ -54,7 +54,6 @@ for i=6:row-5
 end
 %write_img2text(img_border,2);
 
-a = img_border;
 img_border = lammanh_process(img_border);
 %write_img2text(img_border,2);
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
