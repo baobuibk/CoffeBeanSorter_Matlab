@@ -1,7 +1,7 @@
-function result_shape = check_roundness(out_pst_pxl,img_label,center,num_obj)
+function result_shape = check_roundness(out_pst_pxl,img_label,center,num_obj,THR_SHAPE)
 
 %====================================================
-THR_SHAPE       = 1.16;
+%THR_SHAPE       = 1.16;
 GOOD            = 1;
 BAD             = 0;
 result_shape    = [];

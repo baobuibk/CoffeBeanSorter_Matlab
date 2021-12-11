@@ -1,5 +1,7 @@
-function color  = evaluate_color(IMG_seg,img_label,num_object,THR_PXL,THR_PERCENT_LOWPXL,order_lb)
+function color  = evaluate_color(IMG_seg,img_label,num_object,order_lb,THR_PXL,THR_PERCENT_LOWPXL)
 
+%THR_PXL = 11;
+%THR_PERCENT_LOWPXL = 0.07;
 GOOD = 1;
 BAD  = 0;
 R = IMG_seg(:,:,1);             %Using red channel to analyze 

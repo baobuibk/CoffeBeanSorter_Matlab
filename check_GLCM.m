@@ -1,8 +1,9 @@
-function [rs_GLCM] = check_GLCM(IMG,img_label,out_border)
+function [rs_GLCM] = check_GLCM(IMG,img_label,out_border,num_obj)
 
+
+THR_GLCM    = 0.13;
 GOOD        = 1;
 BAD         = 0;
-num_obj     = size(out_border,1);
 top         = 0;
 bottom      = 0;
 left        = 0;
@@ -11,29 +12,41 @@ rs_GLCM     = [];
 parameter   = [];
 
 RED_chanel  = IMG(:,:,1);
+pnt         = 1;
+
+
 for obj=1:num_obj
-    bd_obj          = out_border{obj};
-    top             = min(bd_obj(:,1));
-    down            = max(bd_obj(:,1));
-    left            = min(bd_obj(:,2));
-    right           = max(bd_obj(:,2));
+    nb_border_pxl   = out_border(pnt,2);
+    if (nb_border_pxl ~=1)                %if not containing the noise
+        bd_obj          = out_border(pnt+1:nb_border_pxl+pnt,:);
+        pnt             = pnt + nb_border_pxl+1;
     
-    object          = RED_chanel(top:down,left:right);
-    obj_label       = img_label(top:down,left:right);
-    label           = (obj_label(:,:) == obj);
-    object_GLCM     = object.*uint8(label);
+        
+        top             = min(bd_obj(:,1));
+        down            = max(bd_obj(:,1));
+        left            = min(bd_obj(:,2));
+        right           = max(bd_obj(:,2));
     
-    [GLCM90]        = graycomatrix(object_GLCM,'NumLevels',128,'Offset',[-1 0]);
-    [GLCM0]         = graycomatrix(object_GLCM,'NumLevels',128,'Offset',[0 1]);
+        object          = RED_chanel(top:down,left:right);
+        obj_label       = img_label(top:down,left:right);
+        label           = (obj_label(:,:) == obj);
+        object_GLCM     = object.*uint8(label);
     
-    stats           = graycoprops(floor((GLCM90+GLCM0)/2),{'Energy'});
+        [GLCM90]        = graycomatrix(object_GLCM,'NumLevels',128,'Offset',[-1 0]);
+        [GLCM0]         = graycomatrix(object_GLCM,'NumLevels',128,'Offset',[0 1]);
+    
+        stats           = graycoprops(floor((GLCM90+GLCM0)/2),{'Energy'});
                
-    parameter       = struct2cell(stats);
+        parameter       = struct2cell(stats);
     
-    if (parameter{1} >= 0.13)
-        rs_GLCM         = [rs_GLCM;parameter{1},BAD];
+        if (parameter{1} >= THR_GLCM)               %0.13
+            rs_GLCM         = [rs_GLCM;BAD];
+        else
+            rs_GLCM         = [rs_GLCM;GOOD];
+        end
     else
-        rs_GLCM         = [rs_GLCM;parameter{1},GOOD];
+        rs_GLCM         = [rs_GLCM;BAD];
+        pnt =pnt+2;
     end
     
     %{

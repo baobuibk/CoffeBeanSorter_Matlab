@@ -22,7 +22,7 @@ function varargout = Coffee_bean(varargin)
 
 % Edit the above text to modify the response to help Coffee_bean
 
-% Last Modified by GUIDE v2.5 29-Jul-2020 20:31:59
+% Last Modified by GUIDE v2.5 22-Aug-2021 00:33:37
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -83,7 +83,7 @@ global IMG;
 
 
      [IMG,row,col,dir3,name_img] = Load_img();
-     IMG = imresize(IMG,[240 320]);
+%     IMG = imresize(IMG,[240 320]);
 %     Red = IMG(:,:,1);
 %     Green = IMG(:,:,2);
 %     Blue = IMG(:,:,3);
@@ -138,62 +138,45 @@ global IMG;
 %==========================================================================PROCESSING OFLINE SINGLE
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function Processing_offline_Callback(hObject, eventdata, handles)
-global IMG;
-    IMG = read_imgtxt();
-    IMG = uint8(IMG);
-    IMG = imresize(IMG,[240 320]);
-    axes(handles.img);
-    imagesc(IMG);
-    colormap(gray);
-%{
-    number_part    = get(handles.number_part,'string');
-    THR_convex     = get(handles.THR_convex,'string');
-    THR_block      = get(handles.THR_block,'string');
-    num_part       = str2double(number_part);
-    THR_convex     = str2double(THR_convex);
-    THR_block      = str2double(THR_block);
-
-    RGB = imresize(IMG,[480 640]);
-    imagesc(RGB);
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% SEGMENTATION
+    BAD = 0;
+    GOOD = 1;
     
-    [IMGBi,IMGSeg_CIE,~] = segmentation_RGB(RGB);
-    axes(handles.img1);
-    imagesc(IMGBi);
-    axes(handles.img2);
-    imagesc(IMGSeg_CIE);
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% find border and calculate result
-    [out_border,pos_px,num_object,er_find_line] = find_border(IMGBi); 
-    axes(handles.img3);
-    imagesc(out_border);
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% check shape
-    if er_find_line == 0
-        [result_shape] = check_shape(pos_px,num_object,num_part,THR_convex,THR_block); 
-    else
-        result_shape = 0;
+    background    = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
+    type = GOOD;
+    
+    addpath('C:\Users\ducan\OneDrive\Desktop\sample\shape');
+    listTemplate   = dir('C:\Users\ducan\OneDrive\Desktop\sample\shape');
+    [length,~]     = size(listTemplate);
+    
+    for ADD_BINARY_THR = -17:-11
+        nb_eachfor = 0;
+        for i=3:length
+            IMG = imread(listTemplate(i).name); 
+            [IMGBi,~,IMG_sub] = segmentation_RGB(   IMG,...
+                                                    background,...
+                                                    ADD_BINARY_THR); %Use RGB %-25
+    
+            [center,~,out_pst_pxl,nb_obj_real,order_lb,img_label] = pre_evaluation(IMGBi);
+            if (nb_obj_real ~= 0)
+                result = features_evaluation(IMG_sub,...                         %remember to add some broken line into result 
+                                            out_pst_pxl,...
+                                            order_lb,...,
+                                            center,...
+                                            img_label,...
+                                            nb_obj_real);                      
+            end
+            resultsum = result(:,3) &result(:,4)& result(:,5)& result(:,6);
+            if type == BAD
+                nb_eachfor = nb_eachfor + sum(1-resultsum);
+            else
+                nb_eachfor = nb_eachfor + sum(resultsum);
+            end
+            fprintf('count: %d\n',i);
+        end
+        fprintf('THR: %d  nb_ob= %d\n',ADD_BINARY_THR,nb_eachfor);
     end
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% check color
-    result_color = check_color(IMGSeg_CIE);   %IMGSeg
     
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-%
-  %{ 
- if result_shape == 0 
-        set(handles.RESULT,'String','BAD');
-    else
-        set(handles.RESULT,'String','GOOD');
-end
-%}
-    %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-% display
-    
-%    axes(handles.img3);
-%    plot(xO,yO,'*b');
-    %======================================================
-    if result_color==1
-        set(handles.RESULT,'String','GOOD');
-    else
-        set(handles.RESULT,'String','BADs');
-    end
-  %}      
+   
 %==========================================================================%PROCESSING OFLINE MULTI
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function Multi_Callback(hObject, eventdata, handles)
@@ -212,16 +195,22 @@ global SAME_POS_MT;
     THR_convex     = str2double(THR_convex);
     THR_block      = str2double(THR_block);
     
-    num_part = 5;
-    THR_convex = 0.25;
-    THR_block = 1;
     
+    THR_Roundness = get(handles.roundness,'string');
+    THR_Roundness = str2double(THR_Roundness);
+    
+    THR_PXL_color = get(handles.Threshold_pxl,'string');
+    THR_PXL_color = str2double(THR_PXL_color);
+    
+    THR_PERCENT_Color = get(handles.percent_color,'string');
+    THR_PERCENT_Color = str2double(THR_PERCENT_Color);
+   
 %    colormap('gray');
 
    
 
-    background     = imread("D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\background.jpg");
-    background     = imresize(background,0.5);
+    background     = imread("D:\HCMUT\14. LUAN VAN THAC SI\MASTER THESIS\MATLAB\matlab_coffee_bean\sample\background.jpg");
+%    background     = imresize(background,0.5);
     R = IMG(:,:,1);
     G = IMG(:,:,2);
     B = IMG(:,:,3);
@@ -241,25 +230,13 @@ global SAME_POS_MT;
     red = IMG_sub(:,:,1);
     blue =IMG_sub(:,:,3);
     axes(handles.img1);
-    imagesc(IMG_Seg);
+    imagesc(red);
     axes(handles.img2);
     imagesc(blue);
     axes(handles.img3);
-    imagesc(out_border_img);
+    imagesc(IMGBi);
     axes(handles.img4);
-    
- %{   
-    if (num_obj_real ~= 0)
-        for ii=1:num_obj_real
-            hold on;
-                plot(center(ii,2),center(ii,1),'*r');
-        end
-    end
-   %}
-    num_part = 5;
-    
-    THR_convex =0.25;
-    THR_block = 1;
+    imagesc(out_border_img);
     
     if (nb_obj_real ~= 0)
         result = features_evaluation(   IMG_sub,...                         %remember to add some broken line into result 
@@ -268,9 +245,13 @@ global SAME_POS_MT;
                                         center,...
                                         img_label,...
                                         nb_obj_real,...
-                                        num_part,...
+                                        NUM_PART,...
                                         THR_convex,...
-                                        THR_block);
+                                        THR_block,...
+                                        THR_Roundness,...
+                                        THR_PXL_color,...
+                                        THR_PERCENT_Color);
+                                      
     end
 
     
@@ -281,9 +262,11 @@ global SAME_POS_MT;
         for ii=1:nb_obj_real
             roundness   = result(ii,3);
             shape_line  = result(ii,4);
-            color       = result(ii,5);
+            rs_GLCM     = result(ii,5);
+            color       = result(ii,6);
+            check =shape_line&roundness&rs_GLCM&color;
             hold on;
-            if (shape_line == BAD) 
+            if ( check== BAD) 
                 plot(result(ii,2),result(ii,1),'*r');
             end
         end
@@ -330,21 +313,21 @@ function GET_THR_Callback(hObject, eventdata, handles)
     BAD     = 0;
     GOOD    = 1;
     
-    text_F1_score  = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\F1_score.txt','w');
+    text_F1_score  = fopen('C:\Users\ducan\OneDrive\Desktop\MASTER THESIS\MATLAB\matlab_coffee_bean\sample\F1_score.txt','w');
     
     %---------------------------------Shape line 
-    text_shapeline = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRshapeline.txt','w');
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\shape');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\shape');
+    text_shapeline = fopen('C:\Users\ducan\OneDrive\Desktop\MASTER THESIS\MATLAB\matlab_coffee_bean\sample\get_THRshapeline.txt','w');
+    addpath('C:\Users\ducan\OneDrive\Desktop\sample\shape');
+    listTemplate   = dir('C:\Users\ducan\OneDrive\Desktop\sample\shape');
     [length,~]     = size(listTemplate);
     
     [TP,FN]        = get_THR_shape(text_shapeline,length,listTemplate,BAD);
    
     
     %--------------------------------- Normal
-    text_normal     = fopen('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\get_THRnormal.txt','w');
-    addpath('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
-    listTemplate   = dir('D:\B. WORK\1. CODE_PROJECT\MATLAB\matlab_coffee_bean\sample\good');
+    text_normal     = fopen('C:\Users\ducan\OneDrive\Desktop\MASTER THESIS\MATLAB\matlab_coffee_bean\sample\get_THRnormal.txt','w');
+    addpath('C:\Users\ducan\OneDrive\Desktop\MASTER THESIS\MATLAB\matlab_coffee_bean\sample\good');
+    listTemplate   = dir('C:\Users\ducan\OneDrive\Desktop\MASTER THESIS\MATLAB\matlab_coffee_bean\sample\good');
     [length,~]     = size(listTemplate);
     [TN,FP]        = get_THR_shape(text_normal,length,listTemplate,GOOD);
     
@@ -738,18 +721,64 @@ end
 
 
 
-function edit18_Callback(hObject, eventdata, handles)
-% hObject    handle to edit18 (see GCBO)
+function roundness_Callback(hObject, eventdata, handles)
+% hObject    handle to roundness (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit18 as text
-%        str2double(get(hObject,'String')) returns contents of edit18 as a double
+% Hints: get(hObject,'String') returns contents of roundness as text
+%        str2double(get(hObject,'String')) returns contents of roundness as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function edit18_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit18 (see GCBO)
+function roundness_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to roundness (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Threshold_pxl_Callback(hObject, eventdata, handles)
+% hObject    handle to Threshold_pxl (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Threshold_pxl as text
+%        str2double(get(hObject,'String')) returns contents of Threshold_pxl as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Threshold_pxl_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Threshold_pxl (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function percent_color_Callback(hObject, eventdata, handles)
+% hObject    handle to percent_color (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of percent_color as text
+%        str2double(get(hObject,'String')) returns contents of percent_color as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function percent_color_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to percent_color (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
